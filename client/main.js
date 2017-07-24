@@ -15,22 +15,50 @@ Meteor.subscribe('reminders');
 
 var ni = false;
 
-Template.home.onCreated(function(){
+Template.clock.onCreated(function(){
   var instance = this;
   instance.now = new ReactiveVar();
+  instance.hrs = new ReactiveVar();
+  instance.min = new ReactiveVar();
+  instance.sec = new ReactiveVar();
   instance.interval = Meteor.setInterval(function(){
     var now = new Date();
-    instance.now.set( now.toDateString() + " " + now.toLocaleTimeString() );
+    instance.now.set( now.toDateString() );
+    instance.hrs.set( now.getHours() );
+    instance.min.set( now.getMinutes() );
+    instance.sec.set( now.getSeconds() );
   }, 1000);
 });
 
-Template.home.helpers({
-  time(){
+Template.clock.helpers({
+  date(){
     return Template.instance().now.get();
-  }
+  },
+
+  dc(){
+  	var hrs = Template.instance().hrs.get();
+  	var min = Template.instance().min.get();
+    return hrs + ":" + min;
+  },
+
+  dc_hour(){
+  	if (Template.instance().hrs.get() > 12) {
+  		return 'PM';
+  	} else {
+  		return 'AM';
+  	}
+  },
+
+  dc_second(){
+  	if (Template.instance().sec.get() < 10) {
+  		return '0' + Template.instance().sec.get();
+  	} else {
+  		return Template.instance().sec.get();
+  	}
+  },
 });
 
-Template.home.onDestroyed(function(){
+Template.clock.onDestroyed(function(){
   var instance = this;
   if(instance.interval) Meteor.clearInterval(instance.interval);
 });

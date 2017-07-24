@@ -16,6 +16,11 @@ body {
     margin-top: 25px;
 }
 
+li .switch {
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
 /* The switch - the box around the slider */
 .switch {
   position: relative;
@@ -73,4 +78,32 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.tabBlock {
+  background-color:#57574f;
+  border:solid 0px #FFA54F;
+  border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+  max-width:188px;
+  width:100%;
+  overflow:hidden;
+  display:block;
+}
+.clock {
+  vertical-align:middle;
+  font-family:Orbitron;
+  font-size:40px;
+  font-weight:normal;
+  color:#FFF;
+  padding:0 10px;
+}
+#date {
+  font-size: 13px;
+}
+.clocklg {
+  vertical-align:middle; 
+  font-family:Orbitron;
+  font-size:20px;
+  font-weight:normal;
+  color:#FFF;
 }
