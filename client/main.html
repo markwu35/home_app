@@ -1,5 +1,5 @@
 <head>
-  <title>Mark's Home</title>
+  <title>Home</title>
 </head>
 
 <body>
@@ -17,6 +17,12 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#">{{> loginButtons}}</a></li>
+        <li>
+          <label class="switch"  data-toggle="tooltip" data-placement="bottom" title="Night Mode">
+            <input id="night" type="checkbox" name="night">
+            <span class="slider round"></span>
+          </label>
+        </li>
       </ul>
     </div>
   </nav>
@@ -41,8 +47,20 @@
 </body>
 
 <template name="home">
-  <h1>Welcome to Home!</h1>
+  <h2>Current time is: {{time}}</h2>
+  <div class="row">
+    <div class="col-sm-4">
+      {{> bucket_list}}
+    </div>
+    <div class="col-sm-4">
+      {{> shopping_list}}
+    </div>
+    <div class="col-sm-4">
+      {{> reminders}}
+    </div>
+  </div>
 </template>
+
 <template name="bucket_list">
   {{#if currentUser}}
     <h3>Add bucket list:</h3>
@@ -54,14 +72,11 @@
           <input type="submit" class="btn btn-primary" value="Submit" />
         </span>
       </div>
-      
-      
-      
     </form>
   {{else}}
     <p>Please log in first to personalize your bucket list!</p>
   {{/if}}
-  <h2>Current bucket list:</h2>
+  <h4>Current bucket list:</h4>
   <ul>
     {{#each bucket_list}}
       <li>{{name}} {{#if currentUser}}<a href="#" class="delete-bucket-list">X</a>{{/if}}</li>
@@ -73,14 +88,18 @@
   {{#if currentUser}}
     <h3>Add shopping list:</h3>
     <form class="add-shopping-list">
-      <label>Item Name</label>
-      <input type="text" class="form-control" name="name" placeholder="Add item" />
-      <input type="submit" class="btn btn-primary" value="Submit" />
+      <div class="input-group">
+        <label>Item Name</label>
+        <input type="text" class="form-control" name="name" placeholder="Add item" />
+        <span class="input-group-btn">
+          <input type="submit" class="btn btn-primary" value="Submit" />
+        </span>
+      </div>
     </form>
   {{else}}
     <p>Please log in first to personalize your shopping list!</p>
   {{/if}}
-  <h2>Current shopping list:</h2>
+  <h4>Current shopping list:</h4>
   <ul>
     {{#each shopping_list}}
       <li>{{name}} {{#if currentUser}}<a href="#" class="delete-shopping-list">X</a>{{/if}}</li>
@@ -92,14 +111,18 @@
   {{#if currentUser}}
     <h3>Add reminders:</h3>
     <form class="add-reminders">
-      <label>Reminders</label>
-      <input type="text" class="form-control" name="name" placeholder="Add reminders" />
-      <input type="submit" class="btn btn-primary" value="Submit" />
+      <div class="input-group">
+        <label>Reminders</label>
+        <input type="text" class="form-control" name="name" placeholder="Add reminders" />
+        <span class="input-group-btn">
+          <input type="submit" class="btn btn-primary" value="Submit" />
+        </span>
+      </div>
     </form>
   {{else}}
     <p>Please log in first to personalize your reminders!</p>
   {{/if}}
-  <h2>Current reminders:</h2>
+  <h4>Current reminders:</h4>
   <ul>
     {{#each reminders_list}}
       <li>{{name}} {{#if currentUser}}<a href="#" class="delete-reminders">X</a>{{/if}}</li>
