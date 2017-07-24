@@ -36,9 +36,7 @@ Template.clock.helpers({
   },
 
   dc(){
-  	var hrs = Template.instance().hrs.get();
-  	var min = Template.instance().min.get();
-    return hrs + ":" + min;
+    return Template.instance().hrs.get() + ":" + Template.instance().min.get();
   },
 
   dc_hour(){
@@ -50,12 +48,13 @@ Template.clock.helpers({
   },
 
   dc_second(){
-  	if (Template.instance().sec.get() < 10) {
-  		return '0' + Template.instance().sec.get();
+  	var cur_sec = Template.instance().sec.get();
+  	if (cur_sec < 10) {
+  		return '0' + cur_sec;
   	} else {
-  		return Template.instance().sec.get();
+  		return cur_sec;
   	}
-  },
+  }
 });
 
 Template.clock.onDestroyed(function(){
