@@ -36,7 +36,13 @@ Template.clock.helpers({
   },
 
   dc(){
-    return Template.instance().hrs.get() + ":" + Template.instance().min.get();
+    var min = Template.instance().min.get();
+    if (min < 10) {
+      var cur_min = '0' + min;
+    } else {
+      var cur_min = min;
+    }
+    return Template.instance().hrs.get() + ":" + cur_min;
   },
 
   dc_hour(){
@@ -85,7 +91,7 @@ Template.bucket_list.events({
 		var name = event.target.name.value;
 		Meteor.call('addBucketList', name);
 		event.target.name.value = '';
-		//return false;
+		return false;
 	},
 
 	"click .delete-bucket-list": function(event){
@@ -103,7 +109,7 @@ Template.shopping_list.events({
 		
 		Meteor.call('addShoppingList', name);
 		event.target.name.value = '';
-		//return false;
+		return false;
 	},
 
 	"click .delete-shopping-list": function(event){
@@ -173,12 +179,16 @@ Template.body.events({
         $(".navbar").addClass('navbar-inverse bg-inverse');
         $('body').css('background-color', 'black');
         $('body').css('color', 'white');
+        $('.navbar-brand').css('filter', "invert(100%)");
+        $('.navbar-brand').css('-webkit-filter', "invert(100%)");
         ni = true;
     }else{
         $(".navbar").removeClass('navbar-inverse bg-inverse');
         $(".navbar").addClass('navbar-default');
         $('body').css('background-color', 'white');
         $('body').css('color', 'black');
+        $('.navbar-brand').css('filter', "invert(0%)");
+        $('.navbar-brand').css('-webkit-filter', "invert(0%)");
         ni = false;
     }
   }

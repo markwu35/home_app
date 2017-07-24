@@ -2,6 +2,10 @@ body {
 	background-color: white;
 	color: black;
 }
+.navbar-brand {
+  filter: invert(100%);
+  -webkit-filter: invert(100%);
+}
 
 #night-label {
 	margin-bottom: 5px;
