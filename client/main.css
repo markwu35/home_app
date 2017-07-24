@@ -1,0 +1,9 @@
+/* CSS declarations go here */
+.main-container {
+	width: 90%;
+	margin-left: 5%;
+}
+
+.input-group-btn .btn {
+    margin-top: 25px;
+}
