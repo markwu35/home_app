@@ -19,3 +19,4 @@ Meteor.publish('shopping_list', function(){
 Meteor.publish('reminders', function(){
 	return Reminders.find({userId: this.userId});
 });
+

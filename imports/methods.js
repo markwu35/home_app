@@ -1,8 +1,20 @@
+var blankName;
+
+(function(){
+    blankName=function(name){
+    	if(name==''){
+    		alert('Item cannot be blank!');
+        throw new Meteor.Error('Item cannot be blank!');
+    	}
+    };
+}());
+
 Meteor.methods({
 	addBucketList: function(name){
 		if(!Meteor.userId()){
 			throw new Meteor.Error('No Access!');
 		}
+		blankName(name);
 		Bucket_list.insert({
 			name: name,
 			createdAt: new Date(),
@@ -20,6 +32,7 @@ Meteor.methods({
 		if(!Meteor.userId()){
 			throw new Meteor.Error('No Access!');
 		}
+		blankName(name);
 		Shopping_list.insert({
 			name: name,
 			createdAt: new Date(),
@@ -37,6 +50,7 @@ Meteor.methods({
 		if(!Meteor.userId()){
 			throw new Meteor.Error('No Access!');
 		}
+		blankName(name);
 		Reminders.insert({
 			name: name,
 			createdAt: new Date(),
@@ -50,3 +64,4 @@ Meteor.methods({
 		Reminders.remove(taskId);
 	}
 })
+

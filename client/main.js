@@ -15,21 +15,24 @@ Meteor.subscribe('reminders');
 
 var ni = false;
 
+Template.home.onCreated(function(){
+  var instance = this;
+  instance.now = new ReactiveVar();
+  instance.interval = Meteor.setInterval(function(){
+    var now = new Date();
+    instance.now.set( now.toDateString() + " " + now.toLocaleTimeString() );
+  }, 1000);
+});
+
 Template.home.helpers({
-	time: function(){
-		var now = new Date();
-		var days = new Array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
-		var months = new Array('January','February','March','April','May','June','July','August','September','October','November','December');
-		var date = ((now.getDate()<10) ? "0" : "")+ now.getDate();
-		function fourdigits(number) {
-		    return (number < 1000) ? number + 1900 : number;
-		}
-		today =  days[now.getDay()] + ", " +
-         months[now.getMonth()] + " " +
-         date + ", " +
-         (fourdigits(now.getYear())) ;
-    return today;
-	}
+  time(){
+    return Template.instance().now.get();
+  }
+});
+
+Template.home.onDestroyed(function(){
+  var instance = this;
+  if(instance.interval) Meteor.clearInterval(instance.interval);
 });
 
 Template.bucket_list.helpers({
@@ -52,7 +55,6 @@ Template.reminders.helpers({
 
 Template.bucket_list.events({
 	"submit .add-bucket-list": function(event){
-		console.log('HERERE');
 		var name = event.target.name.value;
 		Meteor.call('addBucketList', name);
 		event.target.name.value = '';
