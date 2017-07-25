@@ -15,6 +15,7 @@ Meteor.subscribe('bucket_list');
 Meteor.subscribe('shopping_list');
 Meteor.subscribe('reminders');
 Meteor.subscribe('rooms');
+Meteor.subscribe("userList");
 
 var ni = false;
 
@@ -41,6 +42,19 @@ Template.clock.onCreated(function(){
 // 			Meteor.call('changeTableCSS', t);
 // 		}
 // });
+Template.body.helpers({
+	message: function(){
+		if (Rooms.find({cleanedBy: Meteor.userId()}).count() == 0) {
+			$("#msg").removeClass('alert-success');
+    	$("#msg").addClass('alert-warning');
+			return "Stop being lazy and go clean some rooms!";
+		} else {
+			$("#msg").removeClass('alert-warning');
+    	$("#msg").addClass('alert-success');
+			return "Keep up your good work!";
+		}
+	}
+});
 
 Template.clock.helpers({
   date(){
@@ -106,9 +120,9 @@ Template.cleaning.helpers({
 
 	p1530: function(){
 		if (Rooms.findOne({name:'1530'}).cleaned == true){
-			$("#1530").addClass('cleaned');
 			var user_id = Rooms.findOne({name:'1530'}).cleanedBy;
 			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			$("#1530").addClass('cleaned');
 			return user_email + " at " + Rooms.findOne({name:'1530'}).cleanedAt;
 		} else {
 			$("#1530").removeClass('cleaned');
@@ -360,12 +374,28 @@ Template.cleaning.helpers({
 Template.labs.helpers({
 	rooms: function(){
 		return Rooms.find({}, {sort: {createdAt: -1}});
+	},
+	isAdmin: function(){
+		if (Meteor.user() === null) {
+			return false;
+		}
+		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
+			console.log(Meteor.user().emails[0].address);
+			return true;
+		}
+		return false;
 	}
 });
 
 Template.clock.onDestroyed(function(){
   var instance = this;
   if(instance.interval) Meteor.clearInterval(instance.interval);
+});
+
+Template.userList.helpers({
+	userList: function(){
+		return userList.find({}, {sort: {createdAt: -1}});
+	}
 });
 
 Template.bucket_list.helpers({
@@ -476,6 +506,7 @@ Template.cleaning.events({
 			var confirm_name = "You have cleaned " + event.target.id + " at " + time + "?";
 			if (confirm(confirm_name)) {
 				Meteor.call('cleanRoom', event.target.id);
+				$(".alert").show();
 				//Meteor.call('changeTableCSS', event.target.id);
 			}
 			return false;
@@ -496,6 +527,11 @@ Template.cleaning.events({
 });
 
 Template.body.events({
+
+	'click .close'(e) {
+    $("#msg").hide();
+  },
+
 	'click #HOME'(e) {
     $('.tab.active').removeClass('active');
     $("#HOME").addClass('active');
@@ -542,6 +578,14 @@ Template.body.events({
     var ax = $(e.target).html();
     $('.gin').hide();
     $('#gin-' + "LA").show();
+  },
+
+  'click #WS'(e) {
+    $('.tab.active').removeClass('active');
+    $("#WS").addClass('active');
+    var ax = $(e.target).html();
+    $('.gin').hide();
+    $('#gin-' + "WS").show();
   },
 
   // Night Mode

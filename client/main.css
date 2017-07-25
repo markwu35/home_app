@@ -5,6 +5,22 @@ body {
 h2 {
   text-align: center;
 }
+
+dt {
+  text-align: right;
+}
+
+.navbar {
+  margin-bottom: 10px;
+}
+
+.navbar-default {
+  -webkit-transition: all .35s;
+  -moz-transition: all .35s;
+  transition: all .35s;
+
+}
+
 .navbar-brand {
   padding: 0px 15px;
 }
@@ -13,6 +29,9 @@ h2 {
 	margin-bottom: 5px;
 }
 
+.alert {
+  margin-bottom: 0px;
+}
 .main-container {
 	width: 90%;
 	margin-left: 5%;
@@ -109,6 +128,12 @@ input:checked + .slider:before {
 #date {
   font-size: 13px;
 }
+
+.message{
+  text-align: center;
+  background-color: green;
+}
+
 .clocklg {
   vertical-align:middle; 
   font-family:Orbitron;
@@ -129,17 +154,28 @@ input:checked + .slider:before {
 #clean-table td {
   font-size: 14px;
   padding: 10px 5px;
-  min-width: 130px;
+  min-width: 120px;
   text-align: center;
 }
 
-#clean-table td:hover {
-  background-color: grey;
+#clean-table tr:hover {
+  background-color: #e0e0e0;
+  color: black;
 }
-#clean-table td:active {
-  background-color: yellow;
+#clean-table tr:active {
+  background-color: #999;
 }
 
 .cleaned {
-  background-color: green;
+  background-color: #dff0d8;
+  color: black;
+}
+
+@media only screen and (max-width: 767px) {
+  dt {
+    text-align: center;
+  }
+  dd {
+    text-align: center;
+  }
 }

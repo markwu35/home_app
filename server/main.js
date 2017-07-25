@@ -25,3 +25,6 @@ Meteor.publish('reminders', function(){
 Meteor.publish('rooms', function(){
 	return Rooms.find();
 });
+Meteor.publish("userList", function () {
+  return Meteor.users.find();
+});

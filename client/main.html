@@ -18,6 +18,7 @@
         -->
         <li id="LA" class="tab"><a href="#">Labs</a></li>
         <li id="CL" class="tab"><a href="#">Cleaning</a></li>
+        <li id="WS" class="tab"><a href="#">Workshops</a></li>
         
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -31,11 +32,26 @@
       </ul>
     </div>
   </nav>
-
-  {{> clock}}
-
-
   <div class="main-container">
+    {{#if currentUser}}
+    <div class="row">
+      <div class="col-lg-12">
+        <div id="msg" class="alert alert-warning alert-dismissable">
+          <a href="#" class="close" aria-label="close">&times;</a>
+          <strong>{{message}}</strong>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+    <div class="row" style="border-bottom: 1px solid;margin-bottom: 10px;">
+      <div class="col-sm-4">
+        {{> clock}}
+      </div>
+      <div class="col-sm-4">
+        <h2>Current Quarter:</h2>
+        <p style="text-align: center;">Summer 2017</p>
+      </div>
+    </div>
     <div class="gin" id="gin-HOME">
       {{> home}}
     </div>
@@ -54,6 +70,9 @@
     <div class="gin" id="gin-CL" style="display: none;">
       {{> cleaning}}
     </div>
+    <div class="gin" id="gin-WS" style="display: none;">
+      {{> workshops}}
+    </div>
   </div>
 
 </body>
@@ -64,23 +83,11 @@
   {{else}}
   <h1>Welcome, please login first!</h1>
   {{/if}}
- <!--
-  <div class="row">
-    <div class="col-sm-4">
-      <p>bucket_list template</p>
-    </div>
-    <div class="col-sm-4">
-      <p>shopping_list template</p>
-    </div>
-    <div class="col-sm-4">
-      <p>reminders template</p>
-    </div>
-  </div>
--->
+  {{> userList}}
 </template>
 
 <template name="clock">
-  <div style="max-width:245px;width:100%;padding:20px;">
+  <div style="max-width:230px;width:100%;padding:20px;margin-left: auto;margin-right: auto;margin-bottom: -10px;">
 
     <table class="tabBlock" align="center" cellspacing="0" cellpadding="0" border="0">
       <tr><td id="date" class="clock">{{date}}</td></tr>
@@ -97,6 +104,15 @@
       </tr>
     </table>
   </div>
+</template>
+
+<template name="userList">
+  <h4>Current userList:</h4>
+  <ul>
+    {{#each userList}}
+      <li>{{name}}</li>
+    {{/each}}
+  </ul>
 </template>
 
 <template name="bucket_list">
@@ -170,14 +186,14 @@
 
 <template name="cleaning">
   {{#if currentUser}}
+    <dl class="row" id="show-dl">
+      <dt class="col-sm-6">Today's cleaning</dt>
+      <dd class="col-sm-6">{{cleaning_duty}}</dd>
+      <dt class="col-sm-6">You have cleaned</dt>
+      <dd class="col-sm-6">{{rooms_cleaned}} rooms today</dd>
+    </dl>
     <div class="row">
-      <div class="col-lg-5">
-        <h3>Today's cleaning is: {{cleaning_duty}}</h3>
-      </div>
-      <div class="col-lg-5">
-        <h3>You have cleaned: {{rooms_cleaned}} rooms</h3>
-      </div>
-      <div class="col-lg-2">
+      <div class="col-lg-12">
         <button type="button" class="reset-cleaning btn btn-danger">Reset</button>
       </div>
     </div>
@@ -294,6 +310,7 @@
 </template>
 
 <template name="labs">
+  {{#if isAdmin}}
   <div class="col-lg-4">
     <h3>Add rooms:</h3>
     <form class="add-rooms">
@@ -305,13 +322,20 @@
         </span>
       </div>
     </form>
+  </div>
+  {{/if}}
+  <div class="col-lg-4">
     <h4>Current rooms:</h4>
     <ul>
       {{#each rooms}}
-        <li>{{name}} {{#if currentUser}}<a href="#" class="delete-rooms">X</a>{{/if}}</li>
+        <li>{{name}} {{#if isAdmin}}<a href="#" class="delete-rooms">X</a>{{/if}}</li>
       {{/each}}
     </ul>
   </div>
+</template>
+
+<template name="workshops">
+  <h4> Current workshop schedules:</h4>
 </template>
 
 <template name="notLoggedIn">
