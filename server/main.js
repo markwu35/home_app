@@ -23,5 +23,5 @@ Meteor.publish('reminders', function(){
 	return Reminders.find({userId: this.userId});
 });
 Meteor.publish('rooms', function(){
-	return Rooms.find({userId: this.userId});
+	return Rooms.find();
 });
