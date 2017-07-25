@@ -7,7 +7,7 @@ import { reminders } from '../imports/reminders.js'
 
 import { rooms } from '../imports/rooms.js'
 
-import { addBucketList, deleteBucketList, addShoppingList, deleteShoppingList, addReminders, deleteReminders, addRooms, deleteRooms, cleanRoom } from '../imports/methods.js'
+import { addBucketList, deleteBucketList, addShoppingList, deleteShoppingList, addReminders, deleteReminders, addRooms, deleteRooms, cleanRoom, resetCleaning } from '../imports/methods.js'
 
 import './main.html';
 
@@ -32,6 +32,15 @@ Template.clock.onCreated(function(){
     instance.sec.set( now.getSeconds() );
   }, 1000);
 });
+
+// Template.body.onCreated(function(){
+// 	  var rooms = Rooms.find({cleaned: true}).fetch();
+// 		for (i in rooms) {
+// 			var t = rooms[i].name;
+// 			console.log(t);
+// 			Meteor.call('changeTableCSS', t);
+// 		}
+// });
 
 Template.clock.helpers({
   date(){
@@ -66,6 +75,12 @@ Template.clock.helpers({
   }
 });
 
+Template.home.helpers({
+	current_user(){
+		return Meteor.user().emails[0].address;
+	}
+});
+
 Template.cleaning.helpers({
 	cleaning_duty(){
 		var d = new Date();
@@ -87,8 +102,259 @@ Template.cleaning.helpers({
 
 	rooms_cleaned: function(){
 		return Rooms.find({cleanedBy: Meteor.userId()}).count();
-	}
+	},
 
+	p1530: function(){
+		if (Rooms.findOne({name:'1530'}).cleaned == true){
+			$("#1530").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1530'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1530'}).cleanedAt;
+		} else {
+			$("#1530").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	p1529: function(){
+		if (Rooms.findOne({name:'1529'}).cleaned == true){
+			$("#1529").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1529'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1529'}).cleanedAt;
+		} else {
+			$("#1529").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	p1525: function(){
+		if (Rooms.findOne({name:'1525'}).cleaned == true){
+			$("#1525").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1525'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1525'}).cleanedAt;
+		} else {
+			$("#1525").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	p1521: function(){
+		if (Rooms.findOne({name:'1521'}).cleaned == true){
+			$("#1521").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1521'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1521'}).cleanedAt;
+		} else {
+			$("#1521").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	p1517: function(){
+		if (Rooms.findOne({name:'1517'}).cleaned == true){
+			$("#1517").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1517'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1517'}).cleanedAt;
+		} else {
+			$("#1517").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	p1513: function(){
+		if (Rooms.findOne({name:'1513'}).cleaned == true){
+			$("#1513").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1513'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1513'}).cleanedAt;
+		} else {
+			$("#1513").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	p1514: function(){
+		if (Rooms.findOne({name:'1514'}).cleaned == true){
+			$("#1514").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1514'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1514'}).cleanedAt;
+		} else {
+			$("#1514").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	p1518: function(){
+		if (Rooms.findOne({name:'1518'}).cleaned == true){
+			$("#1518").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1518'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1518'}).cleanedAt;
+		} else {
+			$("#1518").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	p1526: function(){
+		if (Rooms.findOne({name:'1526'}).cleaned == true){
+			$("#1526").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1526'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1526'}).cleanedAt;
+		} else {
+			$("#1526").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	HSSB: function(){
+		if (Rooms.findOne({name:'HSSB'}).cleaned == true){
+			$("#HSSB").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'HSSB'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'HSSB'}).cleanedAt;
+		} else {
+			$("#HSSB").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	s1005: function(){
+		if (Rooms.findOne({name:'1005'}).cleaned == true){
+			$("#1005").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1005'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1005'}).cleanedAt;
+		} else {
+			$("#1005").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	s1007: function(){
+		if (Rooms.findOne({name:'1007'}).cleaned == true){
+			$("#1007").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1007'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1007'}).cleanedAt;
+		} else {
+			$("#1007").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	s1301: function(){
+		if (Rooms.findOne({name:'1301'}).cleaned == true){
+			$("#1301").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1301'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1301'}).cleanedAt;
+		} else {
+			$("#1301").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	s1302: function(){
+		if (Rooms.findOne({name:'1302'}).cleaned == true){
+			$("#1302").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1302'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1302'}).cleanedAt;
+		} else {
+			$("#1302").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	s1303: function(){
+		if (Rooms.findOne({name:'1303'}).cleaned == true){
+			$("#1303").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1303'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1303'}).cleanedAt;
+		} else {
+			$("#1303").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	s1304: function(){
+		if (Rooms.findOne({name:'1304'}).cleaned == true){
+			$("#1304").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1304'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1304'}).cleanedAt;
+		} else {
+			$("#1304").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	l1804: function(){
+		if (Rooms.findOne({name:'1804'}).cleaned == true){
+			$("#1804").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1804'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1804'}).cleanedAt;
+		} else {
+			$("#1804").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	l1805: function(){
+		if (Rooms.findOne({name:'1805'}).cleaned == true){
+			$("#1805").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1805'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1805'}).cleanedAt;
+		} else {
+			$("#1805").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	l1806: function(){
+		if (Rooms.findOne({name:'1806'}).cleaned == true){
+			$("#1806").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'1806'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'1806'}).cleanedAt;
+		} else {
+			$("#1806").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	BSIF: function(){
+		if (Rooms.findOne({name:'BSIF'}).cleaned == true){
+			$("#BSIF").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'BSIF'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'BSIF'}).cleanedAt;
+		} else {
+			$("#BSIF").removeClass('cleaned');
+			return '---';
+		}
+	},
+
+	MUSIC: function(){
+		if (Rooms.findOne({name:'MUSIC'}).cleaned == true){
+			$("#MUSIC").addClass('cleaned');
+			var user_id = Rooms.findOne({name:'MUSIC'}).cleanedBy;
+			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+			return user_email + " at " + Rooms.findOne({name:'MUSIC'}).cleanedAt;
+		} else {
+			$("#MUSIC").removeClass('cleaned');
+			return '---';
+		}
+	}
 });
 
 Template.labs.helpers({
@@ -190,12 +456,42 @@ Template.labs.events({
 
 Template.cleaning.events({
 	"click .clean-room": function(event){
-		var d = new Date();
-		var confirm_name = "You have cleaned " + event.target.id + " at " + d + "?";
-		if (confirm(confirm_name)) {
-			Meteor.call('cleanRoom', event.target.id);
+		if ($("#" + event.target.id ).html() == "---"){
+			var d = new Date();
+			var h = d.getHours();
+			if (h <12){
+				var hr = '0' + h;
+				var APM = "AM";
+			} else {
+				var hr = h;
+				var APM = "PM";
+			}
+			var m = d.getMinutes();
+			if (m < 10){
+				var mi = '0' + m;
+			} else {
+				var mi = m;
+			}
+			var time = hr + ":" + mi + " " + APM;
+			var confirm_name = "You have cleaned " + event.target.id + " at " + time + "?";
+			if (confirm(confirm_name)) {
+				Meteor.call('cleanRoom', event.target.id);
+				//Meteor.call('changeTableCSS', event.target.id);
+			}
+			return false;
+		} else {
+			alert("This lab is already cleaned today!");
 		}
-		return false;
+	},
+
+	"click .reset-cleaning": function(event){
+			var d = new Date();
+			var confirm_name = "Are you sure ?";
+			if (confirm(confirm_name)) {
+				Meteor.call('resetCleaning');
+				//Meteor.call('changeTableCSS', event.target.id);
+			}
+			return false;
 	}
 });
 
@@ -255,8 +551,6 @@ Template.body.events({
         $(".navbar").addClass('navbar-inverse bg-inverse');
         $('body').css('background-color', 'black');
         $('body').css('color', 'white');
-        $('.navbar-brand').css('filter', "invert(100%)");
-        $('.navbar-brand').css('-webkit-filter', "invert(100%)");
         $('#clean-table table').css('border', '1px solid white');
         $('#clean-table td').css('border', '1px solid white');
         ni = true;
@@ -265,11 +559,20 @@ Template.body.events({
         $(".navbar").addClass('navbar-default');
         $('body').css('background-color', 'white');
         $('body').css('color', 'black');
-        $('.navbar-brand').css('filter', "invert(0%)");
-        $('.navbar-brand').css('-webkit-filter', "invert(0%)");
 				$('#clean-table table').css('border', '1px solid black');
         $('#clean-table td').css('border', '1px solid black');
         ni = false;
     }
   }
 });
+
+
+Meteor.methods({
+	changeTableCSS: function(targetId){
+		var t_id = "#" + targetId;
+		$(t_id).addClass('cleaned');
+		var user_id = Rooms.findOne({name:targetId}).cleanedBy
+		var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
+		$(t_id).html(user_email + " at " + Rooms.findOne({name:targetId}).cleanedAt);
+	}
+})

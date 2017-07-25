@@ -86,18 +86,34 @@ Meteor.methods({
 		var d = new Date();
 		var h = d.getHours();
 		if (h <12){
+			var hr = '0' + h;
 			var APM = "AM";
 		} else {
+			var hr = h;
 			var APM = "PM";
 		}
-		var time = h + ":" + d.getMinutes() + " " + APM;
-		Rooms.update({name: roomId}, { $set: { cleaned: true, cleanedAt: time, cleanedBy: Meteor.userId()}}, true, true);
+		var m = d.getMinutes();
+		if (m < 10){
+			var mi = '0' + m;
+		} else {
+			var mi = m;
+		}
+		var time = hr + ":" + mi + " " + APM;
+		Rooms.update({name: roomId}, { $set: { cleaned: true, cleanedAt: time, cleanedBy: Meteor.userId()}}, false, true);
 	},
 	deleteRooms: function(roomId){
 		if(!Meteor.userId()){
 			throw new Meteor.Error('No Access!');
 		}
 		Rooms.remove(roomId);
-	}
-})
+	},
 
+	resetCleaning: function(){
+		var rooms = Rooms.find({cleaned: true}).fetch();
+ 		for (i in rooms) {
+ 			var t = rooms[i].name;
+			Rooms.update({name: t}, { $set: { cleaned: false, cleanedAt: '', cleanedBy: ''}}, false, true);
+		}
+	}
+
+})

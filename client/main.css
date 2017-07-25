@@ -6,8 +6,6 @@ h2 {
   text-align: center;
 }
 .navbar-brand {
-  filter: invert(0%);
-  -webkit-filter: invert(0%);
   padding: 0px 15px;
 }
 
@@ -96,7 +94,6 @@ input:checked + .slider:before {
   background-color:#57574f;
   border:solid 0px #FFA54F;
   border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
-  max-width:188px;
   width:100%;
   overflow:hidden;
   display:block;
@@ -141,4 +138,8 @@ input:checked + .slider:before {
 }
 #clean-table td:active {
   background-color: yellow;
+}
+
+.cleaned {
+  background-color: green;
 }

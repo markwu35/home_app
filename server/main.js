@@ -6,10 +6,11 @@ import { reminders } from '../imports/reminders.js'
 
 import { rooms } from '../imports/rooms.js'
 
-import { addBucketList, deleteBucketList, addShoppingList, deleteShoppingList, addReminders, deleteReminders, addRooms, deleteRooms, cleanRoom } from '../imports/methods.js'
+import { addBucketList, deleteBucketList, addShoppingList, deleteShoppingList, addReminders, deleteReminders, addRooms, deleteRooms, cleanRoom, resetCleaning } from '../imports/methods.js'
 
 Meteor.startup(() => {
   // code to run on server at startup
+
 });
 
 Meteor.publish('bucket_list', function(){
