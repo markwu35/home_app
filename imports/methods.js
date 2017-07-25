@@ -62,6 +62,42 @@ Meteor.methods({
 			throw new Meteor.Error('No Access!');
 		}
 		Reminders.remove(taskId);
+	},
+
+	addRooms: function(roomId){
+		if(!Meteor.userId()){
+			throw new Meteor.Error('No Access!');
+		}
+		blankName(roomId);
+		Rooms.insert({
+			name: roomId,
+			createdAt: new Date(),
+			userId: Meteor.userId(),
+			cleaned: false,
+			cleanedAt: '',
+			cleanedBy: ''
+		});
+		console.log("inserted");
+	},
+	cleanRoom: function(roomId){
+		if(!Meteor.userId()){
+			throw new Meteor.Error('No Access!');
+		}
+		var d = new Date();
+		var h = d.getHours();
+		if (h <12){
+			var APM = "AM";
+		} else {
+			var APM = "PM";
+		}
+		var time = h + ":" + d.getMinutes() + " " + APM;
+		Rooms.update({name: roomId}, { $set: { cleaned: true, cleanedAt: time, cleanedBy: Meteor.userId()}}, true, true);
+	},
+	deleteRooms: function(roomId){
+		if(!Meteor.userId()){
+			throw new Meteor.Error('No Access!');
+		}
+		Rooms.remove(roomId);
 	}
 })
 

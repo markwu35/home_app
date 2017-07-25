@@ -2,9 +2,13 @@ body {
 	background-color: white;
 	color: black;
 }
+h2 {
+  text-align: center;
+}
 .navbar-brand {
-  filter: invert(100%);
-  -webkit-filter: invert(100%);
+  filter: invert(0%);
+  -webkit-filter: invert(0%);
+  padding: 0px 15px;
 }
 
 #night-label {
@@ -14,6 +18,10 @@ body {
 .main-container {
 	width: 90%;
 	margin-left: 5%;
+}
+
+.center-container {
+  text-align: center;
 }
 
 .input-group-btn .btn {
@@ -110,4 +118,27 @@ input:checked + .slider:before {
   font-size:20px;
   font-weight:normal;
   color:#FFF;
+}
+
+#clean-table table, #clean-table td {
+  border: 1px solid black;
+}
+
+#clean-table table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#clean-table td {
+  font-size: 14px;
+  padding: 10px 5px;
+  min-width: 130px;
+  text-align: center;
+}
+
+#clean-table td:hover {
+  background-color: grey;
+}
+#clean-table td:active {
+  background-color: yellow;
 }

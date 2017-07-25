@@ -1,5 +1,5 @@
 <head>
-  <title>Home</title>
+  <title>UCSB Collaborate Home</title>
   <link href="http://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" type="text/css"/>
 </head>
 
@@ -7,13 +7,17 @@
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="http://localhost:3000"><img src="./home_icon.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+        <a class="navbar-brand" href="http://localhost:3000"><img src="./collab_icon.jpeg" width="40" height="49" class="d-inline-block align-top" alt=""></a>
       </div>
       <ul class="nav navbar-nav">
-        <li id="HOME" class="tab active"><a href="#">Home Page</a></li>
+        <li id="HOME" class="tab active"><a href="#">Home</a></li>
+        <!-- 
         <li id="BL" class="tab"><a href="#">Bucket List</a></li>
         <li id="SL" class="tab"><a href="#">Shoping List</a></li>
         <li id="RE" class="tab"><a href="#">Reminders</a></li>
+        -->
+        <li id="LA" class="tab"><a href="#">Labs</a></li>
+        <li id="CL" class="tab"><a href="#">Cleaning</a></li>
         
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -28,6 +32,9 @@
     </div>
   </nav>
 
+  {{> clock}}
+
+
   <div class="main-container">
     <div class="gin" id="gin-HOME">
       {{> home}}
@@ -41,6 +48,12 @@
     <div class="gin" id="gin-RE" style="display: none;">
       {{> reminders}}
     </div>
+    <div class="gin" id="gin-LA" style="display: none;">
+      {{> labs}}
+    </div>
+    <div class="gin" id="gin-CL" style="display: none;">
+      {{> cleaning}}
+    </div>
   </div>
 
 </body>
@@ -48,17 +61,14 @@
 <template name="home">
   <h1>Welcome back!</h1>
   <div class="row">
-    {{> clock}}
-  </div>
-  <div class="row">
     <div class="col-sm-4">
-      {{> bucket_list}}
+      <p>bucket_list template</p>
     </div>
     <div class="col-sm-4">
-      {{> shopping_list}}
+      <p>shopping_list template</p>
     </div>
     <div class="col-sm-4">
-      {{> reminders}}
+      <p>reminders template</p>
     </div>
   </div>
 </template>
@@ -96,7 +106,7 @@
       </div>
     </form>
   {{else}}
-    <p>Please log in first to personalize your bucket list!</p>
+    {{> notLoggedIn}}
   {{/if}}
   <h4>Current bucket list:</h4>
   <ul>
@@ -119,7 +129,7 @@
       </div>
     </form>
   {{else}}
-    <p>Please log in first to personalize your shopping list!</p>
+    {{> notLoggedIn}}
   {{/if}}
   <h4>Current shopping list:</h4>
   <ul>
@@ -142,7 +152,7 @@
       </div>
     </form>
   {{else}}
-    <p>Please log in first to personalize your reminders!</p>
+    {{> notLoggedIn}}
   {{/if}}
   <h4>Current reminders:</h4>
   <ul>
@@ -152,3 +162,152 @@
   </ul>
 </template>
 
+<template name="cleaning">
+  {{#if currentUser}}
+    <div class="row">
+      <div class="col-lg-6">
+        <h3>Today's cleaning is: {{cleaning_duty}}</h3>
+      </div>
+      <div class="col-lg-6">
+        <h3>You have cleaned: {{rooms_cleaned}} rooms</h3>
+      </div>
+    </div>
+    
+    <div id="clean-table" class="row">
+      <div class="col-lg-3">
+        <h2>PHELPS</h2>
+        <table>
+          <tr>
+            <td>Phelps 1530</td>
+            <td id="1530" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>Phelps 1529</td>
+            <td id="1529" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>Phelps 1526</td>
+            <td id="1526" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>Phelps 1525</td>
+            <td id="1525" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>Phelps 1521</td>
+            <td id="1521" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>Phelps 1518</td>
+            <td id="1518" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>Phelps 1517</td>
+            <td id="1517" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>Phelps 1514</td>
+            <td id="1514" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>Phelps 1513</td>
+            <td id="1513" class="clean-room">---</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-lg-3">
+        <h2>HSSB</h2>
+        <table>
+          <tr>
+            <td>HSSB</td>
+            <td id="HSSB" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>SSMS 1005</td>
+            <td id="1005" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>SSMS 1007</td>
+            <td id="1007" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>SSMS 1301</td>
+            <td id="1301" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>SSMS 1302</td>
+            <td id="1302" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>SSMS 1303</td>
+            <td id="1303" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>SSMS 1304</td>
+            <td id="1304" class="clean-room">---</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-lg-3">
+        <h2>LIFE SCIENCE</h2>
+        <table>
+          <tr>
+            <td>LSCF 1804</td>
+            <td id="1804" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>LSCF 1805</td>
+            <td id="1805" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>LSCF 1806</td>
+            <td id="1806" class="clean-room">---</td>
+          </tr>
+          <tr>
+            <td>BSIF</td>
+            <td id="BSIF" class="clean-room">---</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-lg-3">
+        <h2>MUSIC</h2>
+        <table>
+          <tr>
+            <td>MUSIC</td>
+            <td id="MUSIC" class="clean-room">---</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  {{else}}
+    {{> notLoggedIn}}
+  {{/if}}
+</template>
+
+<template name="labs">
+  <div class="col-lg-4">
+    <h3>Add rooms:</h3>
+    <form class="add-rooms">
+      <div class="input-group">
+        <label>Room Number</label>
+        <input type="text" class="form-control" name="name" placeholder="Add room" />
+        <span class="input-group-btn">
+          <input type="submit" class="btn btn-primary" value="Submit" />
+        </span>
+      </div>
+    </form>
+    <h4>Current rooms:</h4>
+    <ul>
+      {{#each rooms}}
+        <li>{{name}} {{#if currentUser}}<a href="#" class="delete-rooms">X</a>{{/if}}</li>
+      {{/each}}
+    </ul>
+  </div>
+</template>
+
+<template name="notLoggedIn">
+  <div class="center-container">
+    <img src="./collab_icon.jpeg">
+    <h2>Access denied. Please log in first!</h2>
+  </div>
+</template>

@@ -5,13 +5,16 @@ import { bucket_list } from '../imports/bucket_list.js'
 import { shopping_list } from '../imports/shopping_list.js'
 import { reminders } from '../imports/reminders.js'
 
-import { addBucketList, deleteBucketList, addShoppingList, deleteShoppingList, addReminders, deleteReminders } from '../imports/methods.js'
+import { rooms } from '../imports/rooms.js'
+
+import { addBucketList, deleteBucketList, addShoppingList, deleteShoppingList, addReminders, deleteReminders, addRooms, deleteRooms, cleanRoom } from '../imports/methods.js'
 
 import './main.html';
 
 Meteor.subscribe('bucket_list');
 Meteor.subscribe('shopping_list');
 Meteor.subscribe('reminders');
+Meteor.subscribe('rooms');
 
 var ni = false;
 
@@ -61,6 +64,37 @@ Template.clock.helpers({
   		return cur_sec;
   	}
   }
+});
+
+Template.cleaning.helpers({
+	cleaning_duty(){
+		var d = new Date();
+		var today = d.getDay();
+		if (today == 1){
+			return "surfaces";
+		} else if (today == 2){
+			return "monitors & dry-erase area";
+		} else if (today == 3){
+			return "keyboards & mice";
+		} else if (today == 4){
+			return "monitors & dry-erase area";
+		} else if (today == 5){
+			return "check email for cleaning duty";
+		} else {
+			return "what are you doing here? It's weekend!";
+		}
+	},
+
+	rooms_cleaned: function(){
+		return Rooms.find({cleanedBy: Meteor.userId()}).count();
+	}
+
+});
+
+Template.labs.helpers({
+	rooms: function(){
+		return Rooms.find({}, {sort: {createdAt: -1}});
+	}
 });
 
 Template.clock.onDestroyed(function(){
@@ -124,7 +158,6 @@ Template.shopping_list.events({
 Template.reminders.events({
 	"submit .add-reminders": function(event){
 		var name = event.target.name.value;
-		
 		Meteor.call('addReminders', name);
 		event.target.name.value = '';
 		return false;
@@ -134,6 +167,33 @@ Template.reminders.events({
 		var confirm_name = "Delete " + this.name + "?";
 		if (confirm(confirm_name)) {
 			Meteor.call('deleteReminders', this._id);
+		}
+		return false;
+	}
+});
+
+Template.labs.events({
+	"submit .add-rooms": function(event){
+		var name = event.target.name.value;
+		Meteor.call('addRooms', name);
+		event.target.name.value = '';
+		return false;
+	},
+	"click .delete-rooms": function(event){
+		var confirm_name = "Delete room " + this.name + "?";
+		if (confirm(confirm_name)) {
+			Meteor.call('deleteRooms', this._id);
+		}
+		return false;
+	}
+});
+
+Template.cleaning.events({
+	"click .clean-room": function(event){
+		var d = new Date();
+		var confirm_name = "You have cleaned " + event.target.id + " at " + d + "?";
+		if (confirm(confirm_name)) {
+			Meteor.call('cleanRoom', event.target.id);
 		}
 		return false;
 	}
@@ -172,6 +232,22 @@ Template.body.events({
     $('#gin-' + "RE").show();
   },
 
+  'click #CL'(e) {
+    $('.tab.active').removeClass('active');
+    $("#CL").addClass('active');
+    var ax = $(e.target).html();
+    $('.gin').hide();
+    $('#gin-' + "CL").show();
+  },
+
+  'click #LA'(e) {
+    $('.tab.active').removeClass('active');
+    $("#LA").addClass('active');
+    var ax = $(e.target).html();
+    $('.gin').hide();
+    $('#gin-' + "LA").show();
+  },
+
   // Night Mode
   'click #night'(e) {
     if($('#night').is(":checked")) {
@@ -181,6 +257,8 @@ Template.body.events({
         $('body').css('color', 'white');
         $('.navbar-brand').css('filter', "invert(100%)");
         $('.navbar-brand').css('-webkit-filter', "invert(100%)");
+        $('#clean-table table').css('border', '1px solid white');
+        $('#clean-table td').css('border', '1px solid white');
         ni = true;
     }else{
         $(".navbar").removeClass('navbar-inverse bg-inverse');
@@ -189,6 +267,8 @@ Template.body.events({
         $('body').css('color', 'black');
         $('.navbar-brand').css('filter', "invert(0%)");
         $('.navbar-brand').css('-webkit-filter', "invert(0%)");
+				$('#clean-table table').css('border', '1px solid black');
+        $('#clean-table td').css('border', '1px solid black');
         ni = false;
     }
   }
