@@ -12,8 +12,6 @@
       <ul class="nav navbar-nav">
         <li id="HOME" class="tab active"><a href="#">Home</a></li>
         <!-- 
-        <li id="BL" class="tab"><a href="#">Bucket List</a></li>
-        <li id="SL" class="tab"><a href="#">Shoping List</a></li>
         <li id="RE" class="tab"><a href="#">Reminders</a></li>
         -->
         <li id="LA" class="tab"><a href="#">Labs</a></li>
@@ -36,7 +34,7 @@
     {{#if currentUser}}
     <div class="row">
       <div class="col-lg-12">
-        <div id="msg" class="alert alert-warning alert-dismissable">
+        <div id="msg" class="alert alert-success alert-dismissable">
           <a href="#" class="close" aria-label="close">&times;</a>
           <strong>{{message}}</strong>
         </div>
@@ -54,12 +52,6 @@
     </div>
     <div class="gin" id="gin-HOME">
       {{> home}}
-    </div>
-    <div class="gin" id="gin-BL" style="display: none;">
-      {{> bucket_list}}
-    </div>
-    <div class="gin" id="gin-SL" style="display: none;">
-      {{> shopping_list}}
     </div>
     <div class="gin" id="gin-RE" style="display: none;">
       {{> reminders}}
@@ -111,52 +103,6 @@
   <ul>
     {{#each userList}}
       <li>{{name}}</li>
-    {{/each}}
-  </ul>
-</template>
-
-<template name="bucket_list">
-  {{#if currentUser}}
-    <h3>Add bucket list:</h3>
-    <form class="add-bucket-list">
-      <div class="input-group">
-        <label>Bucket List Name</label>
-        <input type="text" class="form-control" name="name" placeholder="Add list" />
-        <span class="input-group-btn">
-          <input type="submit" class="btn btn-primary" value="Submit" />
-        </span>
-      </div>
-    </form>
-  {{else}}
-    {{> notLoggedIn}}
-  {{/if}}
-  <h4>Current bucket list:</h4>
-  <ul>
-    {{#each bucket_list}}
-      <li>{{name}} {{#if currentUser}}<a href="#" class="delete-bucket-list">X</a>{{/if}}</li>
-    {{/each}}
-  </ul>
-</template>
-
-<template name="shopping_list">
-  {{#if currentUser}}
-    <h3>Add shopping list:</h3>
-    <form class="add-shopping-list">
-      <div class="input-group">
-        <label>Item Name</label>
-        <input type="text" class="form-control" name="name" placeholder="Add item" />
-        <span class="input-group-btn">
-          <input type="submit" class="btn btn-primary" value="Submit" />
-        </span>
-      </div>
-    </form>
-  {{else}}
-    {{> notLoggedIn}}
-  {{/if}}
-  <h4>Current shopping list:</h4>
-  <ul>
-    {{#each shopping_list}}
-      <li>{{name}} {{#if currentUser}}<a href="#" class="delete-shopping-list">X</a>{{/if}}</li>
     {{/each}}
   </ul>
 </template>

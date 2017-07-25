@@ -1,19 +1,12 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import { bucket_list } from '../imports/bucket_list.js'
-import { shopping_list } from '../imports/shopping_list.js'
-import { reminders } from '../imports/reminders.js'
-
 import { rooms } from '../imports/rooms.js'
 
-import { addBucketList, deleteBucketList, addShoppingList, deleteShoppingList, addReminders, deleteReminders, addRooms, deleteRooms, cleanRoom, resetCleaning } from '../imports/methods.js'
+import { addRooms, deleteRooms, cleanRoom, resetCleaning } from '../imports/methods.js'
 
 import './main.html';
 
-Meteor.subscribe('bucket_list');
-Meteor.subscribe('shopping_list');
-Meteor.subscribe('reminders');
 Meteor.subscribe('rooms');
 Meteor.subscribe("userList");
 
@@ -34,14 +27,16 @@ Template.clock.onCreated(function(){
   }, 1000);
 });
 
-// Template.body.onCreated(function(){
-// 	  var rooms = Rooms.find({cleaned: true}).fetch();
-// 		for (i in rooms) {
-// 			var t = rooms[i].name;
-// 			console.log(t);
-// 			Meteor.call('changeTableCSS', t);
-// 		}
-// });
+Template.body.onCreated(function(){
+	//$("#msg").addClass("alert-warning");
+});
+
+Template.cleaning.onRendered(function(){
+	if ($(".clean-room").html() != "---"){
+		$(".clean-room").addClass("cleaned");
+	}
+});
+
 Template.body.helpers({
 	message: function(){
 		if (Rooms.find({cleanedBy: Meteor.userId()}).count() == 0) {
@@ -398,75 +393,22 @@ Template.userList.helpers({
 	}
 });
 
-Template.bucket_list.helpers({
-	bucket_list: function(){
-		return Bucket_list.find({}, {sort: {createdAt: -1}});
-	}
-});
+// Template.bucket_list.events({
+// 	"submit .add-bucket-list": function(event){
+// 		var name = event.target.name.value;
+// 		Meteor.call('addBucketList', name);
+// 		event.target.name.value = '';
+// 		return false;
+// 	},
 
-Template.shopping_list.helpers({
-	shopping_list: function(){
-		return Shopping_list.find({}, {sort: {createdAt: -1}});
-	}
-});
-
-Template.reminders.helpers({
-	reminders_list: function(){
-		return Reminders.find({}, {sort: {createdAt: -1}});
-	}
-});
-
-Template.bucket_list.events({
-	"submit .add-bucket-list": function(event){
-		var name = event.target.name.value;
-		Meteor.call('addBucketList', name);
-		event.target.name.value = '';
-		return false;
-	},
-
-	"click .delete-bucket-list": function(event){
-		var confirm_name = "Delete " + this.name + "?";
-		if (confirm(confirm_name)) {
-			Meteor.call('deleteBucketList', this._id);
-		}
-		return false;
-	}
-});
-
-Template.shopping_list.events({
-	"submit .add-shopping-list": function(event){
-		var name = event.target.name.value;
-		
-		Meteor.call('addShoppingList', name);
-		event.target.name.value = '';
-		return false;
-	},
-
-	"click .delete-shopping-list": function(event){
-		var confirm_name = "Delete " + this.name + "?";
-		if (confirm(confirm_name)) {
-			Meteor.call('deleteShoppingList', this._id);
-		}
-		return false;
-	}
-});
-
-Template.reminders.events({
-	"submit .add-reminders": function(event){
-		var name = event.target.name.value;
-		Meteor.call('addReminders', name);
-		event.target.name.value = '';
-		return false;
-	},
-
-	"click .delete-reminders": function(event){
-		var confirm_name = "Delete " + this.name + "?";
-		if (confirm(confirm_name)) {
-			Meteor.call('deleteReminders', this._id);
-		}
-		return false;
-	}
-});
+// 	"click .delete-bucket-list": function(event){
+// 		var confirm_name = "Delete " + this.name + "?";
+// 		if (confirm(confirm_name)) {
+// 			Meteor.call('deleteBucketList', this._id);
+// 		}
+// 		return false;
+// 	}
+// });
 
 Template.labs.events({
 	"submit .add-rooms": function(event){
@@ -540,22 +482,6 @@ Template.body.events({
     $('#gin-' + "HOME").show();
   },
 
-  'click #BL'(e) {
-    $('.tab.active').removeClass('active');
-    $("#BL").addClass('active');
-    var ax = $(e.target).html();
-    $('.gin').hide();
-    $('#gin-' + "BL").show();
-  },
-
-  'click #SL'(e) {
-    $('.tab.active').removeClass('active');
-    $("#SL").addClass('active');
-    var ax = $(e.target).html();
-    $('.gin').hide();
-    $('#gin-' + "SL").show();
-  },
-
   'click #RE'(e) {
     $('.tab.active').removeClass('active');
     $("#RE").addClass('active');
@@ -609,14 +535,3 @@ Template.body.events({
     }
   }
 });
-
-
-Meteor.methods({
-	changeTableCSS: function(targetId){
-		var t_id = "#" + targetId;
-		$(t_id).addClass('cleaned');
-		var user_id = Rooms.findOne({name:targetId}).cleanedBy
-		var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-		$(t_id).html(user_email + " at " + Rooms.findOne({name:targetId}).cleanedAt);
-	}
-})
