@@ -141,8 +141,9 @@ input:checked + .slider:before {
   border: 1px solid black;
 }
 
-th{
+#clean-table th{
   text-align: center;
+  min-width: 130px;
 }
 
 #clean-table table {
