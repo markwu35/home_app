@@ -101,6 +101,24 @@ Meteor.methods({
 		}
 		blankLab(lab);
 		var d = new Date();
+		var h = d.getHours();
+		if (h<10){
+			var hr = '0' + h;
+		} else {
+			var hr = h;
+		}
+		if (h <12){
+			var APM = "AM";
+		} else {
+			var APM = "PM";
+		}
+		var m = d.getMinutes();
+		if (m < 10){
+			var mi = '0' + m;
+		} else {
+			var mi = m;
+		}
+		var time = hr + ":" + mi + " " + APM;
 		var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 		LabNoShows.insert({
 			week: 'STUB',
@@ -110,7 +128,8 @@ Meteor.methods({
 			location: lab[1],
 			className: lab[2],
 			professorName: lab[3],
-			recordedBy: Meteor.user().emails[0].address
+			recordedBy: Meteor.user().emails[0].address,
+			time: time
 		});
 		console.log("inserted room");
 	}
