@@ -423,7 +423,24 @@ Template.labs.events({
 			Meteor.call('deleteRooms', this._id);
 		}
 		return false;
-	}
+	},
+
+	"click #MUSIC-detail": function(event){
+		var n = event.target.id.replace('-detail','');
+		$(".lab-name").html(n);
+		$(".help-desk").html('Yes');
+		$(".print-spot").html('2');
+		$(".computers").html('15');
+		$(".lab-pic").attr("src","./music_ext.jpg");
+  },
+  "click #BSIF-detail": function(event){
+  	var n = event.target.id.replace('-detail','');
+		$(".lab-name").html(n);
+		$(".help-desk").html('No');
+		$(".print-spot").html('0');
+		$(".computers").html('0');
+		$(".lab-pic").attr("src","./bsif.jpg");
+  }
 });
 
 Template.cleaning.events({

@@ -7,7 +7,7 @@
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="http://localhost:3000"><img src="./collab_icon.jpeg" width="40" height="49" class="d-inline-block align-top" alt=""></a>
+        <a class="navbar-brand" href="#"><img src="./collab_icon.jpeg" width="40" height="49" class="d-inline-block align-top" alt=""></a>
       </div>
       <ul class="nav navbar-nav">
         <li id="HOME" class="tab active"><a href="#">Home</a></li>
@@ -34,7 +34,7 @@
     {{#if currentUser}}
     <div class="row">
       <div class="col-lg-12">
-        <div id="msg" class="alert alert-success alert-dismissable">
+        <div id="msg" style="display: none;" class="alert alert-success alert-dismissable">
           <a href="#" class="close" aria-label="close">&times;</a>
           <strong>{{message}}</strong>
         </div>
@@ -258,10 +258,10 @@
 <template name="labs">
   {{#if isAdmin}}
   <div class="col-lg-4">
-    <h3>Add rooms:</h3>
+    <h3>Add labs:</h3>
     <form class="add-rooms">
       <div class="input-group">
-        <label>Room Number</label>
+        <label>Room Name</label>
         <input type="text" class="form-control" name="name" placeholder="Add room" />
         <span class="input-group-btn">
           <input type="submit" class="btn btn-primary" value="Submit" />
@@ -271,12 +271,27 @@
   </div>
   {{/if}}
   <div class="col-lg-4">
-    <h4>Current rooms:</h4>
+    <h4>Current labs:</h4>
     <ul>
       {{#each rooms}}
-        <li>{{name}} {{#if isAdmin}}<a href="#" class="delete-rooms">X</a>{{/if}}</li>
+        <li><a id={{name}}-detail href="#">{{name}}</a> {{#if isAdmin}}<a href="#" class="delete-rooms">X</a>{{/if}}</li>
       {{/each}}
     </ul>
+  </div>
+  <div class="col-lg-4">
+    <h2>Lab Details:</h2>
+    <dl class="row" id="show-dl">
+      <dt class="col-sm-6">Lab</dt>
+      <dd class="lab-name col-sm-6">-</dd>
+      <dt class="col-sm-6">Help Desk Availability</dt>
+      <dd class="help-desk col-sm-6">-</dd>
+      <dt class="col-sm-6">Number of Print Spots</dt>
+      <dd class="print-spot col-sm-6">-</dd>
+      <dt class="col-sm-6">Number of Computers</dt>
+      <dd class="computers col-sm-6">-</dd>
+
+    </dl>
+    <img class='lab-pic' src="./print_default.jpg">
   </div>
 </template>
 

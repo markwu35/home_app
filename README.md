@@ -11,3 +11,5 @@ Meteor application to Home App.
 ## Bugs
 
 * Jquery doesn't work when you reload, it doesnt update td to class cleaned
+* In production, timestamp is converted into different timezone
+* nightmode then login, and table borders become black

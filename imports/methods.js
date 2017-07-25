@@ -85,11 +85,14 @@ Meteor.methods({
 		}
 		var d = new Date();
 		var h = d.getHours();
-		if (h <12){
+		if (h<10){
 			var hr = '0' + h;
-			var APM = "AM";
 		} else {
 			var hr = h;
+		}
+		if (h <12){
+			var APM = "AM";
+		} else {
 			var APM = "PM";
 		}
 		var m = d.getMinutes();
