@@ -137,13 +137,18 @@ input:checked + .slider:before {
   color:#FFF;
 }
 
-#clean-table table, #clean-table td {
+#clean-table table, #clean-table td, #clean-table th {
   border: 1px solid black;
+}
+
+th{
+  text-align: center;
 }
 
 #clean-table table {
   margin-left: auto;
   margin-right: auto;
+  margin-top: 5px;
 }
 
 #clean-table td {

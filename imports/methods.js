@@ -1,4 +1,5 @@
 var blankName;
+var blankLab;
 
 (function(){
     blankName=function(name){
@@ -9,43 +10,18 @@ var blankName;
     };
 }());
 
+(function(){
+    blankLab=function(lab){
+    	for (i=0;i< lab.length;i++){
+    		if (lab[i]==''){
+    			alert('Item cannot be blank!');
+        	throw new Meteor.Error('Item cannot be blank!');
+    		}
+    	}
+    };
+}());
+
 Meteor.methods({
-	addBucketList: function(name){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
-		blankName(name);
-		Bucket_list.insert({
-			name: name,
-			createdAt: new Date(),
-			userId: Meteor.userId()
-		});
-	},
-	deleteBucketList: function(taskId){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
-		Bucket_list.remove(taskId);
-	},
-
-	addShoppingList: function(name){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
-		blankName(name);
-		Shopping_list.insert({
-			name: name,
-			createdAt: new Date(),
-			userId: Meteor.userId()
-		});
-	},
-	deleteShoppingList: function(taskId){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
-		Shopping_list.remove(taskId);
-	},
-
 	addReminders: function(name){
 		if(!Meteor.userId()){
 			throw new Meteor.Error('No Access!');
@@ -77,7 +53,7 @@ Meteor.methods({
 			cleanedAt: '',
 			cleanedBy: ''
 		});
-		console.log("inserted");
+		console.log("inserted room");
 	},
 	cleanRoom: function(roomId){
 		if(!Meteor.userId()){
@@ -117,6 +93,25 @@ Meteor.methods({
  			var t = rooms[i].name;
 			Rooms.update({name: t}, { $set: { cleaned: false, cleanedAt: '', cleanedBy: ''}}, false, true);
 		}
-	}
+	},
 
+	addLabNoShows: function(lab){
+		if(!Meteor.userId()){
+			throw new Meteor.Error('No Access!');
+		}
+		blankLab(lab);
+		var d = new Date();
+		var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+		LabNoShows.insert({
+			week: 'STUB',
+			date: d.getMonth()+1 + '/' + d.getDate() + '/' + d.getFullYear(),
+			day: days[d.getDay()],
+			SEtime: lab[0],
+			location: lab[1],
+			className: lab[2],
+			professorName: lab[3],
+			recordedBy: Meteor.user().emails[0].address
+		});
+		console.log("inserted room");
+	}
 })

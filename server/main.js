@@ -1,8 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 
 import { rooms } from '../imports/rooms.js'
+import { labNoShows } from '../imports/labNoShows.js'
 
-import { addBucketList, deleteBucketList, addShoppingList, deleteShoppingList, addReminders, deleteReminders, addRooms, deleteRooms, cleanRoom, resetCleaning } from '../imports/methods.js'
+import { addReminders, deleteReminders, addRooms, deleteRooms, cleanRoom, resetCleaning } from '../imports/methods.js'
 
 Meteor.startup(() => {
   // code to run on server at startup
@@ -15,6 +16,9 @@ Meteor.startup(() => {
 Meteor.publish('rooms', function(){
 	return Rooms.find();
 });
-Meteor.publish("userList", function () {
-  return Meteor.users.find();
+Meteor.publish('labNoShows', function(){
+	return LabNoShows.find();
+});
+Meteor.publish("userList", function() {
+    return Meteor.users.find({}, {fields: { emails: 1, profile: 1 } });
 });

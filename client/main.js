@@ -2,12 +2,14 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import { rooms } from '../imports/rooms.js'
+import { labNoShows } from '../imports/labNoShows.js'
 
 import { addRooms, deleteRooms, cleanRoom, resetCleaning } from '../imports/methods.js'
 
 import './main.html';
 
 Meteor.subscribe('rooms');
+Meteor.subscribe('labNoShows');
 Meteor.subscribe("userList");
 
 var ni = false;
@@ -88,6 +90,15 @@ Template.home.helpers({
 	current_user(){
 		return Meteor.user().emails[0].address;
 	}
+});
+
+Template.userList.helpers({
+  allUsers(){
+    return Meteor.users.find({});
+  },
+  email(){
+    return this.emails[0].address;
+  }
 });
 
 Template.cleaning.helpers({
@@ -375,11 +386,17 @@ Template.labs.helpers({
 			return false;
 		}
 		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
-			console.log(Meteor.user().emails[0].address);
+			//console.log(Meteor.user().emails[0].address);
 			return true;
 		}
 		return false;
 	}
+});
+
+Template.labNoShows.helpers({
+  labNoShows: function(){
+    return LabNoShows.find({}, {sort: {createdAt: -1}});
+  }
 });
 
 Template.clock.onDestroyed(function(){
@@ -441,6 +458,24 @@ Template.labs.events({
 		$(".computers").html('0');
 		$(".lab-pic").attr("src","./bsif.jpg");
   }
+});
+
+Template.labNoShows.events({
+  "submit .add-labNoShows": function(event){
+    var SEtime = event.target.startEndTime.value;
+    var location = event.target.location.value;
+    var className = event.target.className.value;
+    var professorName = event.target.professorName.value;
+
+    var lab = [SEtime,location,className,professorName];
+    console.log(lab);
+    Meteor.call('addLabNoShows', lab);
+    event.target.startEndTime.value = '';
+    event.target.location.value = '';
+    event.target.className.value = '';
+    event.target.professorName.value = '';
+    return false;
+  },
 });
 
 Template.cleaning.events({
@@ -531,6 +566,14 @@ Template.body.events({
     $('#gin-' + "WS").show();
   },
 
+  'click #LNS'(e) {
+    $('.tab.active').removeClass('active');
+    $("#LNS").addClass('active');
+    var ax = $(e.target).html();
+    $('.gin').hide();
+    $('#gin-' + "LNS").show();
+  },
+
   // Night Mode
   'click #night'(e) {
     if($('#night').is(":checked")) {
@@ -540,6 +583,7 @@ Template.body.events({
         $('body').css('color', 'white');
         $('#clean-table table').css('border', '1px solid white');
         $('#clean-table td').css('border', '1px solid white');
+        $('#clean-table th').css('border', '1px solid white');
         ni = true;
     }else{
         $(".navbar").removeClass('navbar-inverse bg-inverse');
@@ -548,6 +592,7 @@ Template.body.events({
         $('body').css('color', 'black');
 				$('#clean-table table').css('border', '1px solid black');
         $('#clean-table td').css('border', '1px solid black');
+        $('#clean-table th').css('border', '1px solid black');
         ni = false;
     }
   }

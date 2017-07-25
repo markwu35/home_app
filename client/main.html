@@ -17,6 +17,7 @@
         <li id="LA" class="tab"><a href="#">Labs</a></li>
         <li id="CL" class="tab"><a href="#">Cleaning</a></li>
         <li id="WS" class="tab"><a href="#">Workshops</a></li>
+        <li id="LNS" class="tab"><a href="#">Lab No Shows</a></li>
         
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -65,6 +66,9 @@
     <div class="gin" id="gin-WS" style="display: none;">
       {{> workshops}}
     </div>
+    <div class="gin" id="gin-LNS" style="display: none;">
+      {{> labNoShows}}
+    </div>
   </div>
 
 </body>
@@ -101,8 +105,8 @@
 <template name="userList">
   <h4>Current userList:</h4>
   <ul>
-    {{#each userList}}
-      <li>{{name}}</li>
+    {{#each allUsers}}
+      <li>{{email}}</li>
     {{/each}}
   </ul>
 </template>
@@ -297,6 +301,78 @@
 
 <template name="workshops">
   <h4> Current workshop schedules:</h4>
+</template>
+
+<template name="labNoShows">
+  {{#if currentUser}}
+  <div id="clean-table" class="row">
+      <h2>Lab No Shows</h2>
+      <div class="lab-form">
+        <h3>Add No Show Labs:</h3>
+        <form class="add-labNoShows">
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="input-group">
+                <label>Class Name</label>
+                <input type="text" class="form-control" name="className" placeholder="Class Name" />
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="input-group">
+                <label>Professor Name</label>
+                <input type="text" class="form-control" name="professorName" placeholder="Professor Name" />
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="input-group">
+                <label>Location</label>
+                <input type="text" class="form-control" name="location" placeholder="Location" />
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="input-group">
+                <label>Start-End Time</label>
+                <input type="text" class="form-control" name="startEndTime" placeholder="Start-End Time" />
+              </div>
+            </div>
+            <div class="col-sm-1">
+              <button type="submit" class="btn btn-primary" value="Submit" style="
+    margin-top: 25px;
+"> Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <table>
+        <tr>
+          <th>WEEK#</th>
+          <th>DATE</th>
+          <th>DAY OF THE WEEK</th>
+          <th>START-END TIME</th>
+          <th>LOCATION</th>
+          <th>PROFESSOR NAME</th>
+          <th>CLASS NAME</th>
+          <th>RECORDED BY</th>
+          <th>TIME</th>
+        </tr>
+        {{#each labNoShows}}
+        <tr>
+          <td>{{week}}</td>
+          <td>{{date}}</td>
+          <td>{{day}}</td>
+          <td>{{SEtime}}</td>
+          <td>{{location}}</td>
+          <td>{{professorName}}</td>
+          <td>{{className}}</td>
+          <td>{{recordedBy}}</td>
+          <td>STUB</td>
+        </tr>
+        {{/each}}
+      </table>
+  </div>
+  {{else}}
+  <h1>Welcome, please login first!</h1>
+  {{/if}}
 </template>
 
 <template name="notLoggedIn">
