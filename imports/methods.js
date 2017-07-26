@@ -150,10 +150,28 @@ Meteor.methods({
 		}
 		blankEntry(entry);
 		var d = new Date();
-		var date = d.toString().slice(0, -33); 
+		var h = d.getHours();
+		if (h<10){
+			var hr = '0' + h;
+		} else {
+			var hr = h;
+		}
+		if (h <12){
+			var APM = "AM";
+		} else {
+			var APM = "PM";
+		}
+		var m = d.getMinutes();
+		if (m < 10){
+			var mi = '0' + m;
+		} else {
+			var mi = m;
+		}
+		var time = hr + ":" + mi + " " + APM;
+		var date = d.getMonth()+1 + '/' + d.getDate() + '/' + d.getFullYear();
 		WireFrame.insert({
 			perm: entry[0],
-			recordedAt: date,
+			recordedAt: date + " " + time,
 			recordedBy: Meteor.user().emails[0].address,
 			checked: entry[1],
 			comments: entry[2]
