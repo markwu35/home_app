@@ -122,6 +122,11 @@
 
 <template name="cleaning">
   {{#if currentUser}}
+    <dl class="row" id="show-dl">  
+      <dt class="col-sm-6">Instructions</dt>
+      <dd class="col-sm-6">Click --- to record your cleaning!</dd>
+    </dl>
+    <br>
     <dl class="row" id="show-dl">
       <dt class="col-sm-6">Today's cleaning</dt>
       <dd class="col-sm-6">{{cleaning_duty}}</dd>
@@ -135,7 +140,6 @@
       </div>
     </div>
     {{/if}}
-    <p style="text-align: center;"><strong>Instructions:</strong> Click --- to record your cleaning!</p>
     <div class="clean-table row">
       <div class="col-lg-3">
         <h2>PHELPS</h2>
@@ -289,7 +293,11 @@
 
 <template name="workshops">
   {{#if currentUser}}
-  <p style="text-align: center;"><strong>Instructions:</strong> Click OPEN to claim your workshop spot!</p>
+  <dl class="row" id="show-dl">  
+    <dt class="col-sm-6">Instructions</dt>
+    <dd class="col-sm-6">Click OPEN to claim your workshop spot!</dd>
+  </dl>
+  <br>
   <dl class="row" id="show-dl">
     <dt class="col-sm-6">Time</dt>
     <dd class="col-sm-6">7PM -9PM</dd>
@@ -298,6 +306,7 @@
   </dl>
   <div class="row">
   {{#if isAdmin}}
+    <h2>Add workshop:</h2>
     <form class="add-workshops">
       <div class="row" style="max-width: 650px;margin-left: auto;margin-right: auto;">
         <div class="col-lg-5">
@@ -306,7 +315,7 @@
         </div>
         <div class="col-lg-5">
           <label>Workshop Name</label>
-          <input type="text" class="form-control" name="name" placeholder="Software Name" />
+          <input type="text" class="form-control" name="name" placeholder="Please replace space with _" />
         </div>
         <div class="col-lg-2">
           <button type="submit" class="btn btn-primary" value="Submit" style="
@@ -338,7 +347,7 @@
           <td>{{name}}</td>
           <td class="ws-open" id="{{name}}1">{{p1}}</td>
           <td class="ws-open" id="{{name}}2">{{p2}}</td>
-          <td>{{#if isAdmin}}<a href="#" class="delete-workshops btn btn-danger">X</a>{{/if}}</td>
+          {{#if isAdmin}}<td><a href="#" class="delete-workshops btn btn-danger">X</a></td>{{/if}}
         </tr>
         
         {{/each}}
@@ -410,7 +419,7 @@
           <td>{{className}}</td>
           <td>{{recordedBy}}</td>
           <td>{{time}}</td>
-          <td>{{#if currentUser}}<a href="#" class="delete-labNoShows btn btn-danger">X</a>{{/if}}</td>
+          {{#if currentUser}}<td><a href="#" class="delete-labNoShows btn btn-danger">X</a></td>{{/if}}
         </tr>
         
         {{/each}}
@@ -478,8 +487,8 @@
           <td>{{checked}}</td>
           <td>{{comments}}</td>
           <td>{{recordedBy}}</td>
-          <td>{{createdAt}}</td>
-          <td>{{#if currentUser}}<a href="#" class="delete-wireFrame btn btn-danger">X</a>{{/if}}</td>
+          <td>{{recordedAt}}</td>
+          {{#if currentUser}}<td><a href="#" class="delete-wireFrame btn btn-danger">X</a></td>{{/if}}
         </tr>
         
         {{/each}}

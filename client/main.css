@@ -1,11 +1,12 @@
 body {
 	background-color: white;
 	color: black;
+  font-family: 'Rubik', sans-serif;
 }
 h2 {
   text-align: center;
   color: #0b5fa8;
-  font-family: 'Rubik', sans-serif;
+  
 }
 
 dt {

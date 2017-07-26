@@ -17,3 +17,4 @@ Meteor application to the UCSB Collab App.
 * reset automatically overnight
 * implement scheduling
 * jeopardy
+* workshop name cannot have space in them

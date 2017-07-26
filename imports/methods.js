@@ -153,7 +153,7 @@ Meteor.methods({
 		var date = d.toString().slice(0, -33); 
 		WireFrame.insert({
 			perm: entry[0],
-			createdAt: date,
+			recordedAt: date,
 			recordedBy: Meteor.user().emails[0].address,
 			checked: entry[1],
 			comments: entry[2]
