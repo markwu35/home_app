@@ -13,10 +13,7 @@ Meteor application to the UCSB Collab App.
 
 * Jquery doesn't work when you reload, it doesnt update td to class cleaned
 * nightmode then login, and table borders become black
-* reset cleaning only for admin
 * change emails into name
 * reset automatically overnight
-* delete specific cleaning entry
-* workshops page put whos teaching what workshop
 * implement scheduling
 * jeopardy
