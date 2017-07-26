@@ -19,3 +19,4 @@ Meteor application to Home App.
 * delete specific cleaning entry/lab no show
 * workshops page put whos teaching what workshop
 * implement scheduling
+* jeopardy

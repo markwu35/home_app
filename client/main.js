@@ -1,5 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Session } from 'meteor/session'
+import '../imports/accounts-config.js'
 
 import { rooms } from '../imports/rooms.js'
 import { labNoShows } from '../imports/labNoShows.js'
@@ -12,7 +14,11 @@ Meteor.subscribe('rooms');
 Meteor.subscribe('labNoShows');
 Meteor.subscribe("userList");
 
+
+
 var ni = false;
+
+
 
 Template.clock.onCreated(function(){
   var instance = this;
@@ -39,6 +45,12 @@ Template.cleaning.onRendered(function(){
 	}
 });
 
+Template.login.helpers({
+  errorMessage: function() {
+    return Session.get('errorMessage');
+  }
+});
+
 Template.body.helpers({
 	message: function(){
 		if (Rooms.find({cleanedBy: Meteor.userId()}).count() == 0) {
@@ -50,7 +62,11 @@ Template.body.helpers({
     	$("#msg").addClass('alert-success');
 			return "Keep up your good work!";
 		}
-	}
+	},
+
+  showRegister() {
+    return Session.get('showRegister');
+  }
 });
 
 Template.clock.helpers({
@@ -595,5 +611,39 @@ Template.body.events({
         $('#clean-table th').css('border', '1px solid black');
         ni = false;
     }
+  }
+});
+
+Template.register.events({
+  'submit .register': function(event){
+    event.preventDefault();
+    var email = event.target.email.value;
+    var password = event.target.password.value;
+    Accounts.createUser({
+      email: email,
+      password: password
+    });
+  },
+
+  'click .s-login'(event) {
+    $('#r-p').hide();
+    $('#l-p').show();
+  }
+});
+
+Template.login.events({
+  'submit form': function(event){
+    event.preventDefault();
+    var email = event.target.email.value;
+    var password = event.target.password.value;
+    Meteor.loginWithPassword(email, password, function(err) {
+  		if (err) {
+    		Session.set('errorMessage', err.message);
+  		}
+		});
+  },
+  'click .s-register'(event) {
+    $('#l-p').hide();
+    $('#r-p').show();
   }
 });

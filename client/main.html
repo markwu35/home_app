@@ -1,6 +1,7 @@
 <head>
   <title>UCSB Collaborate Home</title>
   <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" type="text/css"/>
+  <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
 </head>
 
 <body>
@@ -15,13 +16,15 @@
         <li id="RE" class="tab"><a href="#">Reminders</a></li>
         -->
         <li id="LA" class="tab"><a href="#">Labs</a></li>
-        <li id="CL" class="tab"><a href="#">Cleaning</a></li>
         <li id="WS" class="tab"><a href="#">Workshops</a></li>
+        <li id="CL" class="tab"><a href="#">Cleaning</a></li>
         <li id="LNS" class="tab"><a href="#">Lab No Shows</a></li>
         
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        {{#if currentUser}}
         <li><a href="#">{{> loginButtons}}</a></li>
+        {{/if}}
         <li>
           <label class="switch"  data-toggle="tooltip" data-placement="bottom" title="Night Mode">
             <input id="night" type="checkbox" name="night">
@@ -76,10 +79,10 @@
 <template name="home">
   {{#if currentUser}}
   <h1>Welcome back, {{current_user}} !</h1>
-  {{else}}
-  <h1>Welcome, please login first!</h1>
-  {{/if}}
   {{> userList}}
+  {{else}}
+  {{> notLoggedIn}}
+  {{/if}}
 </template>
 
 <template name="clock">
@@ -300,7 +303,100 @@
 </template>
 
 <template name="workshops">
-  <h4> Current workshop schedules:</h4>
+  <dl class="row" id="show-dl">
+    <dt class="col-sm-6">Time</dt>
+    <dd class="lab-name col-sm-6">7PM -9PM</dd>
+    <dt class="col-sm-6">Location</dt>
+    <dd class="help-desk col-sm-6">SSMS 1304</dd>
+  </dl>
+  <div id="clean-table" class="row">
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Workshop</th>
+        <th>OpCo1/Cons1</th>
+        <th>OpCo2/Cons2</th>
+      </tr>
+      <tr>
+        <td></td>
+        <td>JavaScript</td>
+        <td id="JavaScript1" class="clean-room">---</td>
+        <td id="JavaScript2" class="clean-room">---</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Matlab</td>
+        <td id="Matlab1" class="clean-room">---</td>
+        <td id="Matlab2" class="clean-room">---</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Microsoft Office</td>
+        <td id="Microsoft_Office1" class="clean-room">---</td>
+        <td id="Microsoft_Office2" class="clean-room">---</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>HTML/Dreamweaver</td>
+        <td id="HTML/Dreamweaver1" class="clean-room">---</td>
+        <td id="HTML/Dreamweaver2" class="clean-room">---</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Photoshop I</td>
+        <td id="Photoshop_I1" class="clean-room">---</td>
+        <td id="Photoshop_I2" class="clean-room">---</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Flash I</td>
+        <td id="Flash_I1" class="clean-room">---</td>
+        <td id="Flash_I2" class="clean-room">---</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Illustrator</td>
+        <td id="Illustrator1" class="clean-room">---</td>
+        <td id="Illustrator2" class="clean-room">---</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Windows Command Line</td>
+        <td id="Cmd1" class="clean-room">---</td>
+        <td id="Cmd2" class="clean-room">---</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>R</td>
+        <td id="R1" class="clean-room">---</td>
+        <td id="R2" class="clean-room">---</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Photoshop II</td>
+        <td id="Photoshop_II1" class="clean-room">---</td>
+        <td id="Photoshop_II2" class="clean-room">---</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Flash II</td>
+        <td id="Flash_II1" class="clean-room">---</td>
+        <td id="Flash_II2" class="clean-room">---</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Python</td>
+        <td id="Python1" class="clean-room">---</td>
+        <td id="Python2" class="clean-room">---</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Indesign</td>
+        <td id="Indesign1" class="clean-room">---</td>
+        <td id="Indesign2" class="clean-room">---</td>
+      </tr>
+    </table>
+  </div>
 </template>
 
 <template name="labNoShows">
@@ -375,8 +471,44 @@
 </template>
 
 <template name="notLoggedIn">
-  <div class="center-container">
-    <img src="./collab_icon.jpeg">
-    <h2>Access denied. Please log in first!</h2>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="center-container">
+        <img src="./collab_icon.jpeg">
+      </div>
+    </div>
+    <div class="col-lg-6">
+        {{> login}}
+        {{> register}}
+    </div>
+  </div>
+</template>
+
+<template name="register">
+  <div id="r-p" class="md-container" style="display: none;">
+    <h2>Register</h2>
+    <form class="register">
+      <p>Email: <input class="form-control" type="email" name="email" placeholder="@umail only!"></p>
+      <p>Password: <input class="form-control" type="password" name="password"></p>
+      <span><input class="btn btn-primary" type="submit" value="Register"></span> | <span>Already have an account? Log in <a href="#" class="s-login">here</a></span> 
+    </form>
+  </div>
+</template>
+
+<template name="login">
+  <div id="l-p" class="md-container">
+    <h2>Sign in</h2>
+    <div class="alert-container">
+      {{#if errorMessage}}
+        <div class="alert">
+          <span><i class="icon-sign"></i>{{errorMessage}}</span>
+        </div>
+      {{/if}}
+    </div>
+    <form class="login">
+      <p>Email: <input class="form-control" type="email" name="email" placeholder="@umail only!"></p>
+      <p>Password: <input class="form-control" type="password" name="password"></p>
+      <span><input class="btn btn-primary" type="submit" value="Login"></span> | <span>Don't have an account? Register <a href="#" class="s-register">here</a></span>
+    </form>
   </div>
 </template>

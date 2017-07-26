@@ -4,6 +4,8 @@ body {
 }
 h2 {
   text-align: center;
+  color: #0b5fa8;
+  font-family: 'Rubik', sans-serif;
 }
 
 dt {
@@ -35,6 +37,12 @@ dt {
 .main-container {
 	width: 90%;
 	margin-left: 5%;
+}
+
+.md-container {
+  width: 55%;
+  margin-left: 15%;
+  max-width: 500px;
 }
 
 .center-container {
@@ -172,15 +180,6 @@ input:checked + .slider:before {
   color: black;
 }
 
-@media only screen and (max-width: 767px) {
-  dt {
-    text-align: center;
-  }
-  dd {
-    text-align: center;
-  }
-}
-
 img{
     max-width:350px;
 }
@@ -191,4 +190,27 @@ a{
 
 a:hover {
     text-decoration: none;
+}
+
+table {
+  font-family: 'Rubik', sans-serif;
+}
+
+dl {
+  margin-bottom: 0px;
+}
+
+@media (min-width: 768px) {
+  .navbar-right {
+    margin-right: 101px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  dt {
+    text-align: center;
+  }
+  dd {
+    text-align: center;
+  }
 }
