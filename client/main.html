@@ -5,33 +5,40 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-default navbar-fixed-top navbar-toggleable-md">
     <div class="container-fluid">
       <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
         <a class="navbar-brand" href="#"><img src="./collab_icon.jpeg" width="40" height="49" class="d-inline-block align-top" alt=""></a>
       </div>
-      <ul class="nav navbar-nav">
-        <li id="HOME" class="tab active"><a href="#">Home</a></li>
-        <!-- 
-        <li id="RE" class="tab"><a href="#">Reminders</a></li>
-        -->
-        <li id="LA" class="tab"><a href="#">Labs</a></li>
-        <li id="WS" class="tab"><a href="#">Workshops</a></li>
-        <li id="CL" class="tab"><a href="#">Cleaning</a></li>
-        <li id="LNS" class="tab"><a href="#">Lab No Shows</a></li>
-        
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        {{#if currentUser}}
-        <li><a href="#">{{> loginButtons}}</a></li>
-        {{/if}}
-        <li>
-          <label class="switch"  data-toggle="tooltip" data-placement="bottom" title="Night Mode">
-            <input id="night" type="checkbox" name="night">
-            <span class="slider round"></span>
-          </label>
-        </li>
-      </ul>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li id="HOME" class="tab active"><a href="#">Home</a></li>
+          <!-- 
+          <li id="RE" class="tab"><a href="#">Reminders</a></li>
+          -->
+          <li id="LA" class="tab"><a href="#">Labs</a></li>
+          <li id="WS" class="tab"><a href="#">Workshops</a></li>
+          <li id="CL" class="tab"><a href="#">Cleaning</a></li>
+          <li id="LNS" class="tab"><a href="#">Lab No Shows</a></li>
+          <li id="WF" class="tab"><a href="#">Wireframe</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li style="margin-top: 13px;">
+            {{#if currentUser}}
+            {{> loginButtons}}
+            {{/if}}
+          </li>
+          <li><label class="switch"  data-toggle="tooltip" data-placement="bottom" title="Night Mode">
+          <input id="night" type="checkbox" name="night">
+          <span class="slider round"></span>
+        </label></li>
+        </ul>
+      </div>
     </div>
   </nav>
   <div class="main-container">
@@ -57,9 +64,6 @@
     <div class="gin" id="gin-HOME">
       {{> home}}
     </div>
-    <div class="gin" id="gin-RE" style="display: none;">
-      {{> reminders}}
-    </div>
     <div class="gin" id="gin-LA" style="display: none;">
       {{> labs}}
     </div>
@@ -72,8 +76,10 @@
     <div class="gin" id="gin-LNS" style="display: none;">
       {{> labNoShows}}
     </div>
+    <div class="gin" id="gin-WF" style="display: none;">
+      {{> wireFrame}}
+    </div>
   </div>
-
 </body>
 
 <template name="home">
@@ -114,29 +120,6 @@
   </ul>
 </template>
 
-<template name="reminders">
-  {{#if currentUser}}
-    <h3>Add reminders:</h3>
-    <form class="add-reminders">
-      <div class="input-group">
-        <label>Reminders</label>
-        <input type="text" class="form-control" name="name" placeholder="Add reminders" />
-        <span class="input-group-btn">
-          <input type="submit" class="btn btn-primary" value="Submit" />
-        </span>
-      </div>
-    </form>
-  {{else}}
-    {{> notLoggedIn}}
-  {{/if}}
-  <h4>Current reminders:</h4>
-  <ul>
-    {{#each reminders_list}}
-      <li>{{name}} {{#if currentUser}}<a href="#" class="delete-reminders">X</a>{{/if}}</li>
-    {{/each}}
-  </ul>
-</template>
-
 <template name="cleaning">
   {{#if currentUser}}
     <dl class="row" id="show-dl">
@@ -145,13 +128,15 @@
       <dt class="col-sm-6">You have cleaned</dt>
       <dd class="col-sm-6">{{rooms_cleaned}} rooms today</dd>
     </dl>
+    {{#if isAdmin}}
     <div class="row">
       <div class="col-lg-12">
         <button type="button" class="reset-cleaning btn btn-danger">Reset</button>
       </div>
     </div>
-    
-    <div id="clean-table" class="row">
+    {{/if}}
+    <p style="text-align: center;"><strong>Instructions:</strong> Click --- to record your cleaning!</p>
+    <div class="clean-table row">
       <div class="col-lg-3">
         <h2>PHELPS</h2>
         <table>
@@ -303,141 +288,105 @@
 </template>
 
 <template name="workshops">
+  {{#if currentUser}}
+  <p style="text-align: center;"><strong>Instructions:</strong> Click OPEN to claim your workshop spot!</p>
   <dl class="row" id="show-dl">
     <dt class="col-sm-6">Time</dt>
-    <dd class="lab-name col-sm-6">7PM -9PM</dd>
+    <dd class="col-sm-6">7PM -9PM</dd>
     <dt class="col-sm-6">Location</dt>
-    <dd class="help-desk col-sm-6">SSMS 1304</dd>
+    <dd class="col-sm-6">SSMS 1304</dd>
   </dl>
-  <div id="clean-table" class="row">
-    <table>
-      <tr>
-        <th>Date</th>
-        <th>Workshop</th>
-        <th>OpCo1/Cons1</th>
-        <th>OpCo2/Cons2</th>
-      </tr>
-      <tr>
-        <td></td>
-        <td>JavaScript</td>
-        <td id="JavaScript1" class="clean-room">---</td>
-        <td id="JavaScript2" class="clean-room">---</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Matlab</td>
-        <td id="Matlab1" class="clean-room">---</td>
-        <td id="Matlab2" class="clean-room">---</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Microsoft Office</td>
-        <td id="Microsoft_Office1" class="clean-room">---</td>
-        <td id="Microsoft_Office2" class="clean-room">---</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>HTML/Dreamweaver</td>
-        <td id="HTML/Dreamweaver1" class="clean-room">---</td>
-        <td id="HTML/Dreamweaver2" class="clean-room">---</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Photoshop I</td>
-        <td id="Photoshop_I1" class="clean-room">---</td>
-        <td id="Photoshop_I2" class="clean-room">---</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Flash I</td>
-        <td id="Flash_I1" class="clean-room">---</td>
-        <td id="Flash_I2" class="clean-room">---</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Illustrator</td>
-        <td id="Illustrator1" class="clean-room">---</td>
-        <td id="Illustrator2" class="clean-room">---</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Windows Command Line</td>
-        <td id="Cmd1" class="clean-room">---</td>
-        <td id="Cmd2" class="clean-room">---</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>R</td>
-        <td id="R1" class="clean-room">---</td>
-        <td id="R2" class="clean-room">---</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Photoshop II</td>
-        <td id="Photoshop_II1" class="clean-room">---</td>
-        <td id="Photoshop_II2" class="clean-room">---</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Flash II</td>
-        <td id="Flash_II1" class="clean-room">---</td>
-        <td id="Flash_II2" class="clean-room">---</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Python</td>
-        <td id="Python1" class="clean-room">---</td>
-        <td id="Python2" class="clean-room">---</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Indesign</td>
-        <td id="Indesign1" class="clean-room">---</td>
-        <td id="Indesign2" class="clean-room">---</td>
-      </tr>
-    </table>
+  <div class="row">
+  {{#if isAdmin}}
+    <form class="add-workshops">
+      <div class="row" style="max-width: 650px;margin-left: auto;margin-right: auto;">
+        <div class="col-lg-5">
+          <label>Date</label>
+          <input type="text" class="form-control" name="date" placeholder="Date" />
+        </div>
+        <div class="col-lg-5">
+          <label>Workshop Name</label>
+          <input type="text" class="form-control" name="name" placeholder="Software Name" />
+        </div>
+        <div class="col-lg-2">
+          <button type="submit" class="btn btn-primary" value="Submit" style="
+  margin-top: 25px;"> Submit</button>
+        </div>
+      </div>
+        <!--
+        <div class="row">
+          <label>Opco/Cons 1</label>
+          <input type="text" class="form-control" name="p1" placeholder="Put 'OPEN' if empty" />
+        </div>
+        <div class="row">
+          <label>Opco/Cons 2</label>
+          <input type="text" class="form-control" name="p2" placeholder="Put 'OPEN' if empty" />
+        </div>
+        -->
+    </form>{{/if}}
+    <div id="ws-table" class="workshops-table col-md-12">
+      <table>
+        <tr>
+          <th>Date</th>
+          <th>Workshop</th>
+          <th>OpCo/Cons 1</th>
+          <th>OpCo/Cons 2</th>
+        </tr>
+        {{#each workshops}}
+        <tr>
+          <td>{{date}}</td>
+          <td>{{name}}</td>
+          <td class="ws-open" id="{{name}}1">{{p1}}</td>
+          <td class="ws-open" id="{{name}}2">{{p2}}</td>
+          <td>{{#if isAdmin}}<a href="#" class="delete-workshops btn btn-danger">X</a>{{/if}}</td>
+        </tr>
+        
+        {{/each}}
+      </table>
+    </div>
   </div>
+  {{else}}
+  {{> notLoggedIn}}
+  {{/if}}
 </template>
 
 <template name="labNoShows">
   {{#if currentUser}}
-  <div id="clean-table" class="row">
-      <h2>Lab No Shows</h2>
-      <div class="lab-form">
-        <form class="add-labNoShows">
-          <div class="row">
-            <div class="col-sm-3">
-              <div class="input-group">
-                <label>Class Name</label>
-                <input type="text" class="form-control" name="className" placeholder="Class Name" />
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <div class="input-group">
-                <label>Professor Name</label>
-                <input type="text" class="form-control" name="professorName" placeholder="Professor Name" />
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <div class="input-group">
-                <label>Location</label>
-                <input type="text" class="form-control" name="location" placeholder="Location" />
-              </div>
-            </div>
-            <div class="col-sm-2">
-              <div class="input-group">
-                <label>Start-End Time</label>
-                <input type="text" class="form-control" name="startEndTime" placeholder="Start-End Time" />
-              </div>
-            </div>
-            <div class="col-sm-1">
-              <button type="submit" class="btn btn-primary" value="Submit" style="
-    margin-top: 25px;
-"> Submit</button>
+    <h2>Lab No Shows</h2>
+    <div class="lab-form">
+      <form class="add-labNoShows">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="input-group">
+              <label>Class Name</label>
+              <input type="text" class="form-control" name="className" placeholder="Class Name" />
             </div>
           </div>
-        </form>
-      </div>
+          <div class="col-sm-3">
+            <div class="input-group">
+              <label>Professor Name</label>
+              <input type="text" class="form-control" name="professorName" placeholder="Professor Name" />
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="input-group">
+              <label>Location</label>
+              <input type="text" class="form-control" name="location" placeholder="Location" />
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="input-group">
+              <label>Start-End Time</label>
+              <input type="text" class="form-control" name="startEndTime" placeholder="Start-End Time" />
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <button type="submit" class="btn btn-primary" value="Submit" style="margin-top: 25px;"> Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="clean-table row">
       <table>
         <tr>
           <th>WEEK#</th>
@@ -461,10 +410,82 @@
           <td>{{className}}</td>
           <td>{{recordedBy}}</td>
           <td>{{time}}</td>
+          <td>{{#if isAdmin}}<a href="#" class="delete-labNoShows btn btn-danger">X</a>{{/if}}</td>
         </tr>
+        
         {{/each}}
       </table>
   </div>
+  {{else}}
+    {{> notLoggedIn}}
+  {{/if}}
+</template>
+
+<template name="wireFrame">
+  {{#if currentUser}}
+    <div class="row">
+      <h2>Wireframe Media Studio Policies</h2>
+      <p>By signing this form, I acknowledge that my use of the Wireframe media studio is a privilege granted through enrollment in Film and Media Studies courses taught by either Professor Shereen Sakr or Professor Chang, and is contingent upon responsible and fair use of the space and its equipment. You also agree to abide by the following rules and policies:</p>
+      <ul>
+      <li>Students are not allowed to alter the software or hardware configurations of any of the lab equipment without prior authorization from either a teacher or lab proctor.</li>
+      <li>While using the space, students must remain vigilant—never leave either the cage or outer doors propped or leave the space unattended.</li>
+      <li>Do not allow unaffiliated students into the space.</li>
+      <li>Coursework takes priority over all other uses.</li>
+      <li>Practice courtesy. Be mindful of others using the Wireframe space or the digital humanities commons, by using headphones to minimize noise disruption, keeping the space clean, returning things to their original places, shutting equipment down properly, charging controllers, and so on</li>
+      <li>Observe “recording in progress” signs for production work</li>
+      <li>Check the library calendar for Wireframe’s availability: <a target="_blank" href="http://www.library.ucsb.edu/sites/default/files/winter_1.pdf">http://www.library.ucsb.edu/sites/default/files/winter_1.pdf</a>.</li>
+      </ul>
+      <h2>Procedures</h2>
+      <p>To enter Wireframe, you must first sign in at the front desk in the lobby of the Music building. Give your student ID to the worker at the desk, and that staff member will unlock the lab space for your use. Your ID card will be returned when you sign out and verify that you have left all equipment as you found it.</p>
+      <p>Any equipment that is damaged, broken, or goes missing while you are using the space becomes your responsibility. We reserve the right to charge your BARC account if the lab equipment is handled inappropriately or negligently.</p>
+      <p style="text-align: center;"> [CSSC STAFF ONLY} <a target="_blank" href="https://ucsb.app.box.com/files/0/f/16880377852/1/f_113185636595">WireFrame Roster</a> </p>
+    </div>
+    <div class="row">
+      <form class="add-wireFrame">
+        <div class="col-md-4">
+          <label>Perm Number</label>
+          <input type="text" class="form-control" name="permNumber" placeholder="Perm Number" />
+        </div>
+        <div class="col-md-3">
+          <label>Check</label>
+          <select class="form-control" name="checked" id="check">
+            <option value="In">In</option>
+            <option value="Out">Out</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label>Comments</label>
+          <input type="text" class="form-control" name="comments" placeholder="[CSSC STAFF ONLY]" />
+        </div>
+        <div class="col-md-1">
+          <button type="submit" class="btn btn-primary" value="Submit" style="
+    margin-top: 25px;"> Submit</button>
+        </div>
+      </form>
+    </div>
+    <div class="clean-table row">
+      <table>
+        <tr>
+          <th>Perm Number</th>
+          <th>Checked</th>
+          <th>Comments</th>
+          <th>Recorded By</th>
+          <th>Created At</th>
+        </tr>
+        {{#each wireFrame}}
+        <tr>
+          <td>{{perm}}</td>
+          <td>{{checked}}</td>
+          <td>{{comments}}</td>
+          <td>{{recordedBy}}</td>
+          <td>{{createdAt}}</td>
+          <td>{{#if isAdmin}}<a href="#" class="delete-wireFrame btn btn-danger">X</a>{{/if}}</td>
+        </tr>
+        
+        {{/each}}
+      </table>
+    </div>
+
   {{else}}
     {{> notLoggedIn}}
   {{/if}}

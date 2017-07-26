@@ -5,20 +5,20 @@ import '../imports/accounts-config.js'
 
 import { rooms } from '../imports/rooms.js'
 import { labNoShows } from '../imports/labNoShows.js'
+import { workshops } from '../imports/workshops.js'
+import { wireFrame } from '../imports/wireFrame.js'
 
-import { addRooms, deleteRooms, cleanRoom, resetCleaning } from '../imports/methods.js'
+import { addRooms, deleteRooms, cleanRoom, resetCleaning, addLabNoShows, deleteLabNoShows, addWireFrame, deleteWireFrame, addWorkshops, deleteWorkshops, claimWorkshops, resetWorkshops } from '../imports/methods.js'
 
 import './main.html';
 
 Meteor.subscribe('rooms');
 Meteor.subscribe('labNoShows');
 Meteor.subscribe("userList");
-
-
+Meteor.subscribe("workshops");
+Meteor.subscribe("wireFrame");
 
 var ni = false;
-
-
 
 Template.clock.onCreated(function(){
   var instance = this;
@@ -118,6 +118,17 @@ Template.userList.helpers({
 });
 
 Template.cleaning.helpers({
+
+	isAdmin: function(){
+		if (Meteor.user() === null) {
+			return false;
+		}
+		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
+			//console.log(Meteor.user().emails[0].address);
+			return true;
+		}
+		return false;
+	},
 	cleaning_duty(){
 		var d = new Date();
 		var today = d.getDay();
@@ -412,7 +423,49 @@ Template.labs.helpers({
 Template.labNoShows.helpers({
   labNoShows: function(){
     return LabNoShows.find({}, {sort: {createdAt: -1}});
-  }
+  },
+	isAdmin: function(){
+		if (Meteor.user() === null) {
+			return false;
+		}
+		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
+			//console.log(Meteor.user().emails[0].address);
+			return true;
+		}
+		return false;
+	}
+});
+
+Template.wireFrame.helpers({
+  wireFrame: function(){
+    return WireFrame.find({}, {sort: {createdAt: -1}});
+  },
+	isAdmin: function(){
+		if (Meteor.user() === null) {
+			return false;
+		}
+		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
+			//console.log(Meteor.user().emails[0].address);
+			return true;
+		}
+		return false;
+	}
+});
+
+Template.workshops.helpers({
+  workshops: function(){
+    return Workshops.find({}, {sort: {date: -1}});
+  },
+	isAdmin: function(){
+		if (Meteor.user() === null) {
+			return false;
+		}
+		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
+			//console.log(Meteor.user().emails[0].address);
+			return true;
+		}
+		return false;
+	}
 });
 
 Template.clock.onDestroyed(function(){
@@ -425,23 +478,6 @@ Template.userList.helpers({
 		return userList.find({}, {sort: {createdAt: -1}});
 	}
 });
-
-// Template.bucket_list.events({
-// 	"submit .add-bucket-list": function(event){
-// 		var name = event.target.name.value;
-// 		Meteor.call('addBucketList', name);
-// 		event.target.name.value = '';
-// 		return false;
-// 	},
-
-// 	"click .delete-bucket-list": function(event){
-// 		var confirm_name = "Delete " + this.name + "?";
-// 		if (confirm(confirm_name)) {
-// 			Meteor.call('deleteBucketList', this._id);
-// 		}
-// 		return false;
-// 	}
-// });
 
 Template.labs.events({
 	"submit .add-rooms": function(event){
@@ -483,15 +519,94 @@ Template.labNoShows.events({
     var className = event.target.className.value;
     var professorName = event.target.professorName.value;
 
-    var lab = [SEtime,location,className,professorName];
-    console.log(lab);
-    Meteor.call('addLabNoShows', lab);
+    var entry = [SEtime,location,className,professorName];
+    Meteor.call('addLabNoShows', entry);
     event.target.startEndTime.value = '';
     event.target.location.value = '';
     event.target.className.value = '';
     event.target.professorName.value = '';
     return false;
   },
+ 	"click .delete-labNoShows": function(event){
+		var confirm_name = "Delete this entry?";
+		if (confirm(confirm_name)) {
+			Meteor.call('deleteLabNoShows', this._id);
+		}
+		return false;
+	}
+});
+
+Template.wireFrame.events({
+  "submit .add-wireFrame": function(event){
+    var perm = event.target.permNumber.value;
+    var checked = event.target.checked.value;
+    var comments = event.target.comments.value;
+
+    var entry = [perm,checked,comments];
+    Meteor.call('addWireFrame', entry);
+    event.target.permNumber.value = '';
+    event.target.checked.value = '';
+    event.target.comments.value = '';
+    return false;
+  },
+ 	"click .delete-wireFrame": function(event){
+		var confirm_name = "Delete this entry?";
+		if (confirm(confirm_name)) {
+			Meteor.call('deleteWireFrame', this._id);
+		}
+		return false;
+	}
+});
+
+Template.workshops.events({
+  "submit .add-workshops": function(event){
+    var date = event.target.date.value;
+    var name = event.target.name.value;
+    //var p1 = event.target.p1.value;
+    //var p2 = event.target.p2.value;
+
+    var entry = [date,name];
+    Meteor.call('addWorkshops', entry);
+    event.target.date.value = '';
+    event.target.name.value = '';
+    //event.target.p1.value = '';
+    //event.target.p2.value = '';
+    return false;
+  },
+ 	"click .delete-workshops": function(event){
+		var confirm_name = "Delete this workshop?";
+		if (confirm(confirm_name)) {
+			Meteor.call('deleteWorkshops', this._id);
+		}
+		return false;
+	},
+	"click .ws-open": function(event){
+		if ($("#" + event.target.id ).html() == "OPEN"){
+			var str = event.target.id;
+			str = str.slice(0, -1);
+			var confirm_name = "Are you teaching the " + str + " workshop?";
+			if (confirm(confirm_name)) {
+				Meteor.call('claimWorkshops', event.target.id);
+				//$(".alert").show();
+			}
+			return false;
+		} else {
+			var confirm_name = "Delete this entry?";
+			if (confirm(confirm_name)) {
+				Meteor.call('resetWorkshops', event.target.id);
+			}
+			return false;
+		}
+	},
+
+	"click .reset-workshops": function(event){
+			var d = new Date();
+			var confirm_name = "Are you sure ?";
+			if (confirm(confirm_name)) {
+				Meteor.call('resetWorkshops', 'ALL');
+			}
+			return false;
+	}
 });
 
 Template.cleaning.events({
@@ -521,7 +636,11 @@ Template.cleaning.events({
 			}
 			return false;
 		} else {
-			alert("This lab is already cleaned today!");
+			var confirm_name = "Delete this cleaning entry?";
+			if (confirm(confirm_name)) {
+				Meteor.call('resetCleaning', event.target.id);
+			}
+			return false;
 		}
 	},
 
@@ -529,12 +648,13 @@ Template.cleaning.events({
 			var d = new Date();
 			var confirm_name = "Are you sure ?";
 			if (confirm(confirm_name)) {
-				Meteor.call('resetCleaning');
+				Meteor.call('resetCleaning', 'ALL');
 				//Meteor.call('changeTableCSS', event.target.id);
 			}
 			return false;
 	}
 });
+
 
 Template.body.events({
 
@@ -590,25 +710,40 @@ Template.body.events({
     $('#gin-' + "LNS").show();
   },
 
+  'click #WF'(e) {
+    $('.tab.active').removeClass('active');
+    $("#WF").addClass('active');
+    var ax = $(e.target).html();
+    $('.gin').hide();
+    $('#gin-' + "WF").show();
+  },
+
   // Night Mode
   'click #night'(e) {
     if($('#night').is(":checked")) {
     		$(".navbar").removeClass('navbar-default');
         $(".navbar").addClass('navbar-inverse bg-inverse');
-        $('body').css('background-color', 'black');
+        $('body').css('background-color', '#333');
+        $('body').css('transition', 'background-color 0.25s');
         $('body').css('color', 'white');
-        $('#clean-table table').css('border', '1px solid white');
-        $('#clean-table td').css('border', '1px solid white');
-        $('#clean-table th').css('border', '1px solid white');
+        $('.clean-table table').css('border', '1px solid white');
+        $('.clean-table td').css('border', '1px solid white');
+        $('.clean-table th').css('border', '1px solid white');
+        $('.workshops-table table').css('border', '1px solid white');
+        $('.workshops-table td').css('border', '1px solid white');
+        $('.workshops-table th').css('border', '1px solid white');
         ni = true;
     }else{
         $(".navbar").removeClass('navbar-inverse bg-inverse');
         $(".navbar").addClass('navbar-default');
         $('body').css('background-color', 'white');
         $('body').css('color', 'black');
-				$('#clean-table table').css('border', '1px solid black');
-        $('#clean-table td').css('border', '1px solid black');
-        $('#clean-table th').css('border', '1px solid black');
+				$('.clean-table table').css('border', '1px solid black');
+        $('.clean-table td').css('border', '1px solid black');
+        $('.clean-table th').css('border', '1px solid black');
+        $('.workshops-table table').css('border', '1px solid black');
+        $('.workshops-table td').css('border', '1px solid black');
+        $('.workshops-table th').css('border', '1px solid black');
         ni = false;
     }
   }
