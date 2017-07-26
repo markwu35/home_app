@@ -55,10 +55,10 @@ Template.body.helpers({
 	message: function(){
 		if (Rooms.find({cleanedBy: Meteor.userId()}).count() == 0) {
 			$("#msg").removeClass('alert-success');
-    	$("#msg").addClass('alert-warning');
-			return "Stop being lazy and go clean some rooms!";
-		} else {
-			$("#msg").removeClass('alert-warning');
+    	$("#msg").addClass('alert-info');
+			return "Lets get this beautiful day started!";
+		} else if (Rooms.find({cleanedBy: Meteor.userId()}).count() != 0){
+			$("#msg").removeClass('alert-info');
     	$("#msg").addClass('alert-success');
 			return "Keep up your good work!";
 		}
@@ -103,6 +103,16 @@ Template.clock.helpers({
 });
 
 Template.home.helpers({
+	isAdmin: function(){
+		if (Meteor.user() === null) {
+			return false;
+		}
+		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
+			//console.log(Meteor.user().emails[0].address);
+			return true;
+		}
+		return false;
+	},
 	current_user(){
 		return Meteor.user().emails[0].address;
 	}
@@ -465,6 +475,9 @@ Template.workshops.helpers({
 			return true;
 		}
 		return false;
+	},
+	name_w_s: function (){
+		return this.name.replace(/_/g, " ");
 	}
 });
 
@@ -477,6 +490,13 @@ Template.userList.helpers({
 	userList: function(){
 		return userList.find({}, {sort: {createdAt: -1}});
 	}
+});
+
+Template.home.events({
+  "submit .j-ans": function(event){
+    alert('Submitted!');
+    return false;
+  }
 });
 
 Template.labs.events({
@@ -561,7 +581,7 @@ Template.wireFrame.events({
 Template.workshops.events({
   "submit .add-workshops": function(event){
     var date = event.target.date.value;
-    var name = event.target.name.value;
+    var name = event.target.name.value.replace(/\s/g, '_');
     //var p1 = event.target.p1.value;
     //var p2 = event.target.p2.value;
 
@@ -582,8 +602,8 @@ Template.workshops.events({
 	},
 	"click .ws-open": function(event){
 		if ($("#" + event.target.id ).html() == "OPEN"){
-			var str = event.target.id;
-			str = str.slice(0, -1);
+			var str = event.target.id.slice(0, -1);
+			str = str.replace(/_/g, " ");
 			var confirm_name = "Are you teaching the " + str + " workshop?";
 			if (confirm(confirm_name)) {
 				Meteor.call('claimWorkshops', event.target.id);
@@ -718,6 +738,14 @@ Template.body.events({
     $('#gin-' + "WF").show();
   },
 
+  'click #LI'(e) {
+    $('.tab.active').removeClass('active');
+    $("#LI").addClass('active');
+    var ax = $(e.target).html();
+    $('.gin').hide();
+    $('#gin-' + "LI").show();
+  },
+
   // Night Mode
   'click #night'(e) {
     if($('#night').is(":checked")) {
@@ -774,11 +802,16 @@ Template.login.events({
     Meteor.loginWithPassword(email, password, function(err) {
   		if (err) {
     		Session.set('errorMessage', err.message);
+  		} else {
+  			Session.set('errorMessage', false);
   		}
 		});
   },
   'click .s-register'(event) {
     $('#l-p').hide();
     $('#r-p').show();
-  }
+  },
+	'click .close'(e) {
+    Session.set('errorMessage', false);
+  },
 });
