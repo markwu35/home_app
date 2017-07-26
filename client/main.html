@@ -27,6 +27,7 @@
           <li id="CL" class="tab"><a href="#">Cleaning</a></li>
           <li id="LNS" class="tab"><a href="#">Lab No Shows</a></li>
           <li id="WF" class="tab"><a href="#">Wireframe</a></li>
+          <li id="WU" class="tab"><a href="#">Write Ups</a></li>
           {{/if}}
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -80,6 +81,9 @@
     </div>
     <div class="gin" id="gin-WF" style="display: none;">
       {{> wireFrame}}
+    </div>
+    <div class="gin" id="gin-WU" style="display: none;">
+      {{> writeUps}}
     </div>
   </div>
 </body>
@@ -301,7 +305,7 @@
     </form>
   </div>
   {{/if}}
-  <div class="col-lg-4">
+  <div class="col-sm-4">
     <h4>Current labs:</h4>
     <ul>
       {{#each rooms}}
@@ -309,7 +313,7 @@
       {{/each}}
     </ul>
   </div>
-  <div class="col-lg-4">
+  <div class="col-sm-4">
     <h2>Lab Details:</h2>
     <dl class="row" id="show-dl">
       <dt class="col-sm-6">Lab</dt>
@@ -537,6 +541,25 @@
 
   {{else}}
     {{> notLoggedIn}}
+  {{/if}}
+</template>
+
+<template name="writeUps">
+  {{#if currentUser}}
+  {{#if isAdmin}}
+  <h2>Create Write up:</h2>
+  <p>PUT FIELDS HERE</p>
+  <br>
+  <p>table for all writeups written here</p>
+  {{/if}}
+  <h2>You currently have [X] writeups</h2>
+  <h3>Good writeups:</h3>
+  <h4>table for your good wrtieups here</h4>
+  <br>
+  <h3>Bad writeups:</h3>
+  <h4>table for your bad wrtieups here</h4>
+  {{else}}
+  {{> notLoggedIn}}
   {{/if}}
 </template>
 

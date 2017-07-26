@@ -746,6 +746,14 @@ Template.body.events({
     $('#gin-' + "LI").show();
   },
 
+  'click #WU'(e) {
+    $('.tab.active').removeClass('active');
+    $("#WU").addClass('active');
+    var ax = $(e.target).html();
+    $('.gin').hide();
+    $('#gin-' + "WU").show();
+  },
+
   // Night Mode
   'click #night'(e) {
     if($('#night').is(":checked")) {
