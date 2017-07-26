@@ -751,7 +751,8 @@ Template.body.events({
     if($('#night').is(":checked")) {
     		$(".navbar").removeClass('navbar-default');
         $(".navbar").addClass('navbar-inverse bg-inverse');
-        $('body').css('background-color', '#333');
+        //$('body').css('background', 'linear-gradient(#222222,#333)');
+        $('body').css('background', '#333');	
         $('body').css('transition', 'background-color 0.25s');
         $('body').css('color', 'white');
         $('.clean-table table').css('border', '1px solid white');
@@ -764,7 +765,7 @@ Template.body.events({
     }else{
         $(".navbar").removeClass('navbar-inverse bg-inverse');
         $(".navbar").addClass('navbar-default');
-        $('body').css('background-color', 'white');
+        $('body').css('background', 'white');
         $('body').css('color', 'black');
 				$('.clean-table table').css('border', '1px solid black');
         $('.clean-table td').css('border', '1px solid black');

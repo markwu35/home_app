@@ -1,5 +1,5 @@
 body {
-	background-color: white;
+	background: white;
 	color: black;
   font-family: 'Rubik', sans-serif;
 }
@@ -45,6 +45,7 @@ dt {
   width: 55%;
   margin-left: 15%;
   max-width: 500px;
+  margin-top: 80px;
 }
 
 .center-container {
@@ -226,6 +227,14 @@ table {
 
 dl {
   margin-bottom: 0px;
+}
+
+@media (max-width: 1199px) {
+  .md-container {
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 @media (max-width: 833px) {
