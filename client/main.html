@@ -410,7 +410,7 @@
           <td>{{className}}</td>
           <td>{{recordedBy}}</td>
           <td>{{time}}</td>
-          <td>{{#if isAdmin}}<a href="#" class="delete-labNoShows btn btn-danger">X</a>{{/if}}</td>
+          <td>{{#if currentUser}}<a href="#" class="delete-labNoShows btn btn-danger">X</a>{{/if}}</td>
         </tr>
         
         {{/each}}
@@ -479,7 +479,7 @@
           <td>{{comments}}</td>
           <td>{{recordedBy}}</td>
           <td>{{createdAt}}</td>
-          <td>{{#if isAdmin}}<a href="#" class="delete-wireFrame btn btn-danger">X</a>{{/if}}</td>
+          <td>{{#if currentUser}}<a href="#" class="delete-wireFrame btn btn-danger">X</a>{{/if}}</td>
         </tr>
         
         {{/each}}
