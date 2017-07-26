@@ -21,11 +21,13 @@
           <!-- 
           <li id="RE" class="tab"><a href="#">Reminders</a></li>
           -->
+          {{#if currentUser}}
           <li id="LA" class="tab"><a href="#">Labs</a></li>
           <li id="WS" class="tab"><a href="#">Workshops</a></li>
           <li id="CL" class="tab"><a href="#">Cleaning</a></li>
           <li id="LNS" class="tab"><a href="#">Lab No Shows</a></li>
           <li id="WF" class="tab"><a href="#">Wireframe</a></li>
+          {{/if}}
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li style="margin-top: 13px;">
