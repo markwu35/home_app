@@ -1,5 +1,6 @@
 <head>
-  <title>UCSB Collaborate Home</title>
+  <title>UCSB Collab Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" type="text/css"/>
   <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
 </head>
@@ -11,24 +12,19 @@
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
-          <span class="icon-bar"></span>                        
+          <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="#"><img src="./collab_icon.jpeg" width="40" height="49" class="d-inline-block align-top" alt=""></a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
           <li id="HOME" class="tab active"><a href="#">Home</a></li>
-          <!-- 
-          <li id="RE" class="tab"><a href="#">Reminders</a></li>
-          -->
-          {{#if currentUser}}
           <li id="LA" class="tab"><a href="#">Labs</a></li>
           <li id="WS" class="tab"><a href="#">Workshops</a></li>
           <li id="CL" class="tab"><a href="#">Cleaning</a></li>
           <li id="LNS" class="tab"><a href="#">Lab No Shows</a></li>
           <li id="WF" class="tab"><a href="#">Wireframe</a></li>
           <li id="WU" class="tab"><a href="#">Write Ups</a></li>
-          {{/if}}
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li style="margin-top: 13px;margin-right: 95px;">
@@ -90,7 +86,7 @@
 
 <template name="home">
   {{#if currentUser}}
-  <h1>Welcome, {{current_user}} !</h1>
+  <h2>Welcome, {{current_user}} !</h2>
   {{#if isAdmin}}
   {{> userList}}
   {{/if}}
@@ -486,7 +482,7 @@
       <li>Coursework takes priority over all other uses.</li>
       <li>Practice courtesy. Be mindful of others using the Wireframe space or the digital humanities commons, by using headphones to minimize noise disruption, keeping the space clean, returning things to their original places, shutting equipment down properly, charging controllers, and so on</li>
       <li>Observe “recording in progress” signs for production work</li>
-      <li>Check the library calendar for Wireframe’s availability: <a target="_blank" href="http://www.library.ucsb.edu/sites/default/files/winter_1.pdf">http://www.library.ucsb.edu/sites/default/files/winter_1.pdf</a>.</li>
+      <li>Check the library calendar for Wireframe’s availability <a target="_blank" href="http://www.library.ucsb.edu/sites/default/files/winter_1.pdf">Here</a></li>
       </ul>
       <h2>Procedures</h2>
       <p>To enter Wireframe, you must first sign in at the front desk in the lobby of the Music building. Give your student ID to the worker at the desk, and that staff member will unlock the lab space for your use. Your ID card will be returned when you sign out and verify that you have left all equipment as you found it.</p>
@@ -565,12 +561,7 @@
 
 <template name="notLoggedIn">
   <div id="login-container" class="row">
-    <div class="col-sm-6">
-      <div class="center-container">
-        <img src="./collab_icon.jpeg">
-      </div>
-    </div>
-    <div class="col-sm-6">
+    <div class="col-sm-12">
         {{> login}}
         {{> register}}
     </div>
@@ -580,6 +571,14 @@
 <template name="register">
   <div id="r-p" class="md-container" style="display: none;">
     <h2>Register</h2>
+    <div class="alert-container">
+      {{#if errorMessage}}
+        <div class="alert alert-danger alert-dismissable">
+          <a href="#" class="close" aria-label="close">&times;</a>
+          <strong>{{errorMessage}}</strong>
+        </div>
+      {{/if}}
+    </div>
     <form class="register">
       <p>Email: <input class="form-control" type="email" name="email" placeholder="@umail only!"></p>
       <p>Password: <input class="form-control" type="password" name="password"></p>

@@ -43,9 +43,11 @@ dt {
 
 .md-container {
   width: 55%;
-  margin-left: 15%;
+  margin-left: auto;
+  margin-right: auto;
   max-width: 500px;
   margin-top: 80px;
+  padding: 70px 50px 100px 50px;
 }
 
 #login-container {
@@ -157,6 +159,7 @@ input:checked + .slider:before {
 .clean-table, .workshops-table {
   margin-top: 5px;
   margin-bottom: 10px;
+  overflow-x:scroll;
 }
 
 .clean-table th, .workshops-table th{
@@ -213,7 +216,7 @@ input:checked + .slider:before {
 }
 
 img{
-    max-width:350px;
+    max-width:300px;
 }
 
 a{
@@ -233,14 +236,6 @@ table {
 
 dl {
   margin-bottom: 0px;
-}
-
-@media (max-width: 1199px) {
-  .md-container {
-    margin-top: 0;
-    margin-left: auto;
-    margin-right: auto;
-  }
 }
 
 @media (max-width: 833px) {
@@ -264,5 +259,27 @@ dl {
   }
   .main-container {
     margin-top: 40px;
+  }
+}
+
+@media only screen and (max-width: 725px) {
+  .md-container {
+    width: 100%;
+    margin-top: 5px;
+  }
+}
+
+@media only screen and (max-width: 494px) {
+  dt {
+    text-align: center;
+  }
+  dd {
+    text-align: center;
+  }
+  .main-container {
+    margin-top: 40px;
+  }
+  .md-container {
+    padding: 0;
   }
 }

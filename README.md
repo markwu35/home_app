@@ -9,6 +9,19 @@ Meteor application to the UCSB Collab App.
 * A web app dedicated for the cons at UCSB Collab
 * All-In-One record-keeping application for cleaning records, workshops signup, labs info, lab no show records, and wireFrame entries
 
+## Features
+
+* Desktop/tablet/mobile responsiveness
+* Register/Login system
+* Admin(OpCo) and user(Cons) system
+* Lab Information
+* Ability to add/signup/signoff/delete workshops
+* Ability to record/delete cleaning entries
+* Ability to record/delete lab no shows entries
+* Ability to record/delete wireFrame entries
+* Night Mode
+
+
 ## Future Features
 
 * implement scheduling
@@ -16,12 +29,13 @@ Meteor application to the UCSB Collab App.
 * change emails into name
 * jeopardy backend implementation
 * better msg system
+* Writeup system
+		* writeup signing
 
 ## Bugs
 
 * Jquery doesn't work when you reload, it doesnt update td to class cleaned
 * nightmode then login, and table borders become black
-* register err control
 
 
 

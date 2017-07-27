@@ -51,6 +51,12 @@ Template.login.helpers({
   }
 });
 
+Template.register.helpers({
+  errorMessage: function() {
+    return Session.get('errorMessage');
+  }
+});
+
 Template.body.helpers({
 	message: function(){
 		if (Rooms.find({cleanedBy: Meteor.userId()}).count() == 0) {
@@ -794,12 +800,25 @@ Template.register.events({
     Accounts.createUser({
       email: email,
       password: password
+    }, function(err) {
+    	if (err) {
+    		console.log("register error");
+    		Session.set('errorMessage', err.message);
+  		} else {
+  			console.log("no register error");
+  			Session.set('errorMessage', false);
+  		}
+    	
     });
   },
 
   'click .s-login'(event) {
+  	Session.set('errorMessage', false);
     $('#r-p').hide();
     $('#l-p').show();
+  },
+	'click .close'(e) {
+    Session.set('errorMessage', false);
   }
 });
 
@@ -817,10 +836,11 @@ Template.login.events({
 		});
   },
   'click .s-register'(event) {
+  	Session.set('errorMessage', false);
     $('#l-p').hide();
     $('#r-p').show();
   },
 	'click .close'(e) {
     Session.set('errorMessage', false);
-  },
+  }
 });
