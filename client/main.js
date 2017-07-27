@@ -9,7 +9,7 @@ import { workshops } from '../imports/workshops.js'
 import { wireFrame } from '../imports/wireFrame.js'
 import { writeUps } from '../imports/writeUps.js' 
 
-import { addRooms, deleteRooms, cleanRoom, resetCleaning, addLabNoShows, deleteLabNoShows, addWireFrame, deleteWireFrame, addWorkshops, deleteWorkshops, claimWorkshops, resetWorkshops } from '../imports/methods.js'
+import { addRooms, deleteRooms, cleanRoom, resetCleaning, addLabNoShows, deleteLabNoShows, addWireFrame, deleteWireFrame, addWorkshops, deleteWorkshops, claimWorkshops, resetWorkshops, addWriteUps, deleteWriteUps, signWriteUps } from '../imports/methods.js'
 
 import './main.html';
 
@@ -143,18 +143,41 @@ Template.writeUps.helpers({
 		return false;
 	},
 	numGoodWriteUps: function (){
-		return WriteUps.find({type: 'good'}).count();
+		return WriteUps.find({type: 'good',assignedTo: Meteor.user().emails[0].address}).count();
 	},
 	numBadWriteUps: function (){
-		return WriteUps.find({type: 'bad'}).count();
+		return WriteUps.find({type: 'bad',assignedTo: Meteor.user().emails[0].address}).count();
 	},
 	numMissedShifts: function (){
-		return WriteUps.find({type: 'shift'}).count();
-	}
+		return WriteUps.find({type: 'shift',assignedTo: Meteor.user().emails[0].address}).count();
+	},
+  writeUps: function (){
+    return WriteUps.find({}, {sort: {createdAt: -1}});
+  },
+  goodWriteUps: function (){
+    return WriteUps.find({type: 'good',assignedTo: Meteor.user().emails[0].address}, {sort: {createdAt: -1}});
+  },
+  badWriteUps: function (){
+    return WriteUps.find({type: 'bad',assignedTo: Meteor.user().emails[0].address}, {sort: {createdAt: -1}});
+  },
+  missedShifts: function (){
+    return WriteUps.find({type: 'shift',assignedTo: Meteor.user().emails[0].address}, {sort: {createdAt: -1}});
+  },
+  unSigned: function (){
+    if (this.signed === false) {
+      return true;
+    }
+    return false;
+  },
+  period: function (){
+    if (this.period == '') {
+      return '-';
+    }
+    return this.period;
+  }
 });
 
 Template.cleaning.helpers({
-
 	isAdmin: function(){
 		if (Meteor.user() === null) {
 			return false;
@@ -663,7 +686,43 @@ Template.writeUps.events({
 		$('#writeUpType').change(function() {
 		   $('#shift').toggle($(this).val() == 'shift');
 		}).change();
-	}
+	},
+  "submit .add-writeUps": function(event){
+    var email = event.target.email.value;
+    var type = event.target.type.value;
+    var reason = event.target.reason.value;
+    var excused = event.target.excused.value;
+    var period = event.target.period.value;
+    var date = event.target.date.value;
+
+    var entry = [email,type,reason,excused,period,date];
+    Meteor.call('addWriteUps', entry);
+    event.target.email.value = '';
+    event.target.type.value = '';
+    event.target.reason.value = '';
+    event.target.excused.value = '';
+    event.target.period.value = '';
+    event.target.date.value = '';
+    return false;
+  },
+  "click .delete-writeUps": function(event){
+    var confirm_name = "Delete this writeup?";
+    if (confirm(confirm_name)) {
+      Meteor.call('deleteWriteUps', this._id);
+    }
+    return false;
+  },
+  "click .sign-writeUps": function(event){
+    event.preventDefault();
+    var confirm_name = "Have you read and agreed with this writeup?";
+    if (confirm(confirm_name)) {
+      Meteor.call('signWriteUps', this._id);
+      $(event.target).parent().css()({
+        'background-color' : '#dff0d8'
+      });
+    }
+    return false;
+  }
 });
 
 Template.cleaning.events({

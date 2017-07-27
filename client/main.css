@@ -160,6 +160,7 @@ input:checked + .slider:before {
   margin-top: 5px;
   margin-bottom: 10px;
   overflow-x:scroll;
+  margin-right: -10px;
 }
 
 .clean-table th, .workshops-table th{
@@ -213,6 +214,13 @@ input:checked + .slider:before {
 .clean-table tr:nth-child(even),.workshops-table tr:nth-child(even) {
   background-color: #f2f2f2;
   color: black;
+}
+
+.clean-table tr:nth-child(even):hover,.workshops-table tr:nth-child(even):hover {
+  background-color: #e0e0e0;
+  color: black;
+  -webkit-transition: background-color 0.25s; /* Safari */
+  transition: background-color 0.25s;
 }
 
 img{

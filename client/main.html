@@ -546,9 +546,13 @@
   <h2>Create Writeup:</h2>
   <div class="row">
     <form class="add-writeUps">
-      <div class="col-md-3">
+      <div class="col-md-2">
         <label>Assigned To</label>
         <input type="text" class="form-control" name="email" placeholder="Email Address" />
+      </div>
+      <div class="col-md-2">
+        <label>Date</label>
+        <input type="text" class="form-control" name="date" placeholder="MM/DD/YY" />
       </div>
       <div class="col-md-2">
         <label>Type</label>
@@ -559,21 +563,20 @@
           <option value="shift">Late/Missed Shift</option>
         </select>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <label>Reason</label>
         <input type="text" class="form-control" name="reason" placeholder="Reason" />
       </div>
       <div class="col-md-2">
         <div id="bad" style="display:none;">
           <div class="checkbox">
-            <label><input type="checkbox" value="excused">Excused?</label>
+            <label><input type="checkbox" name="excused" value="no">Excused?</label>
           </div> 
         </div>
         <div id="shift" style="display:none;">
           <label>How Long?</label>
           <input type="text" class="form-control" name="period" placeholder="How long shift missed" />
         </div>
-        
       </div>
       <div class="col-md-1">
         <button type="submit" class="btn btn-primary" value="Submit" style="
@@ -600,12 +603,11 @@
           <td>{{assignedTo}}</td>
           <td>{{type}}</td>
           <td>{{assignedBy}}</td>
-          <td>{{Date}}</td>
+          <td>{{date}}</td>
           <td>{{recordedAt}}</td>
           <td>{{reason}}</td>
           <td>{{excused}}</td>
           <td>{{period}}</td>
-          <td></td>
           {{#if isAdmin}}<td><a href="#" class="delete-writeUps btn btn-danger">X</a></td>{{/if}}
         </tr>
       {{/each}}
@@ -635,11 +637,10 @@
           {{#each goodWriteUps}}
             <tr>
               <td>{{assignedBy}}</td>
-              <td>{{Date}}</td>
+              <td>{{date}}</td>
               <td>{{recordedAt}}</td>
               <td>{{reason}}</td>
-              <td></td>
-              {{#if isAdmin}}<td><a href="#" class="delete-writeUps btn btn-danger">X</a></td>{{/if}}
+              {{#if unSigned}}<td><a href="#" class="sign-writeUps btn btn-info">Sign</a></td>{{/if}}
             </tr>
           {{/each}}
         </table>
@@ -659,12 +660,11 @@
           {{#each badWriteUps}}
             <tr>
               <td>{{assignedBy}}</td>
-              <td>{{Date}}</td>
+              <td>{{date}}</td>
               <td>{{recordedAt}}</td>
               <td>{{reason}}</td>
               <td>{{excused}}</td>
-              <td></td>
-              {{#if isAdmin}}<td><a href="#" class="delete-writeUps btn btn-danger">X</a></td>{{/if}}
+              {{#if unSigned}}<td><a href="#" class="sign-writeUps btn btn-info">Sign</a></td>{{/if}}
             </tr>
           {{/each}}
         </table>
@@ -679,17 +679,14 @@
             <th>Date</th>
             <th>Recorded At</th>
             <th>How Long</th>
-            <th>Excused?</th>
           </tr>
-          {{#each badWriteUps}}
+          {{#each missedShifts}}
             <tr>
               <td>{{assignedBy}}</td>
-              <td>{{Date}}</td>
+              <td>{{date}}</td>
               <td>{{recordedAt}}</td>
               <td>{{period}}</td>
-              <td>{{excused}}</td>
-              <td></td>
-              {{#if isAdmin}}<td><a href="#" class="delete-writeUps btn btn-danger">X</a></td>{{/if}}
+              {{#if unSigned}}<td><a href="#" class="sign-writeUps btn btn-info">Sign</a></td>{{/if}}
             </tr>
           {{/each}}
         </table>

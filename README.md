@@ -32,12 +32,14 @@ Meteor application to the UCSB Collab App.
 * Writeup system
 		* writeup signing
 * forms on modals to minimize use of space
+* enhance write up signing UI
 
 ## Bugs
 
 * Jquery doesn't work when you reload, it doesnt update td to class cleaned
 * nightmode then login, and table borders become black
 * Limit who can access writeups in server main.js and client main.js helpers
+* checkbox for writeup excused? value
 
 
 

@@ -1,5 +1,16 @@
 var blankName;
 var blankEntry;
+var getTime;
+var getDate;
+var ifLoggedIn;
+
+(function(){
+    ifLoggedIn=function(){
+			if(!Meteor.userId()){
+				throw new Meteor.Error('No Access!');
+			}
+    };
+}());
 
 (function(){
     blankName=function(name){
@@ -21,11 +32,40 @@ var blankEntry;
     };
 }());
 
+(function(){
+    getDate=function(){
+			var d = new Date();
+			return d.getMonth()+1 + '/' + d.getDate() + '/' + d.getFullYear();
+    };
+}());
+
+(function(){
+    getTime=function(){
+			var d = new Date();
+			var h = d.getHours();
+			if (h<10){
+				var hr = '0' + h;
+			} else {
+				var hr = h;
+			}
+			if (h <12){
+				var APM = "AM";
+			} else {
+				var APM = "PM";
+			}
+			var m = d.getMinutes();
+			if (m < 10){
+				var mi = '0' + m;
+			} else {
+				var mi = m;
+			}
+			return hr + ":" + mi + " " + APM;
+    };
+}());
+
 Meteor.methods({
 	addReminders: function(name){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
+		ifLoggedIn();
 		blankName(name);
 		Reminders.insert({
 			name: name,
@@ -34,16 +74,12 @@ Meteor.methods({
 		});
 	},
 	deleteReminders: function(taskId){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
+		ifLoggedIn();
 		Reminders.remove(taskId);
 	},
 
 	addRooms: function(roomId){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
+		ifLoggedIn();
 		blankName(roomId);
 		Rooms.insert({
 			name: roomId,
@@ -56,38 +92,16 @@ Meteor.methods({
 		console.log("inserted room");
 	},
 	cleanRoom: function(roomId){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
-		var d = new Date();
-		var h = d.getHours();
-		if (h<10){
-			var hr = '0' + h;
-		} else {
-			var hr = h;
-		}
-		if (h <12){
-			var APM = "AM";
-		} else {
-			var APM = "PM";
-		}
-		var m = d.getMinutes();
-		if (m < 10){
-			var mi = '0' + m;
-		} else {
-			var mi = m;
-		}
-		var time = hr + ":" + mi + " " + APM;
-		Rooms.update({name: roomId}, { $set: { cleaned: true, cleanedAt: time, cleanedBy: Meteor.userId()}}, false, true);
+		ifLoggedIn();
+		Rooms.update({name: roomId}, { $set: { cleaned: true, cleanedAt: getTime(), cleanedBy: Meteor.userId()}}, false, true);
 	},
 	deleteRooms: function(roomId){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
+		ifLoggedIn();
 		Rooms.remove(roomId);
 	},
 
 	resetCleaning: function(labId){
+		ifLoggedIn();
 		if (labId == 'ALL'){
 			var rooms = Rooms.find({cleaned: true}).fetch();
 	 		for (i in rooms) {
@@ -100,29 +114,9 @@ Meteor.methods({
 	},
 
 	addLabNoShows: function(entry){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
+		ifLoggedIn();
 		blankEntry(entry);
 		var d = new Date();
-		var h = d.getHours();
-		if (h<10){
-			var hr = '0' + h;
-		} else {
-			var hr = h;
-		}
-		if (h <12){
-			var APM = "AM";
-		} else {
-			var APM = "PM";
-		}
-		var m = d.getMinutes();
-		if (m < 10){
-			var mi = '0' + m;
-		} else {
-			var mi = m;
-		}
-		var time = hr + ":" + mi + " " + APM;
 		var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 		LabNoShows.insert({
 			week: 'STUB',
@@ -133,45 +127,21 @@ Meteor.methods({
 			className: entry[2],
 			professorName: entry[3],
 			recordedBy: Meteor.user().emails[0].address,
-			time: time
+			time: getTime()
 		});
 		console.log("inserted room");
 	},
 	deleteLabNoShows: function(labNoShowsId){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
+		ifLoggedIn();
 		LabNoShows.remove(labNoShowsId);
 	},
 
 	addWireFrame: function(entry){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
+		ifLoggedIn();
 		blankEntry(entry);
-		var d = new Date();
-		var h = d.getHours();
-		if (h<10){
-			var hr = '0' + h;
-		} else {
-			var hr = h;
-		}
-		if (h <12){
-			var APM = "AM";
-		} else {
-			var APM = "PM";
-		}
-		var m = d.getMinutes();
-		if (m < 10){
-			var mi = '0' + m;
-		} else {
-			var mi = m;
-		}
-		var time = hr + ":" + mi + " " + APM;
-		var date = d.getMonth()+1 + '/' + d.getDate() + '/' + d.getFullYear();
 		WireFrame.insert({
 			perm: entry[0],
-			recordedAt: date + " " + time,
+			recordedAt: getDate() + " " + getTime(),
 			recordedBy: Meteor.user().emails[0].address,
 			checked: entry[1],
 			comments: entry[2]
@@ -179,16 +149,12 @@ Meteor.methods({
 		console.log("inserted room");
 	},
 	deleteWireFrame: function(wireFrameId){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
+		ifLoggedIn();
 		WireFrame.remove(wireFrameId);
 	},
 
 	addWorkshops: function(entry){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
+		ifLoggedIn();
 		blankEntry(entry);
 		Workshops.insert({
 			date: entry[0],
@@ -196,18 +162,13 @@ Meteor.methods({
 			p1: "OPEN",
 			p2: "OPEN"
 		});
-		console.log("inserted room");
 	},
 	deleteWorkshops: function(workshopsId){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
+		ifLoggedIn();
 		Workshops.remove(workshopsId);
 	},
 	claimWorkshops: function(workshopId){
-		if(!Meteor.userId()){
-			throw new Meteor.Error('No Access!');
-		}
+		ifLoggedIn();
 		var name = workshopId.slice(0, -1);
 		var pos = workshopId.charAt(workshopId.length-1);
 		if (pos == '1'){
@@ -217,6 +178,7 @@ Meteor.methods({
 		}
 	},
 	resetWorkshops: function(workshopId){
+		ifLoggedIn();
 		if (workshopId == 'ALL'){
 			var workshops = Workshops.find().fetch();
 	 		for (i in workshops) {
@@ -232,5 +194,33 @@ Meteor.methods({
 				Workshops.update({name: name}, { $set: { p2: "OPEN"}}, false, true);
 			}
 		}
+	},
+	addWriteUps: function(entry){
+		ifLoggedIn();
+		var ini = [entry[0],entry[1],entry[2],entry[5]];
+		blankEntry(ini);
+		if (entry[1] == 'shift' && entry[4] == '') {
+  		alert('Item cannot be blank!');
+      throw new Meteor.Error('Item cannot be blank!');
+		}
+		WriteUps.insert({
+			assignedTo: entry[0],
+			type: entry[1],
+			reason: entry[2],
+			excused: entry[3],
+			period: entry[4],
+			assignedBy: Meteor.user().emails[0].address,
+			date: entry[5],
+			recordedAt: getDate() + " " + getTime(),
+			signed: false
+		});
+	},
+	deleteWriteUps: function(writeUpId){
+		ifLoggedIn();
+		WriteUps.remove(writeUpId);
+	},
+	signWriteUps: function(writeUpId){
+		ifLoggedIn();
+		WriteUps.update({_id: writeUpId}, { $set: { signed: true}}, false, true);
 	}
 })
