@@ -7,6 +7,7 @@ import { rooms } from '../imports/rooms.js'
 import { labNoShows } from '../imports/labNoShows.js'
 import { workshops } from '../imports/workshops.js'
 import { wireFrame } from '../imports/wireFrame.js'
+import { writeUps } from '../imports/writeUps.js' 
 
 import { addRooms, deleteRooms, cleanRoom, resetCleaning, addLabNoShows, deleteLabNoShows, addWireFrame, deleteWireFrame, addWorkshops, deleteWorkshops, claimWorkshops, resetWorkshops } from '../imports/methods.js'
 
@@ -17,6 +18,7 @@ Meteor.subscribe('labNoShows');
 Meteor.subscribe("userList");
 Meteor.subscribe("workshops");
 Meteor.subscribe("wireFrame");
+Meteor.subscribe("writeUps");
 
 var ni = false;
 
@@ -33,10 +35,6 @@ Template.clock.onCreated(function(){
     instance.min.set( now.getMinutes() );
     instance.sec.set( now.getSeconds() );
   }, 1000);
-});
-
-Template.body.onCreated(function(){
-	//$("#msg").addClass("alert-warning");
 });
 
 Template.cleaning.onRendered(function(){
@@ -131,6 +129,28 @@ Template.userList.helpers({
   email(){
     return this.emails[0].address;
   }
+});
+
+Template.writeUps.helpers({
+	isAdmin: function(){
+		if (Meteor.user() === null) {
+			return false;
+		}
+		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
+			//console.log(Meteor.user().emails[0].address);
+			return true;
+		}
+		return false;
+	},
+	numGoodWriteUps: function (){
+		return WriteUps.find({type: 'good'}).count();
+	},
+	numBadWriteUps: function (){
+		return WriteUps.find({type: 'bad'}).count();
+	},
+	numMissedShifts: function (){
+		return WriteUps.find({type: 'shift'}).count();
+	}
 });
 
 Template.cleaning.helpers({
@@ -632,6 +652,17 @@ Template.workshops.events({
 				Meteor.call('resetWorkshops', 'ALL');
 			}
 			return false;
+	}
+});
+
+Template.writeUps.events({
+	'click #writeUpType': function(event){
+		$('#writeUpType').change(function() {
+			$('#bad').toggle($(this).val() == 'bad');
+		}).change();
+		$('#writeUpType').change(function() {
+		   $('#shift').toggle($(this).val() == 'shift');
+		}).change();
 	}
 });
 

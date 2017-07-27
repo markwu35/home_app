@@ -288,7 +288,7 @@
 <template name="labs">
   {{#if currentUser}}
   {{#if isAdmin}}
-  <div class="col-lg-4">
+  <div class="col-lg-2">
     <h3>Add labs:</h3>
     <form class="add-rooms">
       <div class="input-group">
@@ -301,7 +301,7 @@
     </form>
   </div>
   {{/if}}
-  <div class="col-sm-4">
+  <div class="col-xs-4">
     <h4>Current labs:</h4>
     <ul>
       {{#each rooms}}
@@ -309,20 +309,20 @@
       {{/each}}
     </ul>
   </div>
-  <div class="col-sm-4">
+  <div class="col-xs-6">
     <h2>Lab Details:</h2>
     <dl class="row" id="show-dl">
       <dt class="col-sm-6">Lab</dt>
       <dd class="lab-name col-sm-6">-</dd>
       <dt class="col-sm-6">Help Desk Availability</dt>
       <dd class="help-desk col-sm-6">-</dd>
-      <dt class="col-sm-6">Number of Print Spots</dt>
+      <dt class="col-sm-6"># of Print Spots</dt>
       <dd class="print-spot col-sm-6">-</dd>
-      <dt class="col-sm-6">Number of Computers</dt>
+      <dt class="col-sm-6"># of Computers</dt>
       <dd class="computers col-sm-6">-</dd>
 
     </dl>
-    <img class='lab-pic' src="./print_default.jpg">
+    <div class="centered-img"><img class='lab-pic' src="./print_default.jpg"></div>
   </div>
   {{else}}
   {{> notLoggedIn}}
@@ -543,17 +543,159 @@
 <template name="writeUps">
   {{#if currentUser}}
   {{#if isAdmin}}
-  <h2>Create Write up:</h2>
-  <p>PUT FIELDS HERE</p>
+  <h2>Create Writeup:</h2>
+  <div class="row">
+    <form class="add-writeUps">
+      <div class="col-md-3">
+        <label>Assigned To</label>
+        <input type="text" class="form-control" name="email" placeholder="Email Address" />
+      </div>
+      <div class="col-md-2">
+        <label>Type</label>
+        <select class="form-control" name="type" id="writeUpType">
+          <option value="">Select One</option>
+          <option value="good">Good</option>
+          <option value="bad">Bad</option>
+          <option value="shift">Late/Missed Shift</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label>Reason</label>
+        <input type="text" class="form-control" name="reason" placeholder="Reason" />
+      </div>
+      <div class="col-md-2">
+        <div id="bad" style="display:none;">
+          <div class="checkbox">
+            <label><input type="checkbox" value="excused">Excused?</label>
+          </div> 
+        </div>
+        <div id="shift" style="display:none;">
+          <label>How Long?</label>
+          <input type="text" class="form-control" name="period" placeholder="How long shift missed" />
+        </div>
+        
+      </div>
+      <div class="col-md-1">
+        <button type="submit" class="btn btn-primary" value="Submit" style="
+  margin-top: 25px;"> Submit</button>
+      </div>
+    </form>
+  </div>
   <br>
-  <p>table for all writeups written here</p>
+  <h3>All Writeups</h3>
+  <div class="clean-table row">
+    <table>
+      <tr>
+        <th>Assigned To</th>
+        <th>Type</th>
+        <th>Assigned By</th>
+        <th>Date</th>
+        <th>Recorded At</th>
+        <th>Reason</th>
+        <th>Excused?</th>
+        <th>Period</th>
+      </tr>
+      {{#each writeUps}}
+        <tr>
+          <td>{{assignedTo}}</td>
+          <td>{{type}}</td>
+          <td>{{assignedBy}}</td>
+          <td>{{Date}}</td>
+          <td>{{recordedAt}}</td>
+          <td>{{reason}}</td>
+          <td>{{excused}}</td>
+          <td>{{period}}</td>
+          <td></td>
+          {{#if isAdmin}}<td><a href="#" class="delete-writeUps btn btn-danger">X</a></td>{{/if}}
+        </tr>
+      {{/each}}
+    </table>
+  </div>
   {{/if}}
-  <h2>You currently have [X] writeups</h2>
-  <h3>Good writeups:</h3>
-  <h4>table for your good wrtieups here</h4>
-  <br>
-  <h3>Bad writeups:</h3>
-  <h4>table for your bad wrtieups here</h4>
+  <h3>Your Writeups</h3>
+  <dl class="row" id="show-dl">  
+    <dt class="col-sm-6"># of Good Writeups</dt>
+    <dd class="col-sm-6">{{numGoodWriteUps}}</dd>
+    <dt class="col-sm-6"># of Bad Writeups</dt>
+    <dd class="col-sm-6">{{numBadWriteUps}}</dd>
+    <dt class="col-sm-6"># of Late/Missed Shifts</dt>
+    <dd class="col-sm-6">{{numMissedShifts}}</dd>
+  </dl>
+  <div class="row">
+    <div class="col-lg-4">
+      <h3>Good Writeups</h3>
+      <div class="clean-table row">
+        <table>
+          <tr>
+            <th>Assigned By</th>
+            <th>Date</th>
+            <th>Recorded At</th>
+            <th>Reason</th>
+          </tr>
+          {{#each goodWriteUps}}
+            <tr>
+              <td>{{assignedBy}}</td>
+              <td>{{Date}}</td>
+              <td>{{recordedAt}}</td>
+              <td>{{reason}}</td>
+              <td></td>
+              {{#if isAdmin}}<td><a href="#" class="delete-writeUps btn btn-danger">X</a></td>{{/if}}
+            </tr>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <h3>Bad Writeups</h3>
+      <div class="clean-table row">
+        <table>
+          <tr>
+            <th>Assigned By</th>
+            <th>Date</th>
+            <th>Recorded At</th>
+            <th>Reason</th>
+            <th>Excused?</th>
+          </tr>
+          {{#each badWriteUps}}
+            <tr>
+              <td>{{assignedBy}}</td>
+              <td>{{Date}}</td>
+              <td>{{recordedAt}}</td>
+              <td>{{reason}}</td>
+              <td>{{excused}}</td>
+              <td></td>
+              {{#if isAdmin}}<td><a href="#" class="delete-writeUps btn btn-danger">X</a></td>{{/if}}
+            </tr>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <h3>Late/Missed Shifts</h3>
+      <div class="clean-table row">
+        <table>
+          <tr>
+            <th>Assigned By</th>
+            <th>Date</th>
+            <th>Recorded At</th>
+            <th>How Long</th>
+            <th>Excused?</th>
+          </tr>
+          {{#each badWriteUps}}
+            <tr>
+              <td>{{assignedBy}}</td>
+              <td>{{Date}}</td>
+              <td>{{recordedAt}}</td>
+              <td>{{period}}</td>
+              <td>{{excused}}</td>
+              <td></td>
+              {{#if isAdmin}}<td><a href="#" class="delete-writeUps btn btn-danger">X</a></td>{{/if}}
+            </tr>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+  </div>
   {{else}}
   {{> notLoggedIn}}
   {{/if}}
