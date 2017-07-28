@@ -989,15 +989,12 @@ Template.register.events({
       password: password
     }, function(err) {
     	if (err) {
-    		console.log("register error");
     		Session.set('errorMessage', err.message);
   		} else {
-  			console.log("no register error");
   			Session.set('errorMessage', false);
+  			Session.set('s_message', "Welcome, " + email + " !");
   		}
-    	
     });
-  	Session.set('s_message', "Welcome, " + email + " !");
   },
 
   'click .s-login'(event) {
@@ -1020,9 +1017,9 @@ Template.login.events({
     		Session.set('errorMessage', err.message);
   		} else {
   			Session.set('errorMessage', false);
+  			Session.set('s_message', "Welcome back, " + email + " !");
   		}
 		});
-		Session.set('s_message', "Welcome back, " + email + " !");
   },
   'click .s-register'(event) {
   	Session.set('errorMessage', false);

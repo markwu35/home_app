@@ -254,15 +254,37 @@ dl {
   color: black;
 }
 
+.msg-row {
+  padding-top: 15px;
+  position: fixed;
+  right: 5px;
+  z-index: 2;
+  top: 50px;
+  
+}
+
+@media (max-width: 1028px) {
+  .main-container {
+    margin-top: 84px;
+  }
+  .msg-row {
+    top: 100px;
+  }
+}
+
 @media (max-width: 833px) {
   .main-container {
     margin-top: 84px;
   }
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .navbar-right {
     margin-right: 0px;
+  }
+  .msg-row {
+    top: 50px;
+    width: 75%;
   }
 }
 
