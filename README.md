@@ -11,26 +11,34 @@ Meteor application to the UCSB Collab App.
 
 ## Features
 
-* Desktop/tablet/mobile responsiveness
 * Register/Login system
-* Admin(OpCo) and user(Cons) system
-* Lab Information
-* Ability to add/signup/signoff/delete workshops
-* Ability to record/delete cleaning entries
-* Ability to record/delete lab no shows entries
-* Ability to record/delete wireFrame entries
+* Admin(OpCo) and User(Cons) System
+* Lab Wiki
+	* Add/Delete labs (OpCos Only)
+* Quarterly Workshops
+	* Add/Delete workshops (OpCos Only)
+	* Signup/Un-Signup
+		* No editing access to other users' signup record
+* Cleaning Record
+	* Clean/Unclean labs
+		* No editing access to other users' record
+* Lab No-shows Record
+	* Add/Delete lab no-shows record
+* Wireframe Record
+	* Add/Delete Wireframe record
+* Writeup System
+	* 3 Types of writeups: Good, Bad, and Late/Missed Shift
+	* Add/Delete writeups (OpCos Only)
+	* Sign writeups
 * Night Mode
-
+* Desktop/Tablet/Mobile Responsiveness
 
 ## Future Features
 
 * implement scheduling
-* reset automatically overnight
+* cleaning reset automatically overnight
 * change emails into name
 * jeopardy backend implementation
-* better msg system
-* Writeup system
-		* writeup signing
 * forms on modals to minimize use of space
 * enhance write up signing UI
 
@@ -39,7 +47,6 @@ Meteor application to the UCSB Collab App.
 * Jquery doesn't work when you reload, it doesnt update td to class cleaned
 * nightmode then login, and table borders become black
 * Limit who can access writeups in server main.js and client main.js helpers
-* checkbox for writeup excused? value
-
-
-
+* add reset workshop button
+* dont rely on html to determine if sign or delete
+* dynamic template.body.events clicking implementation

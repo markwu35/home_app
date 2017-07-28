@@ -201,10 +201,6 @@ input:checked + .slider:before {
   background-color: #999;
 }
 
-.cleaned {
-  background-color: #dff0d8;
-  color: black;
-}
 .cleaned:hover {
   background-color: #f0ad4e;
   -webkit-transition: background-color 0.25s; /* Safari */
@@ -252,6 +248,12 @@ dl {
 .checkbox {
   margin-top: 30px;
 }
+
+.cleaned {
+  background-color: #dff0d8;
+  color: black;
+}
+
 @media (max-width: 833px) {
   .main-container {
     margin-top: 84px;

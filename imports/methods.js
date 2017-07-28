@@ -15,7 +15,6 @@ var ifLoggedIn;
 (function(){
     blankName=function(name){
     	if(name==''){
-    		alert('Item cannot be blank!');
         throw new Meteor.Error('Item cannot be blank!');
     	}
     };
@@ -25,7 +24,6 @@ var ifLoggedIn;
     blankEntry=function(entry){
     	for (i=0;i< entry.length;i++){
     		if (entry[i]==''){
-    			alert('Item cannot be blank!');
         	throw new Meteor.Error('Item cannot be blank!');
     		}
     	}
@@ -89,7 +87,6 @@ Meteor.methods({
 			cleanedAt: '',
 			cleanedBy: ''
 		});
-		console.log("inserted room");
 	},
 	cleanRoom: function(roomId){
 		ifLoggedIn();
@@ -109,7 +106,11 @@ Meteor.methods({
 				Rooms.update({name: t}, { $set: { cleaned: false, cleanedAt: '', cleanedBy: ''}}, false, true);
 			}
 		} else {
-			Rooms.update({name: labId}, { $set: { cleaned: false, cleanedAt: '', cleanedBy: ''}}, false, true);
+			if (Meteor.userId() != Rooms.findOne({name: labId}).cleanedBy) {
+				throw new Meteor.Error("You can't delete someone else's cleaning record!");
+			} else {
+				Rooms.update({name: labId}, { $set: { cleaned: false, cleanedAt: '', cleanedBy: ''}}, false, true);
+			}
 		}
 	},
 
@@ -129,7 +130,6 @@ Meteor.methods({
 			recordedBy: Meteor.user().emails[0].address,
 			time: getTime()
 		});
-		console.log("inserted room");
 	},
 	deleteLabNoShows: function(labNoShowsId){
 		ifLoggedIn();
@@ -146,7 +146,6 @@ Meteor.methods({
 			checked: entry[1],
 			comments: entry[2]
 		});
-		console.log("inserted room");
 	},
 	deleteWireFrame: function(wireFrameId){
 		ifLoggedIn();
@@ -189,9 +188,17 @@ Meteor.methods({
 			var name = workshopId.slice(0, -1);
 			var pos = workshopId.charAt(workshopId.length-1);
 			if (pos == '1') {
-				Workshops.update({name: name}, { $set: { p1: "OPEN"}}, false, true);
+				if (Meteor.user().emails[0].address != Workshops.findOne({name: name}).p1) {
+					throw new Meteor.Error("You can't delete someone else's workshop signup!");
+				}else {
+					Workshops.update({name: name}, { $set: { p1: "OPEN"}}, false, true);
+				}
 			} else {
-				Workshops.update({name: name}, { $set: { p2: "OPEN"}}, false, true);
+				if (Meteor.user().emails[0].address != Workshops.findOne({name: name}).p2){
+					throw new Meteor.Error("You can't delete someone else's workshop signup!");
+				}else {
+					Workshops.update({name: name}, { $set: { p2: "OPEN"}}, false, true);
+				}
 			}
 		}
 	},
@@ -199,9 +206,14 @@ Meteor.methods({
 		ifLoggedIn();
 		var ini = [entry[0],entry[1],entry[2],entry[5]];
 		blankEntry(ini);
+		if (Meteor.users.find({ "emails.address" : entry[0] }).count() == '0'){
+			throw new Meteor.Error("Can't find this user!");
+		}
 		if (entry[1] == 'shift' && entry[4] == '') {
-  		alert('Item cannot be blank!');
-      throw new Meteor.Error('Item cannot be blank!');
+      throw new Meteor.Error('Period cannot be blank!');
+		}
+		if (entry[1] == 'bad' && entry[3] == '') {
+      throw new Meteor.Error('Excused? cannot be blank!');
 		}
 		WriteUps.insert({
 			assignedTo: entry[0],

@@ -1,15 +1,15 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { Session } from 'meteor/session'
-import '../imports/accounts-config.js'
+import { Session } from 'meteor/session';
+import '../imports/accounts-config.js';
 
-import { rooms } from '../imports/rooms.js'
-import { labNoShows } from '../imports/labNoShows.js'
-import { workshops } from '../imports/workshops.js'
-import { wireFrame } from '../imports/wireFrame.js'
-import { writeUps } from '../imports/writeUps.js' 
+import { rooms } from '../imports/rooms.js';
+import { labNoShows } from '../imports/labNoShows.js';
+import { workshops } from '../imports/workshops.js';
+import { wireFrame } from '../imports/wireFrame.js';
+import { writeUps } from '../imports/writeUps.js';
 
-import { addRooms, deleteRooms, cleanRoom, resetCleaning, addLabNoShows, deleteLabNoShows, addWireFrame, deleteWireFrame, addWorkshops, deleteWorkshops, claimWorkshops, resetWorkshops, addWriteUps, deleteWriteUps, signWriteUps } from '../imports/methods.js'
+import { addRooms, deleteRooms, cleanRoom, resetCleaning, addLabNoShows, deleteLabNoShows, addWireFrame, deleteWireFrame, addWorkshops, deleteWorkshops, claimWorkshops, resetWorkshops, addWriteUps, deleteWriteUps, signWriteUps } from '../imports/methods.js';
 
 import './main.html';
 
@@ -43,6 +43,11 @@ Template.cleaning.onRendered(function(){
 	}
 });
 
+Template.body.onRendered(function(){
+	Session.set("s_message", false);
+	Session.set('d_message', false);
+});
+
 Template.login.helpers({
   errorMessage: function() {
     return Session.get('errorMessage');
@@ -56,20 +61,14 @@ Template.register.helpers({
 });
 
 Template.body.helpers({
-	message: function(){
-		if (Rooms.find({cleanedBy: Meteor.userId()}).count() == 0) {
-			$("#msg").removeClass('alert-success');
-    	$("#msg").addClass('alert-info');
-			return "Lets get this beautiful day started!";
-		} else if (Rooms.find({cleanedBy: Meteor.userId()}).count() != 0){
-			$("#msg").removeClass('alert-info');
-    	$("#msg").addClass('alert-success');
-			return "Keep up your good work!";
-		}
+	s_message: function(){
+		return Session.get('s_message');
 	},
-
   showRegister() {
     return Session.get('showRegister');
+  },
+  d_message: function(){
+  	return Session.get('d_message');
   }
 });
 
@@ -112,7 +111,6 @@ Template.home.helpers({
 			return false;
 		}
 		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
-			//console.log(Meteor.user().emails[0].address);
 			return true;
 		}
 		return false;
@@ -137,7 +135,6 @@ Template.writeUps.helpers({
 			return false;
 		}
 		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
-			//console.log(Meteor.user().emails[0].address);
 			return true;
 		}
 		return false;
@@ -174,6 +171,23 @@ Template.writeUps.helpers({
       return '-';
     }
     return this.period;
+  },
+  excused: function (){
+  	if (this.excused == '') {
+  		return 'no';
+  	}
+  	return this.excused;
+  },
+  type: function (){
+  	if (this.type == 'bad') {
+  		return 'Bad';
+  	} else if (this.type == 'good'){
+  		return 'Good';
+  	} else if (this.type == 'shift'){
+  		return 'Late/Missed Shift';
+  	} else {
+  		return this.type;
+  	}
   }
 });
 
@@ -192,15 +206,15 @@ Template.cleaning.helpers({
 		var d = new Date();
 		var today = d.getDay();
 		if (today == 1){
-			return "surfaces";
+			return "Surfaces";
 		} else if (today == 2){
-			return "monitors & dry-erase area";
+			return "Monitors & dry-erase area";
 		} else if (today == 3){
-			return "keyboards & mice";
+			return "Keyboards & mice";
 		} else if (today == 4){
-			return "monitors & dry-erase area";
+			return "Surfaces";
 		} else if (today == 5){
-			return "check email for cleaning duty";
+			return "Check email for cleaning duty";
 		} else {
 			return "what are you doing here? It's weekend!";
 		}
@@ -488,7 +502,6 @@ Template.labNoShows.helpers({
 			return false;
 		}
 		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
-			//console.log(Meteor.user().emails[0].address);
 			return true;
 		}
 		return false;
@@ -504,7 +517,6 @@ Template.wireFrame.helpers({
 			return false;
 		}
 		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
-			//console.log(Meteor.user().emails[0].address);
 			return true;
 		}
 		return false;
@@ -520,7 +532,6 @@ Template.workshops.helpers({
 			return false;
 		}
 		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
-			//console.log(Meteor.user().emails[0].address);
 			return true;
 		}
 		return false;
@@ -543,7 +554,9 @@ Template.userList.helpers({
 
 Template.home.events({
   "submit .j-ans": function(event){
-    alert('Submitted!');
+  	//STUB
+    Session.set("s_message","You have successfully submmited an answer!");
+    Session.set('d_message', false);
     return false;
   }
 });
@@ -551,14 +564,24 @@ Template.home.events({
 Template.labs.events({
 	"submit .add-rooms": function(event){
 		var name = event.target.name.value;
-		Meteor.call('addRooms', name);
-		event.target.name.value = '';
+		Meteor.call('addRooms', name, function(err,result){
+			if (!err){
+				event.target.name.value = '';
+				Session.set("s_message","You have successfully added lab " + name + " !");
+				Session.set('d_message', false);				
+			} else {
+				Session.set("d_message","You can't have blank fields!");
+				Session.set("s_message", false);
+			}
+		});
 		return false;
 	},
 	"click .delete-rooms": function(event){
 		var confirm_name = "Delete room " + this.name + "?";
 		if (confirm(confirm_name)) {
 			Meteor.call('deleteRooms', this._id);
+			Session.set("s_message","You have successfully deleted lab " + this.name + " !");
+			Session.set('d_message', false);
 		}
 		return false;
 	},
@@ -589,17 +612,27 @@ Template.labNoShows.events({
     var professorName = event.target.professorName.value;
 
     var entry = [SEtime,location,className,professorName];
-    Meteor.call('addLabNoShows', entry);
-    event.target.startEndTime.value = '';
-    event.target.location.value = '';
-    event.target.className.value = '';
-    event.target.professorName.value = '';
+    Meteor.call('addLabNoShows', entry, function(err,result){
+    	if (!err){
+		    event.target.startEndTime.value = '';
+		    event.target.location.value = '';
+		    event.target.className.value = '';
+		    event.target.professorName.value = '';
+		    Session.set("s_message","You have successfully added this entry!");
+		    Session.set('d_message', false);  		
+    	}else {
+		    Session.set("d_message","You can't have blank fields!");
+		    Session.set("s_message", false);
+    	}
+    });
     return false;
   },
  	"click .delete-labNoShows": function(event){
 		var confirm_name = "Delete this entry?";
 		if (confirm(confirm_name)) {
 			Meteor.call('deleteLabNoShows', this._id);
+			Session.set("s_message","You have successfully deleted this entry!");
+			Session.set('d_message', false);
 		}
 		return false;
 	}
@@ -612,16 +645,26 @@ Template.wireFrame.events({
     var comments = event.target.comments.value;
 
     var entry = [perm,checked,comments];
-    Meteor.call('addWireFrame', entry);
-    event.target.permNumber.value = '';
-    event.target.checked.value = '';
-    event.target.comments.value = '';
+    Meteor.call('addWireFrame', entry, function(err,result){
+    	if (!err){
+		    event.target.permNumber.value = '';
+		    event.target.checked.value = '';
+		    event.target.comments.value = '';
+		    Session.set("s_message","You have successfully added this entry!");
+		    Session.set('d_message', false);   		
+    	}else {
+    		Session.set("d_message","You can't have blank fields!");
+    		Session.set("s_message", false);
+    	}
+    });
     return false;
   },
  	"click .delete-wireFrame": function(event){
 		var confirm_name = "Delete this entry?";
 		if (confirm(confirm_name)) {
 			Meteor.call('deleteWireFrame', this._id);
+			Session.set("s_message","You have successfully deleted this entry!");
+			Session.set('d_message', false);
 		}
 		return false;
 	}
@@ -635,17 +678,27 @@ Template.workshops.events({
     //var p2 = event.target.p2.value;
 
     var entry = [date,name];
-    Meteor.call('addWorkshops', entry);
-    event.target.date.value = '';
-    event.target.name.value = '';
-    //event.target.p1.value = '';
-    //event.target.p2.value = '';
+    Meteor.call('addWorkshops', entry, function (err,result){
+    	if (!err){
+				Session.set("s_message","You have successfully added " + event.target.name.value + " !");
+				Session.set('d_message', false);
+		    event.target.date.value = '';
+		    event.target.name.value = '';
+		    //event.target.p1.value = '';
+		    //event.target.p2.value = '';    		
+    	}else {
+    		Session.set("d_message","You can't have blank fields!");
+    		Session.set("s_message", false);
+    	}
+    });
     return false;
   },
  	"click .delete-workshops": function(event){
 		var confirm_name = "Delete this workshop?";
 		if (confirm(confirm_name)) {
 			Meteor.call('deleteWorkshops', this._id);
+    	Session.set("s_message","You have successfully deleted this workshop!");
+    	Session.set('d_message', false);
 		}
 		return false;
 	},
@@ -656,13 +709,23 @@ Template.workshops.events({
 			var confirm_name = "Are you teaching the " + str + " workshop?";
 			if (confirm(confirm_name)) {
 				Meteor.call('claimWorkshops', event.target.id);
-				//$(".alert").show();
+				Session.set("s_message","You have successfully signed up for " + str + " !");
+				Session.set('d_message', false);
 			}
 			return false;
 		} else {
 			var confirm_name = "Delete this entry?";
 			if (confirm(confirm_name)) {
-				Meteor.call('resetWorkshops', event.target.id);
+				Meteor.call('resetWorkshops', event.target.id, function(err,result){
+					if (!err) {
+						Session.set("s_message","You have successfully deleted this workshop signup!");
+						Session.set('d_message', false);
+					}else {
+						Session.set('d_message', err.message);
+						Session.set('s_message', false);
+					}
+				});
+
 			}
 			return false;
 		}
@@ -673,6 +736,8 @@ Template.workshops.events({
 			var confirm_name = "Are you sure ?";
 			if (confirm(confirm_name)) {
 				Meteor.call('resetWorkshops', 'ALL');
+				Session.set("s_message","You have successfully reset all workshop signups!");
+				Session.set('d_message', false);
 			}
 			return false;
 	}
@@ -696,19 +761,32 @@ Template.writeUps.events({
     var date = event.target.date.value;
 
     var entry = [email,type,reason,excused,period,date];
-    Meteor.call('addWriteUps', entry);
-    event.target.email.value = '';
-    event.target.type.value = '';
-    event.target.reason.value = '';
-    event.target.excused.value = '';
-    event.target.period.value = '';
-    event.target.date.value = '';
+    Meteor.call('addWriteUps', entry, function(err,result){
+    	if (!err) {
+		    event.target.email.value = '';
+		    event.target.type.value = '';
+		    event.target.reason.value = '';
+		    event.target.excused.value = '';
+		    event.target.period.value = '';
+		    event.target.date.value = '';
+		    Session.set("s_message","You have successfully submmited a writeup!");
+		    Session.set('d_message', false);
+		    $('#bad').css("display","none");
+		    $('#shift').css("display","none");
+    	}else {
+    		Session.set("d_message",err.message);
+    		Session.set("s_message", false);
+    	}
+    });
+
     return false;
   },
   "click .delete-writeUps": function(event){
     var confirm_name = "Delete this writeup?";
     if (confirm(confirm_name)) {
       Meteor.call('deleteWriteUps', this._id);
+      Session.set("s_message","You have successfully deleted this writeup!");
+      Session.set('d_message', false);
     }
     return false;
   },
@@ -717,9 +795,9 @@ Template.writeUps.events({
     var confirm_name = "Have you read and agreed with this writeup?";
     if (confirm(confirm_name)) {
       Meteor.call('signWriteUps', this._id);
-      $(event.target).parent().css()({
-        'background-color' : '#dff0d8'
-      });
+      $(event.target).parent().parent().addClass('cleaned');
+      Session.set("s_message","You have successfully signed this writeup!");
+      Session.set('d_message', false);
     }
     return false;
   }
@@ -747,14 +825,22 @@ Template.cleaning.events({
 			var confirm_name = "You have cleaned " + event.target.id + " at " + time + "?";
 			if (confirm(confirm_name)) {
 				Meteor.call('cleanRoom', event.target.id);
-				$(".alert").show();
-				//Meteor.call('changeTableCSS', event.target.id);
+				Session.set('s_message', "You have cleaned room " + event.target.id +" !");
+				Session.set('d_message', false);
 			}
 			return false;
 		} else {
 			var confirm_name = "Delete this cleaning entry?";
 			if (confirm(confirm_name)) {
-				Meteor.call('resetCleaning', event.target.id);
+				Meteor.call('resetCleaning', event.target.id, function(err,result){
+					if (!err){
+						Session.set('s_message', "You have deleted this cleaning record!");
+						Session.set('d_message', false);
+					} else {
+						Session.set('d_message', err.message);
+						Session.set('s_message', false);
+					}
+				});
 			}
 			return false;
 		}
@@ -765,7 +851,8 @@ Template.cleaning.events({
 			var confirm_name = "Are you sure ?";
 			if (confirm(confirm_name)) {
 				Meteor.call('resetCleaning', 'ALL');
-				//Meteor.call('changeTableCSS', event.target.id);
+				Session.set('s_message', "You have reset all cleaning record!");
+				Session.set('d_message', false);
 			}
 			return false;
 	}
@@ -773,17 +860,13 @@ Template.cleaning.events({
 
 
 Template.body.events({
-
-	'click .close'(e) {
-    $("#msg").hide();
-  },
-
 	'click #HOME'(e) {
     $('.tab.active').removeClass('active');
     $("#HOME").addClass('active');
     var ax = $(e.target).html();
     $('.gin').hide();
     $('#gin-' + "HOME").show();
+    Session.set('s_message', false);
   },
 
   'click #RE'(e) {
@@ -792,6 +875,7 @@ Template.body.events({
     var ax = $(e.target).html();
     $('.gin').hide();
     $('#gin-' + "RE").show();
+    Session.set('s_message', false);
   },
 
   'click #CL'(e) {
@@ -800,6 +884,7 @@ Template.body.events({
     var ax = $(e.target).html();
     $('.gin').hide();
     $('#gin-' + "CL").show();
+    Session.set('s_message', false);
   },
 
   'click #LA'(e) {
@@ -808,6 +893,7 @@ Template.body.events({
     var ax = $(e.target).html();
     $('.gin').hide();
     $('#gin-' + "LA").show();
+    Session.set('s_message', false);
   },
 
   'click #WS'(e) {
@@ -816,6 +902,7 @@ Template.body.events({
     var ax = $(e.target).html();
     $('.gin').hide();
     $('#gin-' + "WS").show();
+    Session.set('s_message', false);
   },
 
   'click #LNS'(e) {
@@ -824,6 +911,7 @@ Template.body.events({
     var ax = $(e.target).html();
     $('.gin').hide();
     $('#gin-' + "LNS").show();
+    Session.set('s_message', false);
   },
 
   'click #WF'(e) {
@@ -832,6 +920,7 @@ Template.body.events({
     var ax = $(e.target).html();
     $('.gin').hide();
     $('#gin-' + "WF").show();
+    Session.set('s_message', false);
   },
 
   'click #LI'(e) {
@@ -840,6 +929,7 @@ Template.body.events({
     var ax = $(e.target).html();
     $('.gin').hide();
     $('#gin-' + "LI").show();
+    Session.set('s_message', false);
   },
 
   'click #WU'(e) {
@@ -848,6 +938,7 @@ Template.body.events({
     var ax = $(e.target).html();
     $('.gin').hide();
     $('#gin-' + "WU").show();
+    Session.set('s_message', false);
   },
 
   // Night Mode
@@ -879,6 +970,12 @@ Template.body.events({
         $('.workshops-table th').css('border', '1px solid black');
         ni = false;
     }
+  },
+	'click #close_s'(e) {
+    Session.set('s_message', false);
+  },
+	'click #close_d'(e) {
+    Session.set('d_message', false);
   }
 });
 
@@ -900,6 +997,7 @@ Template.register.events({
   		}
     	
     });
+  	Session.set('s_message', "Welcome, " + email + " !");
   },
 
   'click .s-login'(event) {
@@ -924,6 +1022,7 @@ Template.login.events({
   			Session.set('errorMessage', false);
   		}
 		});
+		Session.set('s_message', "Welcome back, " + email + " !");
   },
   'click .s-register'(event) {
   	Session.set('errorMessage', false);
