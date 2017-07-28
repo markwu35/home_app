@@ -159,7 +159,7 @@ input:checked + .slider:before {
 .clean-table, .workshops-table {
   margin-top: 5px;
   margin-bottom: 10px;
-  overflow-x:scroll;
+  overflow-x: auto;
   margin-right: -10px;
 }
 

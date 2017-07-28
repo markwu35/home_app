@@ -1,13 +1,13 @@
-# UCSB Collab App for Cons
+# UCSB Collaborate Labs App
 
-Meteor application to the UCSB Collab App.
+Single-page Meteor.js application to the UCSB Collaborate Labs
 
 ## About
 
 * You must have [Meteor](https://www.meteor.com/) and [MongoDB](https://www.mongodb.com/) installed to run the app
 * Run on localhost:3000
-* A web app dedicated for the cons at UCSB Collab
-* All-In-One record-keeping application for cleaning records, workshops signup, labs info, lab no show records, and wireFrame entries
+* A web app dedicated for the hardworking friends at UCSB Collaborate Labs
+* All-In-One record-keeping application for cleaning records, workshops signup, labs info, lab no show records, wireFrame entries, writeups, and much more to come.
 
 ## Features
 
@@ -35,18 +35,18 @@ Meteor application to the UCSB Collab App.
 
 ## Future Features
 
-* implement scheduling
-* cleaning reset automatically overnight
-* change emails into name
-* jeopardy backend implementation
-* forms on modals to minimize use of space
-* enhance write up signing UI
+* Implement scheduling
+* Cleaning reset automatically overnight
+* Change emails into name
+* Jeopardy backend implementation
+* Forms on modals to minimize use of space
+* Enhance write up signing UI
 
 ## Bugs
 
 * Jquery doesn't work when you reload, it doesnt update td to class cleaned
-* nightmode then login, and table borders become black
+* Nightmode then login, and table borders become black
 * Limit who can access writeups in server main.js and client main.js helpers
-* add reset workshop button
-* dont rely on html to determine if sign or delete
-* dynamic template.body.events clicking implementation
+* Add reset workshop button
+* Don't rely on html to determine if sign or delete
+* Dynamic template.body.events clicking implementation
