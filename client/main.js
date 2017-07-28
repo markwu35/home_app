@@ -188,6 +188,13 @@ Template.writeUps.helpers({
   	} else {
   		return this.type;
   	}
+  },
+  class_signed: function(){
+    if(this.signed){
+      return 'cleaned';
+    } else {
+      return 'un-signed';
+    }
   }
 });
 

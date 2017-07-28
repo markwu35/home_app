@@ -50,3 +50,4 @@ Single-page Meteor.js application to the UCSB Collaborate Labs
 * Add reset workshop button
 * Don't rely on html to determine if sign or delete
 * Dynamic template.body.events clicking implementation
+* fix cleaned class css change based on collection value

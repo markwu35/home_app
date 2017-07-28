@@ -156,6 +156,27 @@ input:checked + .slider:before {
   color:#FFF;
 }
 
+.cleaned {
+  background-color: #dff0d8;
+  color: black;
+}
+.un-signed {
+  background-color: #ec8c8c;
+  color: black;
+}
+
+.un-signed:hover {
+  background-color: #f17e7e;
+  -webkit-transition: background-color 0.25s; /* Safari */
+  transition: background-color 0.25s;
+}
+
+.cleaned:hover {
+  background-color: #c5ebb6;
+  -webkit-transition: background-color 0.25s; /* Safari */
+  transition: background-color 0.25s;
+}
+
 .clean-table, .workshops-table {
   margin-top: 5px;
   margin-bottom: 10px;
@@ -184,12 +205,6 @@ input:checked + .slider:before {
   border: 1px solid black;
 }
 
-.clean-table tr:hover {
-  background-color: #e0e0e0;
-  color: black;
-  -webkit-transition: background-color 0.25s; /* Safari */
-  transition: background-color 0.25s;
-}
 .workshops-table td:hover {
   background-color: #dff0d8;
   color: black;
@@ -201,13 +216,8 @@ input:checked + .slider:before {
   background-color: #999;
 }
 
-.cleaned:hover {
-  background-color: #f0ad4e;
-  -webkit-transition: background-color 0.25s; /* Safari */
-  transition: background-color 0.25s;
-}
 
-.clean-table tr:nth-child(even),.workshops-table tr:nth-child(even) {
+/*.clean-table tr:nth-child(even),.workshops-table tr:nth-child(even) {
   background-color: #f2f2f2;
   color: black;
 }
@@ -217,7 +227,7 @@ input:checked + .slider:before {
   color: black;
   -webkit-transition: background-color 0.25s; /* Safari */
   transition: background-color 0.25s;
-}
+}*/
 
 img{
   max-width:300px;
@@ -247,11 +257,6 @@ dl {
 }
 .checkbox {
   margin-top: 30px;
-}
-
-.cleaned {
-  background-color: #dff0d8;
-  color: black;
 }
 
 .msg-row {

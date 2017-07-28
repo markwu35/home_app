@@ -615,7 +615,7 @@
         <th>Period</th>
       </tr>
       {{#each writeUps}}
-        <tr>
+        <tr class={{class_signed}}>
           <td>{{assignedTo}}</td>
           <td>{{type}}</td>
           <td>{{assignedBy}}</td>
@@ -624,7 +624,7 @@
           <td>{{reason}}</td>
           <td>{{excused}}</td>
           <td>{{period}}</td>
-          <td>{{#if signed}}<span>Signed </span>{{/if}}<a href="#" class="delete-writeUps btn btn-danger">X</a></td>
+          <td><a href="#" class="delete-writeUps btn btn-danger">X</a></td>
         </tr>
       {{/each}}
     </table>
@@ -651,7 +651,7 @@
             <th>Reason</th>
           </tr>
           {{#each goodWriteUps}}
-            <tr>
+            <tr class={{class_signed}}>
               <td>{{assignedBy}}</td>
               <td>{{date}}</td>
               <td>{{recordedAt}}</td>
@@ -674,7 +674,7 @@
             <th>Excused?</th>
           </tr>
           {{#each badWriteUps}}
-            <tr>
+            <tr class={{class_signed}}>
               <td>{{assignedBy}}</td>
               <td>{{date}}</td>
               <td>{{recordedAt}}</td>
@@ -697,7 +697,7 @@
             <th>How Long</th>
           </tr>
           {{#each missedShifts}}
-            <tr>
+            <tr class={{class_signed}}>
               <td>{{assignedBy}}</td>
               <td>{{date}}</td>
               <td>{{recordedAt}}</td>
