@@ -37,7 +37,7 @@ Template.clock.onCreated(function(){
   }, 1000);
 });
 
-Template.cleaning.onRendered(function(){
+Template.cleaning.onCreated(function(){
 	if ($(".clean-room").html() != "---"){
 		$(".clean-room").addClass("cleaned");
 	}
@@ -79,12 +79,18 @@ Template.clock.helpers({
 
   dc(){
     var min = Template.instance().min.get();
+    var hr = Template.instance().hrs.get();
     if (min < 10) {
       var cur_min = '0' + min;
     } else {
       var cur_min = min;
     }
-    return Template.instance().hrs.get() + ":" + cur_min;
+    if (hr < 10) {
+      var cur_hr = '0' + hr;
+    } else {
+      var cur_hr = hr;
+    }
+    return cur_hr + ":" + cur_min;
   },
 
   dc_hour(){
@@ -867,85 +873,25 @@ Template.cleaning.events({
 
 
 Template.body.events({
-	'click #HOME'(e) {
-    $('.tab.active').removeClass('active');
-    $("#HOME").addClass('active');
-    var ax = $(e.target).html();
-    $('.gin').hide();
-    $('#gin-' + "HOME").show();
-    Session.set('s_message', false);
-  },
+	'click .nav a'(e) {
+		//console.log(e.currentTarget);
+		console.log(e.target.className);
+		if (e.target.className != 'login-link-text') {
+			if($('.navbar-toggle').css('display') !='none'){
+				$(".navbar-toggle").trigger( "click" );
+			}
+		}
+	},
 
-  'click #RE'(e) {
+  'click .tab'(e) {
     $('.tab.active').removeClass('active');
-    $("#RE").addClass('active');
-    var ax = $(e.target).html();
+    console.log(e.target);
+    $(e.currentTarget).addClass('active');
+    var ax = $(e.target).html().replace(/\s+/g, '');
     $('.gin').hide();
-    $('#gin-' + "RE").show();
+    $('#gin-' + ax).show();
     Session.set('s_message', false);
-  },
-
-  'click #CL'(e) {
-    $('.tab.active').removeClass('active');
-    $("#CL").addClass('active');
-    var ax = $(e.target).html();
-    $('.gin').hide();
-    $('#gin-' + "CL").show();
-    Session.set('s_message', false);
-  },
-
-  'click #LA'(e) {
-    $('.tab.active').removeClass('active');
-    $("#LA").addClass('active');
-    var ax = $(e.target).html();
-    $('.gin').hide();
-    $('#gin-' + "LA").show();
-    Session.set('s_message', false);
-  },
-
-  'click #WS'(e) {
-    $('.tab.active').removeClass('active');
-    $("#WS").addClass('active');
-    var ax = $(e.target).html();
-    $('.gin').hide();
-    $('#gin-' + "WS").show();
-    Session.set('s_message', false);
-  },
-
-  'click #LNS'(e) {
-    $('.tab.active').removeClass('active');
-    $("#LNS").addClass('active');
-    var ax = $(e.target).html();
-    $('.gin').hide();
-    $('#gin-' + "LNS").show();
-    Session.set('s_message', false);
-  },
-
-  'click #WF'(e) {
-    $('.tab.active').removeClass('active');
-    $("#WF").addClass('active');
-    var ax = $(e.target).html();
-    $('.gin').hide();
-    $('#gin-' + "WF").show();
-    Session.set('s_message', false);
-  },
-
-  'click #LI'(e) {
-    $('.tab.active').removeClass('active');
-    $("#LI").addClass('active');
-    var ax = $(e.target).html();
-    $('.gin').hide();
-    $('#gin-' + "LI").show();
-    Session.set('s_message', false);
-  },
-
-  'click #WU'(e) {
-    $('.tab.active').removeClass('active');
-    $("#WU").addClass('active');
-    var ax = $(e.target).html();
-    $('.gin').hide();
-    $('#gin-' + "WU").show();
-    Session.set('s_message', false);
+    Session.set('d_message', false);
   },
 
   // Night Mode
@@ -984,6 +930,15 @@ Template.body.events({
 	'click #close_d'(e) {
     Session.set('d_message', false);
   }
+});
+
+Template.scheduling.events({
+	'click #sel-lab-sch': function(event){
+		$('#sel-lab-sch').change(function() {
+      $('.sin').hide();
+      $('#sin-' + $(this).val()).show();
+	});
+	}
 });
 
 Template.register.events({

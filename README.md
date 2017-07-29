@@ -30,24 +30,26 @@ Single-page Meteor.js application to the UCSB Collaborate Labs
 	* 3 Types of writeups: Good, Bad, and Late/Missed Shift
 	* Add/Delete writeups (OpCos Only)
 	* Sign writeups
+* Cons Scheduling
+	* Front-end implemented
 * Night Mode
 * Desktop/Tablet/Mobile Responsiveness
 
 ## Future Features
 
-* Implement scheduling
+* Back-end implementation of cons scheduling
 * Cleaning reset automatically overnight
-* Change emails into name
-* Jeopardy backend implementation
+* Change emails into name (probably going to use Google API)
+* Jeopardy back-end implementation
 * Forms on modals to minimize use of space
-* Enhance write up signing UI
+* Limit the amount of workshops each user can sign up
+* Export tables to .csv files
+* Potentially move data tables to seperate routes to minimize use of resources, especially on mobile devices
 
 ## Bugs
 
-* Jquery doesn't work when you reload, it doesnt update td to class cleaned
+* Jquery doesn't work until you reload, or else it doesn't update td to class cleaned
 * Nightmode then login, and table borders become black
-* Limit who can access writeups in server main.js and client main.js helpers
-* Add reset workshop button
+	* Template where the tables are located is not loaded before the users signup, thus the problem
 * Don't rely on html to determine if sign or delete
-* Dynamic template.body.events clicking implementation
 * fix cleaned class css change based on collection value

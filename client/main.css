@@ -156,6 +156,12 @@ input:checked + .slider:before {
   color:#FFF;
 }
 
+tr:hover {
+  background-color: #e2e2e2;
+  -webkit-transition: background-color 0.25s; /* Safari */
+  transition: background-color 0.25s;
+}
+
 .cleaned {
   background-color: #dff0d8;
   color: black;
@@ -163,6 +169,9 @@ input:checked + .slider:before {
 .un-signed {
   background-color: #ec8c8c;
   color: black;
+}
+.closed {
+  background-color: black;
 }
 
 .un-signed:hover {

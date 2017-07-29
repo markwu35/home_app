@@ -18,14 +18,15 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li id="HOME" class="tab active"><a href="#">Home</a></li>
+          <li id="Home" class="tab active"><a href="#">Home</a></li>
           {{#if currentUser}}
-          <li id="LA" class="tab"><a href="#">Labs</a></li>
-          <li id="WS" class="tab"><a href="#">Workshops</a></li>
-          <li id="CL" class="tab"><a href="#">Cleaning</a></li>
-          <li id="LNS" class="tab"><a href="#">Lab No Shows</a></li>
-          <li id="WF" class="tab"><a href="#">Wireframe</a></li>
-          <li id="WU" class="tab"><a href="#">Write Ups</a></li>
+          <li id="Labs" class="tab"><a href="#">Labs</a></li>
+          <li id="Workshops" class="tab"><a href="#">Workshops</a></li>
+          <li id="Cleaning" class="tab"><a href="#">Cleaning</a></li>
+          <li id="LabNoShows" class="tab"><a href="#">Lab No Shows</a></li>
+          <li id="Wireframe" class="tab"><a href="#">Wireframe</a></li>
+          <li id="WriteUps" class="tab"><a href="#">Write Ups</a></li>
+          <li id="Scheduling" class="tab"><a href="#">Scheduling</a></li>
           {{/if}}
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -72,26 +73,29 @@
         <p style="text-align: center;">Summer 2017</p>
       </div>
     </div>
-    <div class="gin" id="gin-HOME">
+    <div class="gin" id="gin-Home">
       {{> home}}
     </div>
-    <div class="gin" id="gin-LA" style="display: none;">
+    <div class="gin" id="gin-Labs" style="display: none;">
       {{> labs}}
     </div>
-    <div class="gin" id="gin-CL" style="display: none;">
+    <div class="gin" id="gin-Cleaning" style="display: none;">
       {{> cleaning}}
     </div>
-    <div class="gin" id="gin-WS" style="display: none;">
+    <div class="gin" id="gin-Workshops" style="display: none;">
       {{> workshops}}
     </div>
-    <div class="gin" id="gin-LNS" style="display: none;">
+    <div class="gin" id="gin-LabNoShows" style="display: none;">
       {{> labNoShows}}
     </div>
-    <div class="gin" id="gin-WF" style="display: none;">
+    <div class="gin" id="gin-Wireframe" style="display: none;">
       {{> wireFrame}}
     </div>
-    <div class="gin" id="gin-WU" style="display: none;">
+    <div class="gin" id="gin-WriteUps" style="display: none;">
       {{> writeUps}}
+    </div>
+    <div class="gin" id="gin-Scheduling" style="display: none;">
+      {{> scheduling}}
     </div>
   </div>
 </body>
@@ -709,6 +713,707 @@
       </div>
     </div>
   </div>
+  {{else}}
+  {{> notLoggedIn}}
+  {{/if}}
+</template>
+
+<template name="scheduling">
+  {{#if currentUser}}
+    <div class="row">
+      <div class="col-md-2">
+        <select class="form-control" name="sel-lab-sch" id="sel-lab-sch">
+          <option value="">Select One</option>
+          <option value="Phelps">Phelps</option>
+          <option value="HSSB">HSSB</option>
+          <option value="SSMS">SSMS</option>
+          <option value="LifeSci">Life Sci</option>
+          <option value="BSIF">BSIF</option>
+          <option value="Music">Music</option>
+        </select>
+        <p><strong>Quarter: </strong>Fall 2017</p>
+        <p><strong>Note: </strong>First Week of</p>
+        <p><strong>Current Group: </strong>A</p>
+      </div>
+      <div class="col-md-10">
+
+        <div class="sin" id="sin-">
+          <p>Currently on beta version with front-end implementation, back-end hasn't been implemented yet.</p>
+          <p>Scheduling feature is only designed for Cons, or OpCos too if it is approved in the future.</p>
+        </div>
+        <div class="sin" id="sin-Phelps" style="display: none;">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="clean-table row Phelps sch-table">
+                <table>
+                  <tr>
+                    <th>Phelps1</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                  </tr>
+                  <tr>
+                    <th>8-9 am</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <th>9-10 am</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <th>10-11 am</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>11-12 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>12-1 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>1-2 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>2-3 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>3-4 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>4-5 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>5-6 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>6-7 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>7-8 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>8-9 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="clean-table row Phelps sch-table">
+                <table>
+                  <tr>
+                    <th>Phelps2</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                  </tr>
+                  <tr>
+                    <th>8-9 am</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <th>9-10 am</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <th>10-11 am</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>11-12 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>12-1 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>1-2 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>2-3 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>3-4 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>4-5 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>5-6 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>6-7 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>7-8 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr><tr>
+                    <th>8-9 pm</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sin" id="sin-HSSB" style="display: none;">
+          <div class="clean-table row HSSB sch-table">
+            <table>
+              <tr>
+                <th>HSSB</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+              </tr>
+              <tr>
+                <th>8-9 am</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>9-10 am</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>10-11 am</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>11-12 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>12-1 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>1-2 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>2-3 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>3-4 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>4-5 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>5-6 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>6-7 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>7-8 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>8-9 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="sin" id="sin-SSMS" style="display: none;">
+          <div class="clean-table row SSMS sch-table">
+            <table>
+              <tr>
+                <th>SSMS</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+              </tr>
+              <tr>
+                <th>8-9 am</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>9-10 am</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>10-11 am</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>11-12 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>12-1 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>1-2 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>2-3 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>3-4 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>4-5 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="sin" id="sin-LifeSci" style="display: none;">
+          <div class="clean-table row LifeSci sch-table">
+            <table>
+              <tr>
+                <th>Life Sci</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+              </tr>
+              <tr>
+                <th>8-9 am</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>9-10 am</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>10-11 am</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>11-12 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>12-1 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>1-2 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>2-3 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>3-4 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>4-5 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="sin" id="sin-BSIF" style="display: none;">
+          <div class="clean-table row BSIF sch-table">
+            <table>
+              <tr>
+                <th>BSIF</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+              </tr>
+              <tr>
+                <th>8-9 am</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>9-10 am</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>10-11 am</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>11-12 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>12-1 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>1-2 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>2-3 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>3-4 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>4-5 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="sin" id="sin-Music" style="display: none;">
+          <div class="clean-table row Music sch-table">
+            <table>
+              <tr>
+                <th>Music</th>
+                <th>Sunday</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+              </tr>
+              <tr>
+                <th>9-10 am</th>
+                <td class="closed"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>10-11 am</th>
+                <td class="closed"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>11-12 pm</th>
+                <td class="closed"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>12-1 pm</th>
+                <td class="closed"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>1-2 pm</th>
+                <td class="closed"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>2-3 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>3-4 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>4-5 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>5-6 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>6-7 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>7-8 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>8-9 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr><tr>
+                <th>9-10 pm</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   {{else}}
   {{> notLoggedIn}}
   {{/if}}
