@@ -42,10 +42,10 @@ Meteor.publish('writeUps', function(){
 	//LIMIT WHO CAN ACCESS WRITEUPS
 	if (Meteor.user() === null){
 		return false;
-	} else if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
+	} else if (Meteor.user().emails[0].address == "test3@gmail.com"){
 		return WriteUps.find();
 	}else {
-		return WriteUps.find({assignedTo: Meteor.user().emails[0].address });
+		return WriteUps.find({assignedTo: Meteor.userId() });
 	}
 	
 });

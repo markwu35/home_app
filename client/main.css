@@ -156,12 +156,6 @@ input:checked + .slider:before {
   color:#FFF;
 }
 
-tr:hover {
-  background-color: #e2e2e2;
-  -webkit-transition: background-color 0.25s; /* Safari */
-  transition: background-color 0.25s;
-}
-
 .cleaned {
   background-color: #dff0d8;
   color: black;
@@ -191,6 +185,12 @@ tr:hover {
   margin-bottom: 10px;
   overflow-x: auto;
   margin-right: -10px;
+}
+
+.clean-table tr:hover, .workshops-table tr:hover {
+  background-color: #e2e2e2;
+  -webkit-transition: background-color 0.25s; /* Safari */
+  transition: background-color 0.25s;
 }
 
 .clean-table th, .workshops-table th{

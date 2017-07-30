@@ -194,105 +194,57 @@
       <div class="col-lg-3">
         <h2>PHELPS</h2>
         <table>
+        {{#each phelps}}
           <tr>
-            <td>Phelps 1530</td>
-            <td id="1530" class="clean-room">{{p1530}}</td>
+            <td>{{name}}</td>
+            <td id={{name}} class="clean-room {{cleaned_class}}">{{clean_info}}</td>
           </tr>
-          <tr>
-            <td>Phelps 1529</td>
-            <td id="1529" class="clean-room">{{p1529}}</td>
-          </tr>
-          <tr>
-            <td>Phelps 1526</td>
-            <td id="1526" class="clean-room">{{p1526}}</td>
-          </tr>
-          <tr>
-            <td>Phelps 1525</td>
-            <td id="1525" class="clean-room">{{p1525}}</td>
-          </tr>
-          <tr>
-            <td>Phelps 1521</td>
-            <td id="1521" class="clean-room">{{p1521}}</td>
-          </tr>
-          <tr>
-            <td>Phelps 1518</td>
-            <td id="1518" class="clean-room">{{p1518}}</td>
-          </tr>
-          <tr>
-            <td>Phelps 1517</td>
-            <td id="1517" class="clean-room">{{p1517}}</td>
-          </tr>
-          <tr>
-            <td>Phelps 1514</td>
-            <td id="1514" class="clean-room">{{p1514}}</td>
-          </tr>
-          <tr>
-            <td>Phelps 1513</td>
-            <td id="1513" class="clean-room">{{p1513}}</td>
-          </tr>
+        {{/each}}
         </table>
       </div>
       <div class="col-lg-3">
         <h2>HSSB</h2>
         <table>
+        {{#each hssb}}
           <tr>
-            <td>HSSB</td>
-            <td id="HSSB" class="clean-room">{{HSSB}}</td>
+            <td>{{name}}</td>
+            <td id={{name}} class="clean-room {{cleaned_class}}">{{clean_info}}</td>
           </tr>
+        {{/each}}
+        {{#each ssms}}
           <tr>
-            <td>SSMS 1005</td>
-            <td id="1005" class="clean-room">{{s1005}}</td>
+            <td>{{name}}</td>
+            <td id={{name}} class="clean-room {{cleaned_class}}">{{clean_info}}</td>
           </tr>
-          <tr>
-            <td>SSMS 1007</td>
-            <td id="1007" class="clean-room">{{s1007}}</td>
-          </tr>
-          <tr>
-            <td>SSMS 1301</td>
-            <td id="1301" class="clean-room">{{s1301}}</td>
-          </tr>
-          <tr>
-            <td>SSMS 1302</td>
-            <td id="1302" class="clean-room">{{s1302}}</td>
-          </tr>
-          <tr>
-            <td>SSMS 1303</td>
-            <td id="1303" class="clean-room">{{s1303}}</td>
-          </tr>
-          <tr>
-            <td>SSMS 1304</td>
-            <td id="1304" class="clean-room">{{s1304}}</td>
-          </tr>
+        {{/each}}
         </table>
       </div>
       <div class="col-lg-3">
         <h2>LIFE SCIENCE</h2>
         <table>
+        {{#each lifeSci}}
           <tr>
-            <td>LSCF 1804</td>
-            <td id="1804" class="clean-room">{{l1804}}</td>
+            <td>{{name}}</td>
+            <td id={{name}} class="clean-room {{cleaned_class}}">{{clean_info}}</td>
           </tr>
+        {{/each}}
+        {{#each bsif}}
           <tr>
-            <td>LSCF 1805</td>
-            <td id="1805" class="clean-room">{{l1805}}</td>
+            <td>{{name}}</td>
+            <td id={{name}} class="clean-room {{cleaned_class}}">{{clean_info}}</td>
           </tr>
-          <tr>
-            <td>LSCF 1806</td>
-            <td id="1806" class="clean-room">{{l1806}}</td>
-          </tr>
-          <tr>
-            <td>BSIF</td>
-            <td id="BSIF" class="clean-room">{{BSIF}}</td>
-          </tr>
+        {{/each}}
         </table>
       </div>
       <div class="col-lg-3">
         <h2>MUSIC</h2>
         <table>
+        {{#each music}}
           <tr>
-            <td>MUSIC</td>
-            <td id="MUSIC" class="clean-room">{{MUSIC}}</td>
+            <td>{{name}}</td>
+            <td id={{name}} class="clean-room {{cleaned_class}}">{{clean_info}}</td>
           </tr>
+        {{/each}}
         </table>
       </div>
     </div>
@@ -307,9 +259,18 @@
   <div class="col-lg-2">
     <h3>Add labs:</h3>
     <form class="add-rooms">
+      <select class="form-control" name="location" id="location">
+        <option value="">Select One</option>
+        <option value="Phelps">Phelps</option>
+        <option value="HSSB">HSSB</option>
+        <option value="SSMS">SSMS</option>
+        <option value="LifeSci">Life Sci</option>
+        <option value="BSIF">BSIF</option>
+        <option value="Music">Music</option>
+      </select>
       <div class="input-group">
-        <label>Room Name</label>
-        <input type="text" class="form-control" name="name" placeholder="Add room" />
+        <label>Room Number</label>
+        <input type="text" class="form-control" name="name" placeholder="Room Number" />
         <span class="input-group-btn">
           <input type="submit" class="btn btn-primary" value="Submit" />
         </span>
@@ -1440,9 +1401,25 @@
       {{/if}}
     </div>
     <form class="register">
-      <p>Email: <input class="form-control" type="email" name="email" placeholder="@umail only!"></p>
-      <p>Password: <input class="form-control" type="password" name="password"></p>
-      <span><input class="btn btn-primary" type="submit" value="Register"></span> | <span>Already have an account? Log in <a href="#" class="s-login">here</a></span> 
+      <div class="row">
+        <div class="col-xs-12"><label>Email</label><input class="form-control" type="email" name="email" placeholder="@umail only!"></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <label>First Name</label>
+          <input class="form-control" type="text" name="firstName" placeholder="First Name">
+        </div>
+        <div class="col-xs-6">
+          <label>Last Name</label><input class="form-control" type="text" name="lastName" placeholder="Last Name">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12"><label>Password</label><input class="form-control" type="password" name="password"></div>
+      </div>
+      <div class="row" style="margin-top: 5px;">
+        <div class="col-xs-12"><span><input class="btn btn-primary" type="submit" value="Register"></span> | <span>Already have an account? Log in <a href="#" class="s-login">here</a></span> </div>
+
+      </div>
     </form>
   </div>
 </template>
@@ -1459,9 +1436,11 @@
       {{/if}}
     </div>
     <form class="login">
-      <p>Email: <input class="form-control" type="email" name="email" placeholder="@umail only!"></p>
-      <p>Password: <input class="form-control" type="password" name="password"></p>
-      <span><input class="btn btn-primary" type="submit" value="Login"></span> | <span>Don't have an account? Register <a href="#" class="s-register">here</a></span>
+    <div class="col-xs-12"><div class="row"><label>Email</label><input class="form-control" type="email" name="email" placeholder="@umail only!"></div></div>
+    <div class="col-xs-12"><div class="row"><label>Password</label><input class="form-control" type="password" name="password"></div></div>
+    <div class="col-xs-12"><div class="row"  style="margin-top: 5px;">
+        <span><input class="btn btn-primary" type="submit" value="Login"></span> | <span>Don't have an account? Register <a href="#" class="s-register">here</a></span>
+      </div></div>
     </form>
   </div>
 </template>

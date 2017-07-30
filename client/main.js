@@ -116,13 +116,13 @@ Template.home.helpers({
 		if (Meteor.user() === null) {
 			return false;
 		}
-		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
+		if (Meteor.user().emails[0].address == "test3@gmail.com"){
 			return true;
 		}
 		return false;
 	},
 	current_user(){
-		return Meteor.user().emails[0].address;
+		return Meteor.user().profile.firstName;
 	}
 });
 
@@ -140,31 +140,31 @@ Template.writeUps.helpers({
 		if (Meteor.user() === null) {
 			return false;
 		}
-		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
+		if (Meteor.user().emails[0].address == "test3@gmail.com"){
 			return true;
 		}
 		return false;
 	},
 	numGoodWriteUps: function (){
-		return WriteUps.find({type: 'good',assignedTo: Meteor.user().emails[0].address}).count();
+		return WriteUps.find({type: 'good',assignedTo: Meteor.userId()}).count();
 	},
 	numBadWriteUps: function (){
-		return WriteUps.find({type: 'bad',assignedTo: Meteor.user().emails[0].address}).count();
+		return WriteUps.find({type: 'bad',assignedTo: Meteor.userId()}).count();
 	},
 	numMissedShifts: function (){
-		return WriteUps.find({type: 'shift',assignedTo: Meteor.user().emails[0].address}).count();
+		return WriteUps.find({type: 'shift',assignedTo: Meteor.userId()}).count();
 	},
   writeUps: function (){
     return WriteUps.find({}, {sort: {createdAt: -1}});
   },
   goodWriteUps: function (){
-    return WriteUps.find({type: 'good',assignedTo: Meteor.user().emails[0].address}, {sort: {createdAt: -1}});
+    return WriteUps.find({type: 'good',assignedTo: Meteor.userId()}, {sort: {createdAt: -1}});
   },
   badWriteUps: function (){
-    return WriteUps.find({type: 'bad',assignedTo: Meteor.user().emails[0].address}, {sort: {createdAt: -1}});
+    return WriteUps.find({type: 'bad',assignedTo: Meteor.userId()}, {sort: {createdAt: -1}});
   },
   missedShifts: function (){
-    return WriteUps.find({type: 'shift',assignedTo: Meteor.user().emails[0].address}, {sort: {createdAt: -1}});
+    return WriteUps.find({type: 'shift',assignedTo: Meteor.userId()}, {sort: {createdAt: -1}});
   },
   unSigned: function (){
     if (this.signed === false) {
@@ -201,7 +201,13 @@ Template.writeUps.helpers({
     } else {
       return 'un-signed';
     }
-  }
+  },
+	assignedTo: function(){
+		return Meteor.users.findOne({_id: this.assignedTo}).profile.firstName + ' ' + Meteor.users.findOne({_id: this.assignedTo}).profile.lastName.charAt(0) + '.';
+	},
+	assignedBy: function(){
+		return Meteor.users.findOne({_id: this.assignedBy}).profile.firstName + ' ' + Meteor.users.findOne({_id: this.assignedBy}).profile.lastName.charAt(0) + '.';
+	}
 });
 
 Template.cleaning.helpers({
@@ -209,8 +215,7 @@ Template.cleaning.helpers({
 		if (Meteor.user() === null) {
 			return false;
 		}
-		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
-			//console.log(Meteor.user().emails[0].address);
+		if (Meteor.user().emails[0].address == "test3@gmail.com"){
 			return true;
 		}
 		return false;
@@ -237,255 +242,42 @@ Template.cleaning.helpers({
 		return Rooms.find({cleanedBy: Meteor.userId()}).count();
 	},
 
-	p1530: function(){
-		if (Rooms.findOne({name:'1530'}).cleaned == true){
-			var user_id = Rooms.findOne({name:'1530'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			$("#1530").addClass('cleaned');
-			return user_email + " at " + Rooms.findOne({name:'1530'}).cleanedAt;
-		} else {
-			$("#1530").removeClass('cleaned');
+	phelps: function(){
+		return Rooms.find({location: "Phelps"});
+	},
+
+	hssb: function(){
+		return Rooms.find({location: "HSSB"});
+	},
+
+	ssms: function(){
+		return Rooms.find({location: "SSMS"});
+	},
+
+	lifeSci: function(){
+		return Rooms.find({location: "LifeSci"});
+	},
+
+	bsif: function(){
+		return Rooms.find({location: "BSIF"});
+	},
+	music: function(){
+		return Rooms.find({location: "Music"});
+	},
+
+	clean_info: function(){
+		if(this.cleaned){
+			return Meteor.users.findOne({_id: this.cleanedBy}).profile.firstName + " " + Meteor.users.findOne({_id: this.cleanedBy}).profile.lastName.charAt(0) + ". at " + this.cleanedAt;
+		}else {
 			return '---';
 		}
 	},
 
-	p1529: function(){
-		if (Rooms.findOne({name:'1529'}).cleaned == true){
-			$("#1529").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1529'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1529'}).cleanedAt;
-		} else {
-			$("#1529").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	p1525: function(){
-		if (Rooms.findOne({name:'1525'}).cleaned == true){
-			$("#1525").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1525'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1525'}).cleanedAt;
-		} else {
-			$("#1525").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	p1521: function(){
-		if (Rooms.findOne({name:'1521'}).cleaned == true){
-			$("#1521").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1521'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1521'}).cleanedAt;
-		} else {
-			$("#1521").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	p1517: function(){
-		if (Rooms.findOne({name:'1517'}).cleaned == true){
-			$("#1517").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1517'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1517'}).cleanedAt;
-		} else {
-			$("#1517").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	p1513: function(){
-		if (Rooms.findOne({name:'1513'}).cleaned == true){
-			$("#1513").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1513'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1513'}).cleanedAt;
-		} else {
-			$("#1513").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	p1514: function(){
-		if (Rooms.findOne({name:'1514'}).cleaned == true){
-			$("#1514").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1514'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1514'}).cleanedAt;
-		} else {
-			$("#1514").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	p1518: function(){
-		if (Rooms.findOne({name:'1518'}).cleaned == true){
-			$("#1518").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1518'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1518'}).cleanedAt;
-		} else {
-			$("#1518").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	p1526: function(){
-		if (Rooms.findOne({name:'1526'}).cleaned == true){
-			$("#1526").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1526'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1526'}).cleanedAt;
-		} else {
-			$("#1526").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	HSSB: function(){
-		if (Rooms.findOne({name:'HSSB'}).cleaned == true){
-			$("#HSSB").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'HSSB'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'HSSB'}).cleanedAt;
-		} else {
-			$("#HSSB").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	s1005: function(){
-		if (Rooms.findOne({name:'1005'}).cleaned == true){
-			$("#1005").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1005'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1005'}).cleanedAt;
-		} else {
-			$("#1005").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	s1007: function(){
-		if (Rooms.findOne({name:'1007'}).cleaned == true){
-			$("#1007").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1007'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1007'}).cleanedAt;
-		} else {
-			$("#1007").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	s1301: function(){
-		if (Rooms.findOne({name:'1301'}).cleaned == true){
-			$("#1301").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1301'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1301'}).cleanedAt;
-		} else {
-			$("#1301").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	s1302: function(){
-		if (Rooms.findOne({name:'1302'}).cleaned == true){
-			$("#1302").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1302'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1302'}).cleanedAt;
-		} else {
-			$("#1302").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	s1303: function(){
-		if (Rooms.findOne({name:'1303'}).cleaned == true){
-			$("#1303").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1303'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1303'}).cleanedAt;
-		} else {
-			$("#1303").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	s1304: function(){
-		if (Rooms.findOne({name:'1304'}).cleaned == true){
-			$("#1304").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1304'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1304'}).cleanedAt;
-		} else {
-			$("#1304").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	l1804: function(){
-		if (Rooms.findOne({name:'1804'}).cleaned == true){
-			$("#1804").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1804'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1804'}).cleanedAt;
-		} else {
-			$("#1804").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	l1805: function(){
-		if (Rooms.findOne({name:'1805'}).cleaned == true){
-			$("#1805").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1805'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1805'}).cleanedAt;
-		} else {
-			$("#1805").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	l1806: function(){
-		if (Rooms.findOne({name:'1806'}).cleaned == true){
-			$("#1806").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'1806'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'1806'}).cleanedAt;
-		} else {
-			$("#1806").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	BSIF: function(){
-		if (Rooms.findOne({name:'BSIF'}).cleaned == true){
-			$("#BSIF").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'BSIF'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'BSIF'}).cleanedAt;
-		} else {
-			$("#BSIF").removeClass('cleaned');
-			return '---';
-		}
-	},
-
-	MUSIC: function(){
-		if (Rooms.findOne({name:'MUSIC'}).cleaned == true){
-			$("#MUSIC").addClass('cleaned');
-			var user_id = Rooms.findOne({name:'MUSIC'}).cleanedBy;
-			var user_email = Meteor.users.findOne({_id:user_id}).emails[0].address;
-			return user_email + " at " + Rooms.findOne({name:'MUSIC'}).cleanedAt;
-		} else {
-			$("#MUSIC").removeClass('cleaned');
-			return '---';
+	cleaned_class: function(){
+		if(this.cleaned){
+			return "cleaned";
+		}else {
+			return '';
 		}
 	}
 });
@@ -498,7 +290,7 @@ Template.labs.helpers({
 		if (Meteor.user() === null) {
 			return false;
 		}
-		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
+		if (Meteor.user().emails[0].address == "test3@gmail.com"){
 			//console.log(Meteor.user().emails[0].address);
 			return true;
 		}
@@ -514,10 +306,13 @@ Template.labNoShows.helpers({
 		if (Meteor.user() === null) {
 			return false;
 		}
-		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
+		if (Meteor.user().emails[0].address == "test3@gmail.com"){
 			return true;
 		}
 		return false;
+	},
+	recordedBy: function(){
+		return Meteor.users.findOne({_id: this.recordedBy}).profile.firstName + ' ' + Meteor.users.findOne({_id: this.recordedBy}).profile.lastName.charAt(0) + '.';
 	}
 });
 
@@ -529,10 +324,13 @@ Template.wireFrame.helpers({
 		if (Meteor.user() === null) {
 			return false;
 		}
-		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
+		if (Meteor.user().emails[0].address == "test3@gmail.com"){
 			return true;
 		}
 		return false;
+	},
+	recordedBy: function(){
+		return Meteor.users.findOne({_id: this.recordedBy}).profile.firstName + ' ' + Meteor.users.findOne({_id: this.recordedBy}).profile.lastName.charAt(0) + '.';
 	}
 });
 
@@ -544,13 +342,27 @@ Template.workshops.helpers({
 		if (Meteor.user() === null) {
 			return false;
 		}
-		if (Meteor.user().emails[0].address == "markwu35@yahoo.com"){
+		if (Meteor.user().emails[0].address == "test3@gmail.com"){
 			return true;
 		}
 		return false;
 	},
 	name_w_s: function (){
 		return this.name.replace(/_/g, " ");
+	},
+	p1: function (){
+		if (this.p1 != ''){
+			return Meteor.users.findOne({_id: this.p1}).profile.firstName + " " + Meteor.users.findOne({_id: this.p1}).profile.lastName.charAt(0) + '.';	
+		} else {
+			return 'OPEN';
+		}
+	},
+	p2: function (){
+		if (this.p2 != ''){
+			return Meteor.users.findOne({_id: this.p2}).profile.firstName + " " + Meteor.users.findOne({_id: this.p2}).profile.lastName.charAt(0) + '.';
+		} else {
+			return 'OPEN';
+		}
 	}
 });
 
@@ -577,7 +389,9 @@ Template.home.events({
 Template.labs.events({
 	"submit .add-rooms": function(event){
 		var name = event.target.name.value;
-		Meteor.call('addRooms', name, function(err,result){
+		var location = event.target.location.value;
+		var entry = [name,location];
+		Meteor.call('addRooms', entry, function(err,result){
 			if (!err){
 				event.target.name.value = '';
 				Session.set("s_message","You have successfully added lab " + name + " !");
@@ -716,31 +530,60 @@ Template.workshops.events({
 		return false;
 	},
 	"click .ws-open": function(event){
-		if ($("#" + event.target.id ).html() == "OPEN"){
-			var str = event.target.id.slice(0, -1);
-			str = str.replace(/_/g, " ");
-			var confirm_name = "Are you teaching the " + str + " workshop?";
-			if (confirm(confirm_name)) {
-				Meteor.call('claimWorkshops', event.target.id);
-				Session.set("s_message","You have successfully signed up for " + str + " !");
-				Session.set('d_message', false);
+		var name = event.target.id.slice(0, -1);
+		var pos = event.target.id.charAt(event.target.id.length-1);
+		if (pos == 1){
+			if (Workshops.findOne({name: name}).p1 == ''){
+				var str = event.target.id.slice(0, -1);
+				str = str.replace(/_/g, " ");
+				var confirm_name = "Are you teaching the " + str + " workshop?";
+				if (confirm(confirm_name)) {
+					Meteor.call('claimWorkshops', event.target.id);
+					Session.set("s_message","You have successfully signed up for " + str + " !");
+					Session.set('d_message', false);
+				}
+				return false;
+			} else {
+				var confirm_name = "Delete this entry?";
+				if (confirm(confirm_name)) {
+					Meteor.call('resetWorkshops', event.target.id, function(err,result){
+						if (!err) {
+							Session.set("s_message","You have successfully deleted this workshop signup!");
+							Session.set('d_message', false);
+						}else {
+							Session.set('d_message', err.message);
+							Session.set('s_message', false);
+						}
+					});
+				}
+				return false;
 			}
-			return false;
 		} else {
-			var confirm_name = "Delete this entry?";
-			if (confirm(confirm_name)) {
-				Meteor.call('resetWorkshops', event.target.id, function(err,result){
-					if (!err) {
-						Session.set("s_message","You have successfully deleted this workshop signup!");
-						Session.set('d_message', false);
-					}else {
-						Session.set('d_message', err.message);
-						Session.set('s_message', false);
-					}
-				});
-
-			}
-			return false;
+			if (Workshops.findOne({name: name}).p2 == ''){
+				var str = event.target.id.slice(0, -1);
+				str = str.replace(/_/g, " ");
+				var confirm_name = "Are you teaching the " + str + " workshop?";
+				if (confirm(confirm_name)) {
+					Meteor.call('claimWorkshops', event.target.id);
+					Session.set("s_message","You have successfully signed up for " + str + " !");
+					Session.set('d_message', false);
+				}
+				return false;
+			} else {
+				var confirm_name = "Delete this entry?";
+				if (confirm(confirm_name)) {
+					Meteor.call('resetWorkshops', event.target.id, function(err,result){
+						if (!err) {
+							Session.set("s_message","You have successfully deleted this workshop signup!");
+							Session.set('d_message', false);
+						}else {
+							Session.set('d_message', err.message);
+							Session.set('s_message', false);
+						}
+					});
+				}
+				return false;
+			}			
 		}
 	},
 
@@ -818,7 +661,8 @@ Template.writeUps.events({
 
 Template.cleaning.events({
 	"click .clean-room": function(event){
-		if ($("#" + event.target.id ).html() == "---"){
+		var room = event.target.id;
+		if ($("#" + room ).html() == "---"){
 			var d = new Date();
 			var h = d.getHours();
 			if (h <12){
@@ -835,10 +679,16 @@ Template.cleaning.events({
 				var mi = m;
 			}
 			var time = hr + ":" + mi + " " + APM;
-			var confirm_name = "You have cleaned " + event.target.id + " at " + time + "?";
+			var confirm_name = "You have cleaned " + room + " at " + time + "?";
 			if (confirm(confirm_name)) {
-				Meteor.call('cleanRoom', event.target.id);
-				Session.set('s_message', "You have cleaned room " + event.target.id +" !");
+				Meteor.call('cleanRoom', room);
+				var location = Rooms.findOne({name: room}).location;
+				console.log(location);
+				if (location != 'Music' || location != 'HSSB'){
+					Session.set('s_message', "You have cleaned " + location + " " + room +" !");
+				}else {
+					Session.set('s_message', "You have cleaned " + room +" !");
+				}
 				Session.set('d_message', false);
 			}
 			return false;
@@ -946,9 +796,17 @@ Template.register.events({
     event.preventDefault();
     var email = event.target.email.value;
     var password = event.target.password.value;
+    var firstName = event.target.firstName.value;
+    var lastName = event.target.lastName.value;
+    if (firstName == '' || lastName == ''){
+    	Session.set('errorMessage', "Names can't be blanked");
+    	throw new Meteor.Error("Names can't be blanked");
+    }
     Accounts.createUser({
       email: email,
-      password: password
+      password: password,
+      firstName: firstName,
+      lastName: lastName
     }, function(err) {
     	if (err) {
     		Session.set('errorMessage', err.message);

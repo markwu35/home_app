@@ -37,19 +37,18 @@ Single-page Meteor.js application to the UCSB Collaborate Labs
 
 ## Future Features
 
+*	Admin function
 * Back-end implementation of cons scheduling
 * Cleaning reset automatically overnight
-* Change emails into name (probably going to use Google API)
 * Jeopardy back-end implementation
 * Forms on modals to minimize use of space
 * Limit the amount of workshops each user can sign up
 * Export tables to .csv files
 * Potentially move data tables to seperate routes to minimize use of resources, especially on mobile devices
+* Random color for each user for scheduling purposes
 
 ## Bugs
 
-* Jquery doesn't work until you reload, or else it doesn't update td to class cleaned
 * Nightmode then login, and table borders become black
 	* Template where the tables are located is not loaded before the users signup, thus the problem
-* Don't rely on html to determine if sign or delete
-* fix cleaned class css change based on collection value
+* Using keyboard to select writeup reason will not trigger excused selection
