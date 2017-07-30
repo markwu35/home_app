@@ -662,7 +662,7 @@ Template.writeUps.events({
 Template.cleaning.events({
 	"click .clean-room": function(event){
 		var room = event.target.id;
-		if ($("#" + room ).html() == "---"){
+		if (Rooms.findOne({name: room}).cleaned == false){
 			var d = new Date();
 			var h = d.getHours();
 			if (h <12){
