@@ -8,8 +8,9 @@ import { labNoShows } from '../imports/labNoShows.js';
 import { workshops } from '../imports/workshops.js';
 import { wireFrame } from '../imports/wireFrame.js';
 import { writeUps } from '../imports/writeUps.js';
+import { schedules } from '../imports/schedules.js';
 
-import { addRooms, deleteRooms, cleanRoom, resetCleaning, addLabNoShows, deleteLabNoShows, addWireFrame, deleteWireFrame, addWorkshops, deleteWorkshops, claimWorkshops, resetWorkshops, addWriteUps, deleteWriteUps, signWriteUps } from '../imports/methods.js';
+import { addRooms, deleteRooms, cleanRoom, resetCleaning, addLabNoShows, deleteLabNoShows, addWireFrame, deleteWireFrame, addWorkshops, deleteWorkshops, claimWorkshops, resetWorkshops, addWriteUps, deleteWriteUps, signWriteUps, addSchedules } from '../imports/methods.js';
 
 import './main.html';
 
@@ -19,6 +20,7 @@ Meteor.subscribe("userList");
 Meteor.subscribe("workshops");
 Meteor.subscribe("wireFrame");
 Meteor.subscribe("writeUps");
+Meteor.subscribe("schedules");
 
 var ni = false;
 
@@ -364,6 +366,21 @@ Template.workshops.helpers({
 			return 'OPEN';
 		}
 	}
+});
+
+Template.scheduling.helpers({
+  isAdmin: function(){
+    if (Meteor.user() === null) {
+      return false;
+    }
+    if (Meteor.user().emails[0].address == "test3@gmail.com"){
+      return true;
+    }
+    return false;
+  },
+  schResult: function(){
+    return Schedules.find();
+  }
 });
 
 Template.clock.onDestroyed(function(){
@@ -783,12 +800,36 @@ Template.body.events({
 });
 
 Template.scheduling.events({
-	'click #sel-lab-sch': function(event){
-		$('#sel-lab-sch').change(function() {
-      $('.sin').hide();
-      $('#sin-' + $(this).val()).show();
-	});
-	}
+	// 'click #sel-lab-sch': function(event){
+	// 	$('#sel-lab-sch').change(function() {
+ //      $('.sin').hide();
+ //      $('#sin-' + $(this).val()).show();
+	// });
+	// },
+
+  'submit .add-schedules': function(event){
+    var location = event.target.location.value;
+    var quarter = event.target.quarter.value;
+    var year = event.target.year.value;
+    var note = event.target.note.value;
+
+    var entry = [location,quarter,year,note];
+    Meteor.call('addSchedules', entry, function(err,result){
+      if (!err){
+        event.target.location.value = '';
+        event.target.quarter.value = '';
+        event.target.year.value = '';
+        event.target.note.value = '';
+        Session.set("s_message","You have successfully added this schedule!");
+        Session.set('d_message', false);
+      }else {
+        Session.set("d_message","You can't have blank fields!");
+        Session.set("s_message", false);
+      }
+    });
+    return false;
+  },
+
 });
 
 Template.register.events({

@@ -682,33 +682,120 @@
 <template name="scheduling">
   {{#if currentUser}}
     <div class="row">
-      <div class="col-md-2">
-        <select class="form-control" name="sel-lab-sch" id="sel-lab-sch">
-          <option value="">Select One</option>
-          <option value="Phelps">Phelps</option>
-          <option value="HSSB">HSSB</option>
-          <option value="SSMS">SSMS</option>
-          <option value="LifeSci">Life Sci</option>
-          <option value="BSIF">BSIF</option>
-          <option value="Music">Music</option>
-        </select>
+      <div class="col-md-4">
+        {{#if isAdmin}}
+        <h3>Add Schedules:</h3>
+        <form class="add-schedules">
+          <div class="row">
+            <div class="col-xs-3">
+              <div class="input-group">
+                <label>Location</label>
+                <select class="form-control" name="location">
+                  <option value="">Select One</option>
+                  <option value="Phelps1">Phelps1</option>
+                  <option value="Phelps2">Phelps2</option>
+                  <option value="HSSB">HSSB</option>
+                  <option value="SSMS">SSMS</option>
+                  <option value="LifeSci">Life Sci</option>
+                  <option value="BSIF">BSIF</option>
+                  <option value="Music">Music</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <div class="input-group">
+                <label>Quarter</label>
+                <select class="form-control" name="quarter">
+                  <option value="">Select One</option>
+                  <option value="Fall">Fall</option>
+                  <option value="Winter">Winter</option>
+                  <option value="Spring">Spring</option>
+                  <option value="SummerA">Summer A</option>
+                  <option value="SummerB">Summer B</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <div class="input-group">
+                <label>Year</label>
+                <input type="text" class="form-control" name="year" placeholder="Year" />
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <div class="input-group">
+                <label>Note</label>
+                <select class="form-control" name="note">
+                  <option value="">Select One</option>
+                  <option value="first">First Week</option>
+                  <option value="perm">Permanent</option>
+                  <option value="finals">Finals Week</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xs-1">
+              <button type="submit" class="btn btn-primary" value="Submit" style="margin-top: 25px;"> Submit</button>
+            </div>
+          </div>
+        </form>
+        <br>
+        {{/if}}
+        <div class="row">
+          <div class="col-xs-3">
+            <label>Location</label>
+            <select class="form-control" name="sel-lab-sch" id="sel-lab-sch">
+              <option value="">Select One</option>
+              <option value="Phelps">Phelps</option>
+              <option value="HSSB">HSSB</option>
+              <option value="SSMS">SSMS</option>
+              <option value="LifeSci">Life Sci</option>
+              <option value="BSIF">BSIF</option>
+              <option value="Music">Music</option>
+            </select>
+          </div>
+          <div class="col-xs-3">
+            <label>Quarter</label>
+            <select class="form-control" name="sel-qua-sch" id="sel-qua-sch">
+              <option value="">Select One</option>
+              <option value="Fall">Fall</option>
+              <option value="Winter">Winter</option>
+              <option value="Spring">Spring</option>
+              <option value="SummerA">Summer A</option>
+              <option value="SummerB">Summer B</option>
+            </select>
+          </div>
+          <div class="col-xs-3">
+            <label>Year</label>
+            <select class="form-control" name="sel-yea-sch" id="sel-yea-sch">
+              <option value="">Select One</option>
+            </select>
+          </div>
+          <div class="col-xs-3">
+            <label>Note</label>
+            <select class="form-control" name="sel-not-sch" id="sel-not-sch">
+              <option value="">Select One</option>
+              <option value="first">First Week</option>
+              <option value="perm">Permanent</option>
+              <option value="finals">Finals Week</option>
+            </select>
+          </div>
+        </div>
+
         <p><strong>Quarter: </strong>Fall 2017</p>
         <p><strong>Note: </strong>First Week of</p>
         <p><strong>Current Group: </strong>A</p>
       </div>
-      <div class="col-md-10">
+      <div class="col-md-8">
 
         <div class="sin" id="sin-">
           <p>Currently on beta version with front-end implementation, back-end hasn't been implemented yet.</p>
           <p>Scheduling feature is only designed for Cons, or OpCos too if it is approved in the future.</p>
-        </div>
-        <div class="sin" id="sin-Phelps" style="display: none;">
+          {{#each schResult}}
           <div class="row">
             <div class="col-md-12">
-              <div class="clean-table row Phelps sch-table">
+              <div class="clean-table row sch-table">
                 <table>
                   <tr>
-                    <th>Phelps1</th>
+                    <th>{{location}}</th>
                     <th>Monday</th>
                     <th>Tuesday</th>
                     <th>Wednesday</th>
@@ -809,569 +896,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="clean-table row Phelps sch-table">
-                <table>
-                  <tr>
-                    <th>Phelps2</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                  </tr>
-                  <tr>
-                    <th>8-9 am</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <th>9-10 am</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <th>10-11 am</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr><tr>
-                    <th>11-12 pm</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr><tr>
-                    <th>12-1 pm</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr><tr>
-                    <th>1-2 pm</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr><tr>
-                    <th>2-3 pm</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr><tr>
-                    <th>3-4 pm</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr><tr>
-                    <th>4-5 pm</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr><tr>
-                    <th>5-6 pm</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr><tr>
-                    <th>6-7 pm</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr><tr>
-                    <th>7-8 pm</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr><tr>
-                    <th>8-9 pm</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="sin" id="sin-HSSB" style="display: none;">
-          <div class="clean-table row HSSB sch-table">
-            <table>
-              <tr>
-                <th>HSSB</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-              </tr>
-              <tr>
-                <th>8-9 am</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <th>9-10 am</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <th>10-11 am</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>11-12 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>12-1 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>1-2 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>2-3 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>3-4 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>4-5 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>5-6 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>6-7 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>7-8 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>8-9 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="sin" id="sin-SSMS" style="display: none;">
-          <div class="clean-table row SSMS sch-table">
-            <table>
-              <tr>
-                <th>SSMS</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-              </tr>
-              <tr>
-                <th>8-9 am</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <th>9-10 am</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <th>10-11 am</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>11-12 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>12-1 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>1-2 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>2-3 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>3-4 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>4-5 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="sin" id="sin-LifeSci" style="display: none;">
-          <div class="clean-table row LifeSci sch-table">
-            <table>
-              <tr>
-                <th>Life Sci</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-              </tr>
-              <tr>
-                <th>8-9 am</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <th>9-10 am</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <th>10-11 am</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>11-12 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>12-1 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>1-2 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>2-3 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>3-4 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>4-5 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="sin" id="sin-BSIF" style="display: none;">
-          <div class="clean-table row BSIF sch-table">
-            <table>
-              <tr>
-                <th>BSIF</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-              </tr>
-              <tr>
-                <th>8-9 am</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <th>9-10 am</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <th>10-11 am</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>11-12 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>12-1 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>1-2 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>2-3 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>3-4 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>4-5 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="sin" id="sin-Music" style="display: none;">
-          <div class="clean-table row Music sch-table">
-            <table>
-              <tr>
-                <th>Music</th>
-                <th>Sunday</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-              </tr>
-              <tr>
-                <th>9-10 am</th>
-                <td class="closed"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <th>10-11 am</th>
-                <td class="closed"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>11-12 pm</th>
-                <td class="closed"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>12-1 pm</th>
-                <td class="closed"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>1-2 pm</th>
-                <td class="closed"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>2-3 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>3-4 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>4-5 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>5-6 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>6-7 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>7-8 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>8-9 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr><tr>
-                <th>9-10 pm</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
-          </div>
+          {{/each}}
         </div>
       </div>
     </div>
