@@ -31,24 +31,29 @@ Single-page Meteor.js application to the UCSB Collaborate Labs
 	* Add/Delete writeups (OpCos Only)
 	* Sign writeups
 * Cons Scheduling
-	* Front-end implemented
+	* Personal color selection for each user
+	* Click and pick style of shift selection
 * Night Mode
 * Desktop/Tablet/Mobile Responsiveness
 
 ## Future Features
 
 *	Admin function
-* Back-end implementation of cons scheduling
 * Cleaning reset automatically overnight
 * Jeopardy back-end implementation
 * Forms on modals to minimize use of space
 * Limit the amount of workshops each user can sign up
 * Export tables to .csv files
 * Potentially move data tables to seperate routes to minimize use of resources, especially on mobile devices
-* Random color for each user for scheduling purposes
+* Scheduling
+	* Groups A, B, C for signup priority
+	* Search function
+	* Rules implementation, for example no one hour gap, no more than 6 hours each session
 
 ## Bugs
 
 * Nightmode then login, and table borders become black
 	* Template where the tables are located is not loaded before the users signup, thus the problem
 * Using keyboard to select writeup reason will not trigger excused selection
+* Schedule table nightmode
+* register button doesn't work after logged out
