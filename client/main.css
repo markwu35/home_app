@@ -180,26 +180,28 @@ input:checked + .slider:before {
   transition: background-color 0.25s;
 }
 
-.clean-table, .workshops-table {
+.clean-table, .workshops-table, .sch-table {
   margin-top: 5px;
   margin-bottom: 10px;
   overflow-x: auto;
   margin-right: -10px;
 }
 
-.clean-table tr:hover, .workshops-table tr:hover {
+
+
+.clean-table tr:hover, .workshops-table tr:hover, .sch-table tr:hover {
   background-color: #e2e2e2;
   -webkit-transition: background-color 0.25s; /* Safari */
   transition: background-color 0.25s;
 }
 
-.clean-table th, .workshops-table th{
+.clean-table th, .workshops-table th, .sch-table th{
   text-align: center;
   min-width: 130px;
   border: 1px solid black;
 }
 
-.clean-table table, .workshops-table table {
+.clean-table table, .workshops-table table, .sch-table table {
   margin-left: auto;
   margin-right: auto;
   margin-top: 5px;
@@ -213,6 +215,21 @@ input:checked + .slider:before {
   text-align: center;
   border: 1px solid black;
 }
+
+.sch-table td{
+  padding: 0px 5px;
+  min-width: 120px;
+  text-align: center;
+  border: 1px solid black;
+  font-size: 14px;
+}
+
+.sch-table td:hover {
+  background-color: #dff0d8;
+  color: black;
+  -webkit-transition: background-color 0.25s; /* Safari */
+  transition: background-color 0.25s;
+} 
 
 .workshops-table td:hover {
   background-color: #dff0d8;

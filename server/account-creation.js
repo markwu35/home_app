@@ -4,6 +4,7 @@ Accounts.onCreateUser(function(options, user) {
    // Assigns first and last names to the newly created user object
    user.profile.firstName = options.firstName;
    user.profile.lastName = options.lastName;
+   user.profile.color = options.color;
    // Returns the user object
    return user;
 });

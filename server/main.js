@@ -7,7 +7,7 @@ import { wireFrame } from '../imports/wireFrame.js';
 import { writeUps } from '../imports/writeUps.js';
 import { schedules } from '../imports/schedules.js';
 
-import { addReminders, deleteReminders, addRooms, deleteRooms, cleanRoom, resetCleaning, addLabNoShows, deleteLabNoShows, addWireFrame, deleteWireFrame, addWorkshops, deleteWorkshops, claimWorkshops, resetWorkshops, addWriteUps, deleteWriteUps, signWriteUps, addSchedules } from '../imports/methods.js';
+import { addReminders, deleteReminders, addRooms, deleteRooms, cleanRoom, resetCleaning, addLabNoShows, deleteLabNoShows, addWireFrame, deleteWireFrame, addWorkshops, deleteWorkshops, claimWorkshops, resetWorkshops, addWriteUps, deleteWriteUps, signWriteUps, addSchedules, removeSchedules, claimSchedules, deleteShifts } from '../imports/methods.js';
 
 Meteor.startup(() => {
   // code to run on server at startup
