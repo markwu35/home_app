@@ -11,7 +11,7 @@ import { addReminders, deleteReminders, addRooms, deleteRooms, cleanRoom, resetC
 
 Meteor.startup(() => {
   // code to run on server at startup
-
+  //seed();
 });
 
 // Meteor.publish('bucket_list', function(){
@@ -39,9 +39,29 @@ Meteor.publish('wireFrame', function(){
 		return WireFrame.find();
 	}
 });
-Meteor.publish('schedules', function(){
+Meteor.publish('schedules', function(searchEntry){
 	if (Meteor.user() !== null){
-		return Schedules.find();
+		if (!searchEntry){
+			return null;
+		} else {
+			var location = searchEntry[0];
+			var quarter = searchEntry[1];
+			var year = searchEntry[2];
+			var note = searchEntry[3];
+			if (location == ''){
+			return Schedules.find({
+					$and :[
+							{quarter: quarter},{year: year},{note: note}
+					]
+				});
+			}else {
+				return Schedules.find({
+					$and :[
+							{location: location},{quarter: quarter},{year: year},{note: note}
+					]
+				});
+			}
+		}
 	}
 });
 Meteor.publish('writeUps', function(){
@@ -60,3 +80,7 @@ Meteor.publish("userList", function() {
     return Meteor.users.find({}, {fields: { emails: 1, profile: 1 } });
   }
 });
+
+// function seed() {
+
+// }

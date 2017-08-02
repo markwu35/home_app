@@ -20,7 +20,7 @@ Meteor.subscribe("userList");
 Meteor.subscribe("workshops");
 Meteor.subscribe("wireFrame");
 Meteor.subscribe("writeUps");
-Meteor.subscribe("schedules");
+
 
 var ni = false;
 
@@ -379,7 +379,12 @@ Template.scheduling.helpers({
     return false;
   },
   schResult: function(){
-    return Schedules.find();
+		Meteor.subscribe("schedules", Session.get("searchSchEntry"));
+		if (Schedules.find().fetch()){
+			return Schedules.find();
+		}else{
+			return null;
+		}
   },
   note: function(){
   	if (this.note == 'perm'){
@@ -1527,6 +1532,21 @@ Template.scheduling.events({
 	    Session.set('d_message', false);
   	}
   	return false;
+  },
+  "click .search-schedules": function(event){
+  	var location = $("#sel-lab-sch").val();
+  	var quarter = $("#sel-qua-sch").val();
+  	var year = $("#sel-yea-sch").val();
+  	var note = $("#sel-not-sch").val();
+  	if (quarter =='' || year == '' || note == ''){
+  		Session.set("d_message","Please enter all required search queries!");
+	    Session.set('s_message', false);
+  	} else {
+			Session.set("d_message",false);
+	    Session.set('s_message', false);
+  		var searchEntry = [location,quarter,year,note];
+  		Session.set("searchSchEntry", searchEntry);
+  	}
   }
 });
 

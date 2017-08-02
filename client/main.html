@@ -687,8 +687,7 @@
         <h3>Add Schedules:</h3>
         <form class="add-schedules">
           <div class="row">
-            <div class="col-xs-3">
-              <div class="input-group">
+            <div class="col-xs-6">
                 <label>Location</label>
                 <select class="form-control" name="location">
                   <option value="">Select One</option>
@@ -700,10 +699,8 @@
                   <option value="BSIF">BSIF</option>
                   <option value="Music">Music</option>
                 </select>
-              </div>
             </div>
-            <div class="col-xs-3">
-              <div class="input-group">
+            <div class="col-xs-6">
                 <label>Quarter</label>
                 <select class="form-control" name="quarter">
                   <option value="">Select One</option>
@@ -713,16 +710,18 @@
                   <option value="SummerA">Summer A</option>
                   <option value="SummerB">Summer B</option>
                 </select>
-              </div>
             </div>
-            <div class="col-xs-2">
-              <div class="input-group">
+          </div>
+          <div class="row">
+            <div class="col-xs-6">
                 <label>Year</label>
-                <input type="text" class="form-control" name="year" placeholder="Year" />
-              </div>
+                <select class="form-control" name="year">
+                  <option value="">Select One</option>
+                  <option value="2017">2017</option>
+                  <option value="2018">2018</option>
+                </select>
             </div>
-            <div class="col-xs-3">
-              <div class="input-group">
+            <div class="col-xs-6">
                 <label>Note</label>
                 <select class="form-control" name="note">
                   <option value="">Select One</option>
@@ -730,23 +729,24 @@
                   <option value="perm">Permanent</option>
                   <option value="finals">Finals Week</option>
                 </select>
-              </div>
             </div>
-            <div class="col-xs-1">
-              <button type="submit" class="btn btn-primary" value="Submit" style="margin-top: 25px;"> Submit</button>
+          </div>
+          <div class="row" style="margin-top: 5px;">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-primary" value="Submit"> Submit</button> | <button class="btn btn-danger delete-schedules"> Delete All</button>
             </div>
           </div>
         </form>
-        <button class="btn btn-danger delete-schedules"> Delete All</button>
         <br>
         {{/if}}
-        <!--
+
         <div class="row">
-          <div class="col-xs-3">
-            <label>Location</label>
-            <select class="form-control" name="sel-lab-sch" id="sel-lab-sch">
-              <option value="">Select One</option>
-              <option value="Phelps">Phelps</option>
+          <div class="col-xs-6">
+            <label>Location<span style="color: red;">*</span></label>
+            <select class="form-control" id="sel-lab-sch">
+              <option value="">Any Locations</option>
+              <option value="Phelps1">Phelps1</option>
+              <option value="Phelps2">Phelps2</option>
               <option value="HSSB">HSSB</option>
               <option value="SSMS">SSMS</option>
               <option value="LifeSci">Life Sci</option>
@@ -754,9 +754,9 @@
               <option value="Music">Music</option>
             </select>
           </div>
-          <div class="col-xs-3">
-            <label>Quarter</label>
-            <select class="form-control" name="sel-qua-sch" id="sel-qua-sch">
+          <div class="col-xs-6">
+            <label>Quarter<span style="color: red;">*</span></label>
+            <select class="form-control" id="sel-qua-sch">
               <option value="">Select One</option>
               <option value="Fall">Fall</option>
               <option value="Winter">Winter</option>
@@ -765,15 +765,19 @@
               <option value="SummerB">Summer B</option>
             </select>
           </div>
-          <div class="col-xs-3">
-            <label>Year</label>
-            <select class="form-control" name="sel-yea-sch" id="sel-yea-sch">
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <label>Year<span style="color: red;">*</span></label>
+            <select class="form-control" id="sel-yea-sch">
               <option value="">Select One</option>
+              <option value="2017">2017</option>
+              <option value="2018">2018</option>
             </select>
           </div>
-          <div class="col-xs-3">
-            <label>Note</label>
-            <select class="form-control" name="sel-not-sch" id="sel-not-sch">
+          <div class="col-xs-6">
+            <label>Note<span style="color: red;">*</span></label>
+            <select class="form-control" id="sel-not-sch">
               <option value="">Select One</option>
               <option value="first">First Week</option>
               <option value="perm">Permanent</option>
@@ -781,16 +785,20 @@
             </select>
           </div>
         </div>
-        -->
+        <div class="row" style="margin-top: 5px;">
+          <div class="col-xs-12">
+            <button class="btn btn-info search-schedules">Search</button>
+          </div>
+        </div>
+
       </div>
       <div class="col-md-8">
-        <div class="sin" id="sin-">
           {{#each schResult}}
           <div class="row">
             <div class="col-md-12">
               <p><strong>Quarter: </strong>{{quarter}}, {{year}}</p>
               <p><strong>Note: </strong>{{note}}</p>
-              <p><strong>Current Group: </strong>A</p>
+              <p><strong>Current Group: </strong>STUB</p>
               <div class="row sch-table">
                 <table class="{{location}}"><tr>
                     <th>{{location}}</th>
@@ -899,7 +907,6 @@
             </div>
           </div>
           {{/each}}
-        </div>
       </div>
     </div>
   {{else}}

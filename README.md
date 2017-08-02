@@ -33,6 +33,7 @@ Single-page Meteor.js application to the UCSB Collaborate Labs
 * Cons Scheduling
 	* Personal color selection for each user
 	* Click and pick style of shift selection
+	* Search function
 * Night Mode
 * Desktop/Tablet/Mobile Responsiveness
 
@@ -47,7 +48,6 @@ Single-page Meteor.js application to the UCSB Collaborate Labs
 * Potentially move data tables to seperate routes to minimize use of resources, especially on mobile devices
 * Scheduling
 	* Groups A, B, C for signup priority
-	* Search function
 	* Rules implementation, for example no one hour gap, no more than 6 hours each session
 
 ## Bugs
