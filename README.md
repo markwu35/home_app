@@ -42,14 +42,17 @@ Single-page Meteor.js application to the UCSB Collaborate Printing Labs
 *	Admin function
 * Cleaning reset automatically overnight
 * Jeopardy back-end implementation (Twitter API?)
-* Admin Panel for adding/deleting records
 * Limit the amount of workshops each Cons can sign up
 * Ability to export tables to .csv files
 * Potentially move data tables to seperate pages to minimize use of resources, especially on mobile devices
 * Scheduling
 	* Groups A, B, C for signup priority
-	* Rules implementation, for example no one hour gap, no more than 6 hours each signup session
+	* Rules implementation, for example no one hour gap, no more than 6 hours each 
+	signup session
+	* Ability to put up uwanted shift and other can pick them up
+	* schedule conflict check(if user picked up shifts at same time)
 * Workshop attendance and feedback
+* better alert messages UI
 
 ## Bugs
 

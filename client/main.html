@@ -47,7 +47,7 @@
     {{#if s_message}}
     <div class="row msg-row">
       <div class="col-lg-12">
-        <div id="msg" class="alert alert-success alert-dismissable">
+        <div id="msgs" class="alert alert-success alert-dismissable">
           <a href="#" id="close_s" class="close" aria-label="close">&times;</a>
           <strong>{{s_message}}</strong>
         </div>
@@ -57,7 +57,7 @@
     {{#if d_message}}
     <div class="row msg-row">
       <div class="col-lg-12">
-        <div id="msg" class="alert alert-danger alert-dismissable">
+        <div id="msgd" class="alert alert-danger alert-dismissable">
           <a href="#" id="close_d" class="close" aria-label="close">&times;</a>
           <strong>{{d_message}}</strong>
         </div>
@@ -323,33 +323,41 @@
   </dl>
   <div class="row">
   {{#if isAdmin}}
-    <h2>Add workshop:</h2>
-    <form class="add-workshops">
-      <div class="row" style="max-width: 650px;margin-left: auto;margin-right: auto;">
-        <div class="col-lg-5">
-          <label>Date</label>
-          <input type="text" class="form-control" name="date" placeholder="Date" />
-        </div>
-        <div class="col-lg-5">
-          <label>Workshop Name</label>
-          <input type="text" class="form-control" name="name" placeholder="Workshop Name" />
-        </div>
-        <div class="col-lg-2">
-          <button type="submit" class="btn btn-primary" value="Submit" style="
-  margin-top: 25px;"> Submit</button>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addWorkshopModal">
+      Add Workshop
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addWorkshopModal" tabindex="-1" role="dialog" aria-labelledby="addWorkshopModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="addWorkshopModalLabel">Add Workshop</h2>
+          </div>
+          <div class="modal-body">
+            <form class="add-workshops">
+              <div class="row" style="max-width: 650px;margin-left: auto;margin-right: auto;">
+                <div class="col-lg-6">
+                  <label>Date</label>
+                  <input type="text" class="form-control" id="add-workshop-date" name="date" placeholder="Date" />
+                </div>
+                <div class="col-lg-6">
+                  <label>Workshop Name</label>
+                  <input type="text" class="form-control" id="add-workshop-name" name="name" placeholder="Workshop Name" />
+                </div>
+
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" id="add-workshop-btn" data-dismiss="modal" class="btn btn-primary" value="Submit"> Submit</button>
+          </div>
         </div>
       </div>
-        <!--
-        <div class="row">
-          <label>Opco/Cons 1</label>
-          <input type="text" class="form-control" name="p1" placeholder="Put 'OPEN' if empty" />
-        </div>
-        <div class="row">
-          <label>Opco/Cons 2</label>
-          <input type="text" class="form-control" name="p2" placeholder="Put 'OPEN' if empty" />
-        </div>
-        -->
-    </form>{{/if}}
+    </div>
+  {{/if}}
     <div id="ws-table" class="workshops-table col-md-12">
       <table>
         <tr>
@@ -521,7 +529,7 @@
 <template name="writeUps">
   {{#if currentUser}}
   {{#if isAdmin}}
-  <h2>Create Writeup:</h2>
+  <h2>Assign Writeup:</h2>
   <div class="row">
     <form class="add-writeUps">
       <div class="col-md-2">
@@ -684,62 +692,78 @@
     <div class="row">
       <div class="col-md-4">
         {{#if isAdmin}}
-        <h3>Add Schedules:</h3>
-        <form class="add-schedules">
-          <div class="row">
-            <div class="col-xs-6">
-                <label>Location</label>
-                <select class="form-control" name="location">
-                  <option value="">Select One</option>
-                  <option value="Phelps1">Phelps1</option>
-                  <option value="Phelps2">Phelps2</option>
-                  <option value="HSSB">HSSB</option>
-                  <option value="SSMS">SSMS</option>
-                  <option value="LifeSci">Life Sci</option>
-                  <option value="BSIF">BSIF</option>
-                  <option value="Music">Music</option>
-                </select>
-            </div>
-            <div class="col-xs-6">
-                <label>Quarter</label>
-                <select class="form-control" name="quarter">
-                  <option value="">Select One</option>
-                  <option value="Fall">Fall</option>
-                  <option value="Winter">Winter</option>
-                  <option value="Spring">Spring</option>
-                  <option value="SummerA">Summer A</option>
-                  <option value="SummerB">Summer B</option>
-                </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-6">
-                <label>Year</label>
-                <select class="form-control" name="year">
-                  <option value="">Select One</option>
-                  <option value="2017">2017</option>
-                  <option value="2018">2018</option>
-                </select>
-            </div>
-            <div class="col-xs-6">
-                <label>Note</label>
-                <select class="form-control" name="note">
-                  <option value="">Select One</option>
-                  <option value="first">First Week</option>
-                  <option value="perm">Permanent</option>
-                  <option value="finals">Finals Week</option>
-                </select>
-            </div>
-          </div>
-          <div class="row" style="margin-top: 5px;">
-            <div class="col-xs-12">
-              <button type="submit" class="btn btn-primary" value="Submit"> Submit</button> | <button class="btn btn-danger delete-schedules"> Delete All</button>
-            </div>
-          </div>
-        </form>
-        <br>
-        {{/if}}
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addScheduleModal">
+            Create Schedule
+          </button>
+          <button class="btn btn-danger delete-schedules"> Delete All</button>
 
+
+          <!-- Modal -->
+          <div class="modal fade" id="addScheduleModal" tabindex="-1" role="dialog" aria-labelledby="addScheduleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h2 class="modal-title" id="addScheduleModalLabel">Create Schedule</h2>
+                </div>
+                <div class="modal-body">
+                  <form class="add-schedules">
+                    <div class="row">
+                      <div class="col-xs-6">
+                          <label>Location</label>
+                          <select class="form-control" id="add-schedule-location" name="location">
+                            <option value="">Select One</option>
+                            <option value="Phelps1">Phelps1</option>
+                            <option value="Phelps2">Phelps2</option>
+                            <option value="HSSB">HSSB</option>
+                            <option value="SSMS">SSMS</option>
+                            <option value="LifeSci">Life Sci</option>
+                            <option value="BSIF">BSIF</option>
+                            <option value="Music">Music</option>
+                          </select>
+                      </div>
+                      <div class="col-xs-6">
+                          <label>Quarter</label>
+                          <select class="form-control" id="add-schedule-quarter" name="quarter">
+                            <option value="">Select One</option>
+                            <option value="Fall">Fall</option>
+                            <option value="Winter">Winter</option>
+                            <option value="Spring">Spring</option>
+                            <option value="SummerA">Summer A</option>
+                            <option value="SummerB">Summer B</option>
+                          </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-6">
+                          <label>Year</label>
+                          <select class="form-control" id="add-schedule-year" name="year">
+                            <option value="">Select One</option>
+                            <option value="2017">2017</option>
+                            <option value="2018">2018</option>
+                          </select>
+                      </div>
+                      <div class="col-xs-6">
+                          <label>Note</label>
+                          <select class="form-control" id="add-schedule-note" name="note">
+                            <option value="">Select One</option>
+                            <option value="first">First Week</option>
+                            <option value="perm">Permanent</option>
+                            <option value="finals">Finals Week</option>
+                          </select>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" id="add-schedule-btn" data-dismiss="modal" class="btn btn-primary" value="Submit"> Create</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/if}}
+        <br>
         <div class="row">
           <div class="col-xs-6">
             <label>Location<span style="color: red;">*</span></label>
