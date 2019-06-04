@@ -1,0 +1,84 @@
+<template name="cleaning">
+  {{#if currentUser}}
+    <dl class="row" id="show-dl">  
+      <dt class="col-sm-6">Instructions</dt>
+      <dd class="col-sm-6">Click --- to record your cleaning!</dd>
+      <dt class="col-sm-6"></dt>
+      <dd class="col-sm-6">Click again to remove your cleaning record!</dd>
+    </dl>
+    <br>
+    <dl class="row" id="show-dl">
+      <dt class="col-sm-6">Today's cleaning</dt>
+      <dd class="col-sm-6">{{cleaning_duty}}</dd>
+      <dt class="col-sm-6">You have cleaned</dt>
+      <dd class="col-sm-6">{{rooms_cleaned}} rooms today</dd>
+    </dl>
+    {{#if isAdmin}}
+    <div class="row">
+      <div class="col-lg-12">
+        <button type="button" class="reset-cleaning btn btn-danger">Reset</button>
+      </div>
+    </div>
+    {{/if}}
+    <div class="clean-table row">
+      <div class="col-lg-3">
+        <h2>PHELPS</h2>
+        <table>
+        {{#each phelps}}
+          <tr>
+            <td>{{name}}</td>
+            <td id={{name}} class="clean-room {{cleaned_class}}">{{clean_info}}</td>
+          </tr>
+        {{/each}}
+        </table>
+      </div>
+      <div class="col-lg-3">
+        <h2>HSSB</h2>
+        <table>
+        {{#each hssb}}
+          <tr>
+            <td>{{name}}</td>
+            <td id={{name}} class="clean-room {{cleaned_class}}">{{clean_info}}</td>
+          </tr>
+        {{/each}}
+        {{#each ssms}}
+          <tr>
+            <td>{{name}}</td>
+            <td id={{name}} class="clean-room {{cleaned_class}}">{{clean_info}}</td>
+          </tr>
+        {{/each}}
+        </table>
+      </div>
+      <div class="col-lg-3">
+        <h2>LIFE SCIENCE</h2>
+        <table>
+        {{#each lifeSci}}
+          <tr>
+            <td>{{name}}</td>
+            <td id={{name}} class="clean-room {{cleaned_class}}">{{clean_info}}</td>
+          </tr>
+        {{/each}}
+        {{#each bsif}}
+          <tr>
+            <td>{{name}}</td>
+            <td id={{name}} class="clean-room {{cleaned_class}}">{{clean_info}}</td>
+          </tr>
+        {{/each}}
+        </table>
+      </div>
+      <div class="col-lg-3">
+        <h2>MUSIC</h2>
+        <table>
+        {{#each music}}
+          <tr>
+            <td>{{name}}</td>
+            <td id={{name}} class="clean-room {{cleaned_class}}">{{clean_info}}</td>
+          </tr>
+        {{/each}}
+        </table>
+      </div>
+    </div>
+  {{else}}
+    {{> notLoggedIn}}
+  {{/if}}
+</template>

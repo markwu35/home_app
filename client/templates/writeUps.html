@@ -1,0 +1,160 @@
+<template name="writeUps">
+  {{#if currentUser}}
+  {{#if isAdmin}}
+  <h2>Assign Writeup:</h2>
+  <div class="row">
+    <form class="add-writeUps">
+      <div class="col-md-2">
+        <label>Assigned To</label>
+        <input type="text" class="form-control" name="email" placeholder="Email Address" />
+      </div>
+      <div class="col-md-2">
+        <label>Date</label>
+        <input type="text" class="form-control" name="date" placeholder="MM/DD/YY" />
+      </div>
+      <div class="col-md-2">
+        <label>Type</label>
+        <select class="form-control" name="type" id="writeUpType">
+          <option value="">Select One</option>
+          <option value="good">Good</option>
+          <option value="bad">Bad</option>
+          <option value="shift">Late/Missed Shift</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label>Reason</label>
+        <input type="text" class="form-control" name="reason" placeholder="Reason" />
+      </div>
+      <div class="col-md-2">
+        <div id="bad" style="display:none;">
+          <label>Excused?</label>
+          <select class="form-control" name="excused">
+            <option value="">Select One</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div id="shift" style="display:none;">
+          <label>How Long?</label>
+          <input type="text" class="form-control" name="period" placeholder="How long shift missed" />
+        </div>
+      </div>
+      <div class="col-md-1">
+        <button type="submit" class="btn btn-primary" value="Submit" style="
+  margin-top: 25px;"> Submit</button>
+      </div>
+    </form>
+  </div>
+  <br>
+  <h3>All Writeups</h3>
+  <div class="clean-table row">
+    <table>
+      <tr>
+        <th>Assigned To</th>
+        <th>Type</th>
+        <th>Assigned By</th>
+        <th>Date</th>
+        <th>Recorded At</th>
+        <th>Reason</th>
+        <th>Excused?</th>
+        <th>Period</th>
+      </tr>
+      {{#each writeUps}}
+        <tr class={{class_signed}}>
+          <td>{{assignedTo}}</td>
+          <td>{{type}}</td>
+          <td>{{assignedBy}}</td>
+          <td>{{date}}</td>
+          <td>{{recordedAt}}</td>
+          <td>{{reason}}</td>
+          <td>{{excused}}</td>
+          <td>{{period}}</td>
+          <td><a href="#" class="delete-writeUps btn btn-danger">X</a></td>
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+  {{/if}}
+  <h3>Your Writeups</h3>
+  <dl class="row" id="show-dl">  
+    <dt class="col-sm-6"># of Good Writeups</dt>
+    <dd class="col-sm-6">{{numGoodWriteUps}}</dd>
+    <dt class="col-sm-6"># of Bad Writeups</dt>
+    <dd class="col-sm-6">{{numBadWriteUps}}</dd>
+    <dt class="col-sm-6"># of Late/Missed Shifts</dt>
+    <dd class="col-sm-6">{{numMissedShifts}}</dd>
+  </dl>
+  <div class="row">
+    <div class="col-lg-4">
+      <h3>Good Writeups</h3>
+      <div class="clean-table row">
+        <table>
+          <tr>
+            <th>Assigned By</th>
+            <th>Date</th>
+            <th>Recorded At</th>
+            <th>Reason</th>
+          </tr>
+          {{#each goodWriteUps}}
+            <tr class={{class_signed}}>
+              <td>{{assignedBy}}</td>
+              <td>{{date}}</td>
+              <td>{{recordedAt}}</td>
+              <td>{{reason}}</td>
+              {{#if unSigned}}<td><a href="#" class="sign-writeUps btn btn-info">Sign</a></td>{{/if}}
+            </tr>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <h3>Bad Writeups</h3>
+      <div class="clean-table row">
+        <table>
+          <tr>
+            <th>Assigned By</th>
+            <th>Date</th>
+            <th>Recorded At</th>
+            <th>Reason</th>
+            <th>Excused?</th>
+          </tr>
+          {{#each badWriteUps}}
+            <tr class={{class_signed}}>
+              <td>{{assignedBy}}</td>
+              <td>{{date}}</td>
+              <td>{{recordedAt}}</td>
+              <td>{{reason}}</td>
+              <td>{{excused}}</td>
+              {{#if unSigned}}<td><a href="#" class="sign-writeUps btn btn-info">Sign</a></td>{{/if}}
+            </tr>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <h3>Late/Missed Shifts</h3>
+      <div class="clean-table row">
+        <table>
+          <tr>
+            <th>Assigned By</th>
+            <th>Date</th>
+            <th>Recorded At</th>
+            <th>How Long</th>
+          </tr>
+          {{#each missedShifts}}
+            <tr class={{class_signed}}>
+              <td>{{assignedBy}}</td>
+              <td>{{date}}</td>
+              <td>{{recordedAt}}</td>
+              <td>{{period}}</td>
+              {{#if unSigned}}<td><a href="#" class="sign-writeUps btn btn-info">Sign</a></td>{{/if}}
+            </tr>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> notLoggedIn}}
+  {{/if}}
+</template>

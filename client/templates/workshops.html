@@ -1,0 +1,77 @@
+<template name="workshops">
+  {{#if currentUser}}
+  <dl class="row" id="show-dl">  
+    <dt class="col-sm-6">Instructions</dt>
+    <dd class="col-sm-6">Click OPEN to claim your workshop spot!</dd>
+    <dt class="col-sm-6"></dt>
+    <dd class="col-sm-6">Click again to remove your workshop spot!</dd>
+  </dl>
+  <br>
+  <dl class="row" id="show-dl">
+    <dt class="col-sm-6">Time</dt>
+    <dd class="col-sm-6">7PM -9PM</dd>
+    <dt class="col-sm-6">Location</dt>
+    <dd class="col-sm-6">SSMS 1304</dd>
+  </dl>
+  <div class="row">
+  {{#if isAdmin}}
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addWorkshopModal">
+      Add Workshop
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addWorkshopModal" tabindex="-1" role="dialog" aria-labelledby="addWorkshopModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="addWorkshopModalLabel">Add Workshop</h2>
+          </div>
+          <div class="modal-body">
+            <form class="add-workshops">
+              <div class="row" style="max-width: 650px;margin-left: auto;margin-right: auto;">
+                <div class="col-lg-6">
+                  <label>Date</label>
+                  <input type="text" class="form-control" id="add-workshop-date" name="date" placeholder="Date" />
+                </div>
+                <div class="col-lg-6">
+                  <label>Workshop Name</label>
+                  <input type="text" class="form-control" id="add-workshop-name" name="name" placeholder="Workshop Name" />
+                </div>
+
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" id="add-workshop-btn" data-dismiss="modal" class="btn btn-primary" value="Submit"> Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+    <div id="ws-table" class="workshops-table col-md-12">
+      <table>
+        <tr>
+          <th>Date</th>
+          <th>Workshop</th>
+          <th>OpCo/Cons 1</th>
+          <th>OpCo/Cons 2</th>
+        </tr>
+        {{#each workshops}}
+        <tr>
+          <td>{{date}}</td>
+          <td>{{name_w_s}}</td>
+          <td class="ws-open" id="{{name}}1">{{p1}}</td>
+          <td class="ws-open" id="{{name}}2">{{p2}}</td>
+          {{#if isAdmin}}<td><a href="#" class="delete-workshops btn btn-danger">X</a></td>{{/if}}
+        </tr>
+        
+        {{/each}}
+      </table>
+    </div>
+  </div>
+  {{else}}
+  {{> notLoggedIn}}
+  {{/if}}
+</template>

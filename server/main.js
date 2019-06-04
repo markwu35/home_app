@@ -1,11 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 
-import { rooms } from '../imports/rooms.js';
-import { labNoShows } from '../imports/labNoShows.js';
-import { workshops } from '../imports/workshops.js';
-import { wireFrame } from '../imports/wireFrame.js';
-import { writeUps } from '../imports/writeUps.js';
-import { schedules } from '../imports/schedules.js';
+import { rooms } from '../imports/dataCollection/rooms.js';
+import { labNoShows } from '../imports/dataCollection/labNoShows.js';
+import { workshops } from '../imports/dataCollection/workshops.js';
+import { wireFrame } from '../imports/dataCollection/wireFrame.js';
+import { writeUps } from '../imports/dataCollection/writeUps.js';
+import { schedules } from '../imports/dataCollection/schedules.js';
 
 import { addReminders, deleteReminders, addRooms, deleteRooms, cleanRoom, resetCleaning, addLabNoShows, deleteLabNoShows, addWireFrame, deleteWireFrame, addWorkshops, deleteWorkshops, claimWorkshops, resetWorkshops, addWriteUps, deleteWriteUps, signWriteUps, addSchedules, removeSchedules, claimSchedules, deleteShifts } from '../imports/methods.js';
 

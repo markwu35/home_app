@@ -1,0 +1,52 @@
+<template name="labs">
+  {{#if currentUser}}
+  {{#if isAdmin}}
+  <div class="col-lg-2">
+    <h3>Add labs:</h3>
+    <form class="add-rooms">
+      <select class="form-control" name="location" id="location">
+        <option value="">Select One</option>
+        <option value="Phelps">Phelps</option>
+        <option value="HSSB">HSSB</option>
+        <option value="SSMS">SSMS</option>
+        <option value="LifeSci">Life Sci</option>
+        <option value="BSIF">BSIF</option>
+        <option value="Music">Music</option>
+      </select>
+      <div class="input-group">
+        <label>Room Number</label>
+        <input type="text" class="form-control" name="name" placeholder="Room Number" />
+        <span class="input-group-btn">
+          <input type="submit" class="btn btn-primary" value="Submit" />
+        </span>
+      </div>
+    </form>
+  </div>
+  {{/if}}
+  <div class="col-xs-4">
+    <h4>Current labs:</h4>
+    <ul>
+      {{#each rooms}}
+        <li><a id={{name}}-detail href="#">{{name}}</a> {{#if isAdmin}}<a href="#" class="delete-rooms">X</a>{{/if}}</li>
+      {{/each}}
+    </ul>
+  </div>
+  <div class="col-xs-6">
+    <h2>Lab Details:</h2>
+    <dl class="row" id="show-dl">
+      <dt class="col-sm-6">Lab</dt>
+      <dd class="lab-name col-sm-6">-</dd>
+      <dt class="col-sm-6">Help Desk Availability</dt>
+      <dd class="help-desk col-sm-6">-</dd>
+      <dt class="col-sm-6"># of Print Spots</dt>
+      <dd class="print-spot col-sm-6">-</dd>
+      <dt class="col-sm-6"># of Computers</dt>
+      <dd class="computers col-sm-6">-</dd>
+
+    </dl>
+    <div class="centered-img"><img class='lab-pic' src="./print_default.jpg"></div>
+  </div>
+  {{else}}
+  {{> notLoggedIn}}
+  {{/if}}
+</template>

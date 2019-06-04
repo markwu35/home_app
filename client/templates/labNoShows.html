@@ -1,0 +1,70 @@
+<template name="labNoShows">
+  {{#if currentUser}}
+    <h2>Lab No Shows</h2>
+    <div class="lab-form">
+      <form class="add-labNoShows">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="input-group">
+              <label>Class Name</label>
+              <input type="text" class="form-control" name="className" placeholder="Class Name" />
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="input-group">
+              <label>Professor Name</label>
+              <input type="text" class="form-control" name="professorName" placeholder="Professor Name" />
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="input-group">
+              <label>Location</label>
+              <input type="text" class="form-control" name="location" placeholder="Location" />
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="input-group">
+              <label>Start-End Time</label>
+              <input type="text" class="form-control" name="startEndTime" placeholder="Start-End Time" />
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <button type="submit" class="btn btn-primary" value="Submit" style="margin-top: 25px;"> Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="clean-table row">
+      <table>
+        <tr>
+          <th>Week#</th>
+          <th>Date</th>
+          <th>Day Of The Week</th>
+          <th>Start-End Time</th>
+          <th>Location</th>
+          <th>Professor Name</th>
+          <th>Class Name</th>
+          <th>Recorded By</th>
+          <th>Time</th>
+        </tr>
+        {{#each labNoShows}}
+        <tr>
+          <td>{{week}}</td>
+          <td>{{date}}</td>
+          <td>{{day}}</td>
+          <td>{{SEtime}}</td>
+          <td>{{location}}</td>
+          <td>{{professorName}}</td>
+          <td>{{className}}</td>
+          <td>{{recordedBy}}</td>
+          <td>{{time}}</td>
+          {{#if currentUser}}<td><a href="#" class="delete-labNoShows btn btn-danger">X</a></td>{{/if}}
+        </tr>
+        
+        {{/each}}
+      </table>
+  </div>
+  {{else}}
+    {{> notLoggedIn}}
+  {{/if}}
+</template>

@@ -1,0 +1,70 @@
+<template name="wireFrame">
+  {{#if currentUser}}
+    <div class="row">
+      <h2>Wireframe Media Studio Policies</h2>
+      <p>By signing this form, I acknowledge that my use of the Wireframe media studio is a privilege granted through enrollment in Film and Media Studies courses taught by either Professor Shereen Sakr or Professor Chang, and is contingent upon responsible and fair use of the space and its equipment. You also agree to abide by the following rules and policies:</p>
+      <ul>
+      <li>Students are not allowed to alter the software or hardware configurations of any of the lab equipment without prior authorization from either a teacher or lab proctor.</li>
+      <li>While using the space, students must remain vigilant—never leave either the cage or outer doors propped or leave the space unattended.</li>
+      <li>Do not allow unaffiliated students into the space.</li>
+      <li>Coursework takes priority over all other uses.</li>
+      <li>Practice courtesy. Be mindful of others using the Wireframe space or the digital humanities commons, by using headphones to minimize noise disruption, keeping the space clean, returning things to their original places, shutting equipment down properly, charging controllers, and so on</li>
+      <li>Observe “recording in progress” signs for production work</li>
+      <li>Check the library calendar for Wireframe’s availability <a target="_blank" href="http://www.library.ucsb.edu/sites/default/files/winter_1.pdf">Here</a></li>
+      </ul>
+      <h2>Procedures</h2>
+      <p>To enter Wireframe, you must first sign in at the front desk in the lobby of the Music building. Give your student ID to the worker at the desk, and that staff member will unlock the lab space for your use. Your ID card will be returned when you sign out and verify that you have left all equipment as you found it.</p>
+      <p>Any equipment that is damaged, broken, or goes missing while you are using the space becomes your responsibility. We reserve the right to charge your BARC account if the lab equipment is handled inappropriately or negligently.</p>
+      <p style="text-align: center;"> [CSSC STAFF ONLY] <a target="_blank" href="https://ucsb.app.box.com/files/0/f/16880377852/1/f_113185636595">WireFrame Roster</a> </p>
+    </div>
+    <div class="row">
+      <form class="add-wireFrame">
+        <div class="col-md-4">
+          <label>Perm Number</label>
+          <input type="text" class="form-control" name="permNumber" placeholder="Perm Number" />
+        </div>
+        <div class="col-md-3">
+          <label>Check</label>
+          <select class="form-control" name="checked" id="check">
+            <option value="">Select One</option>
+            <option value="In">In</option>
+            <option value="Out">Out</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label>Comments</label>
+          <input type="text" class="form-control" name="comments" placeholder="[CSSC STAFF ONLY]" />
+        </div>
+        <div class="col-md-1">
+          <button type="submit" class="btn btn-primary" value="Submit" style="
+    margin-top: 25px;"> Submit</button>
+        </div>
+      </form>
+    </div>
+    <div class="clean-table row">
+      <table>
+        <tr>
+          <th>Perm Number</th>
+          <th>Checked</th>
+          <th>Comments</th>
+          <th>Recorded By</th>
+          <th>Recorded At</th>
+        </tr>
+        {{#each wireFrame}}
+        <tr>
+          <td>{{perm}}</td>
+          <td>{{checked}}</td>
+          <td>{{comments}}</td>
+          <td>{{recordedBy}}</td>
+          <td>{{recordedAt}}</td>
+          {{#if currentUser}}<td><a href="#" class="delete-wireFrame btn btn-danger">X</a></td>{{/if}}
+        </tr>
+        
+        {{/each}}
+      </table>
+    </div>
+
+  {{else}}
+    {{> notLoggedIn}}
+  {{/if}}
+</template>

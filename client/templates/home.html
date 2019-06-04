@@ -1,0 +1,120 @@
+<template name="home">
+  {{#if currentUser}}
+  <h2>Welcome, {{current_user}} !</h2>
+  {{#if isAdmin}}
+  {{> userList}}
+  {{/if}}
+  <br>
+  {{> reminders}}
+  <br>
+  {{> jeopardy}}
+  {{else}}
+  {{> notLoggedIn}}
+  {{/if}}
+</template>
+
+
+
+
+<template name="userList">
+  <h4>Current User List:</h4>
+  <ul>
+    {{#each allUsers}}
+      <li>{{email}}</li>
+    {{/each}}
+  </ul>
+</template>
+
+<template name="reminders">
+  <h4>Current Reminders:</h4>
+  <ul>
+    <li>You have signed up for [NAME] workshop on [DATE]</li>
+    <li>You haven't cleaned any labs today yet</li>
+    <li>Fall 2017 scheduling will be on [DATE]</li>
+  </ul>
+</template>
+
+<template name="jeopardy">
+  <div class="col-md-4">
+    <h4>Hourly Jeopardy</h4>
+    <form class="j-ans">
+      <div class="input-group">
+        <label>[QUESTION HERE]</label>
+        <input type="text" class="form-control" name="ans" placeholder="Answer" />
+        <span class="input-group-btn">
+          <input type="submit" class="btn btn-primary" value="Submit" />
+        </span>
+      </div>
+    </form>
+  </div>
+</template>
+
+<template name="notLoggedIn">
+  <div id="login-container" class="row">
+    <div class="col-sm-12">
+        {{> login}}
+        {{> register}}
+    </div>
+  </div>
+</template>
+
+<template name="register">
+  <div id="r-p" class="md-container" style="display: none;">
+    <h2>Register</h2>
+    <div class="alert-container">
+      {{#if errorMessage}}
+        <div class="alert alert-danger alert-dismissable">
+          <a href="#" class="close" aria-label="close">&times;</a>
+          <strong>{{errorMessage}}</strong>
+        </div>
+      {{/if}}
+    </div>
+    <form class="register">
+      <div class="row">
+        <div class="col-xs-12"><label>Email</label><input class="form-control" type="email" name="email" placeholder="@umail only!"></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <label>First Name</label>
+          <input class="form-control" type="text" name="firstName" placeholder="First Name">
+        </div>
+        <div class="col-xs-6">
+          <label>Last Name</label><input class="form-control" type="text" name="lastName" placeholder="Last Name">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12"><label>Color for Scheduling</label><input class="form-control" type="color" name="color"></div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12"><label>Password</label><input class="form-control" type="password" name="password"></div>
+      </div>
+      <div class="row" style="margin-top: 5px;">
+        <div class="col-xs-12"><span><input class="btn btn-primary" type="submit" value="Register"></span> | <span>Already have an account? Log in <a href="#" class="s-login">here</a></span> </div>
+
+      </div>
+    </form>
+  </div>
+</template>
+
+<template name="login">
+  <div id="l-p" class="md-container">
+    <p>Please re-register again!</p>
+    <p>OpCo account: test3@gmail.com pw: test123</p>
+    <h2>Sign in</h2>
+    <div id="err-msg" class="alert-container">
+      {{#if errorMessage}}
+        <div class="alert alert-danger alert-dismissable">
+          <a href="#" class="close" aria-label="close">&times;</a>
+          <strong>{{errorMessage}}</strong>
+        </div>
+      {{/if}}
+    </div>
+    <form class="login">
+    <div class="col-xs-12"><div class="row"><label>Email</label><input class="form-control" type="email" name="email" placeholder="@umail only!"></div></div>
+    <div class="col-xs-12"><div class="row"><label>Password</label><input class="form-control" type="password" name="password"></div></div>
+    <div class="col-xs-12"><div class="row"  style="margin-top: 5px;">
+        <span><input class="btn btn-primary" type="submit" value="Login"></span> | <span>Don't have an account? Register <a href="#" class="s-register">here</a></span>
+      </div></div>
+    </form>
+  </div>
+</template>

@@ -1,0 +1,250 @@
+<template name="scheduling">
+  {{#if currentUser}}
+    <div class="row">
+      <div class="col-md-4">
+        {{#if isAdmin}}
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addScheduleModal">
+            Create Schedule
+          </button>
+          <button class="btn btn-danger delete-schedules"> Delete All</button>
+
+
+          <!-- Modal -->
+          <div class="modal fade" id="addScheduleModal" tabindex="-1" role="dialog" aria-labelledby="addScheduleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h2 class="modal-title" id="addScheduleModalLabel">Create Schedule</h2>
+                </div>
+                <div class="modal-body">
+                  <form class="add-schedules">
+                    <div class="row">
+                      <div class="col-xs-6">
+                          <label>Location</label>
+                          <select class="form-control" id="add-schedule-location" name="location">
+                            <option value="">Select One</option>
+                            <option value="Phelps1">Phelps1</option>
+                            <option value="Phelps2">Phelps2</option>
+                            <option value="HSSB">HSSB</option>
+                            <option value="SSMS">SSMS</option>
+                            <option value="LifeSci">Life Sci</option>
+                            <option value="BSIF">BSIF</option>
+                            <option value="Music">Music</option>
+                          </select>
+                      </div>
+                      <div class="col-xs-6">
+                          <label>Quarter</label>
+                          <select class="form-control" id="add-schedule-quarter" name="quarter">
+                            <option value="">Select One</option>
+                            <option value="Fall">Fall</option>
+                            <option value="Winter">Winter</option>
+                            <option value="Spring">Spring</option>
+                            <option value="SummerA">Summer A</option>
+                            <option value="SummerB">Summer B</option>
+                          </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-6">
+                          <label>Year</label>
+                          <select class="form-control" id="add-schedule-year" name="year">
+                            <option value="">Select One</option>
+                            <option value="2017">2017</option>
+                            <option value="2018">2018</option>
+                          </select>
+                      </div>
+                      <div class="col-xs-6">
+                          <label>Note</label>
+                          <select class="form-control" id="add-schedule-note" name="note">
+                            <option value="">Select One</option>
+                            <option value="first">First Week</option>
+                            <option value="perm">Permanent</option>
+                            <option value="finals">Finals Week</option>
+                          </select>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" id="add-schedule-btn" data-dismiss="modal" class="btn btn-primary" value="Submit"> Create</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/if}}
+        <br>
+        <div class="row">
+          <div class="col-xs-6">
+            <label>Location<span style="color: red;">*</span></label>
+            <select class="form-control" id="sel-lab-sch">
+              <option value="">Any Locations</option>
+              <option value="Phelps1">Phelps1</option>
+              <option value="Phelps2">Phelps2</option>
+              <option value="HSSB">HSSB</option>
+              <option value="SSMS">SSMS</option>
+              <option value="LifeSci">Life Sci</option>
+              <option value="BSIF">BSIF</option>
+              <option value="Music">Music</option>
+            </select>
+          </div>
+          <div class="col-xs-6">
+            <label>Quarter<span style="color: red;">*</span></label>
+            <select class="form-control" id="sel-qua-sch">
+              <option value="">Select One</option>
+              <option value="Fall">Fall</option>
+              <option value="Winter">Winter</option>
+              <option value="Spring">Spring</option>
+              <option value="SummerA">Summer A</option>
+              <option value="SummerB">Summer B</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <label>Year<span style="color: red;">*</span></label>
+            <select class="form-control" id="sel-yea-sch">
+              <option value="">Select One</option>
+              <option value="2017">2017</option>
+              <option value="2018">2018</option>
+            </select>
+          </div>
+          <div class="col-xs-6">
+            <label>Note<span style="color: red;">*</span></label>
+            <select class="form-control" id="sel-not-sch">
+              <option value="">Select One</option>
+              <option value="first">First Week</option>
+              <option value="perm">Permanent</option>
+              <option value="finals">Finals Week</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 5px;">
+          <div class="col-xs-12">
+            <button class="btn btn-info search-schedules">Search</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-8">
+          {{#each schResult}}
+          <div class="row">
+            <div class="col-md-12">
+              <p><strong>Quarter: </strong>{{quarter}}, {{year}}</p>
+              <p><strong>Note: </strong>{{note}}</p>
+              <p><strong>Current Group: </strong>STUB</p>
+              <div class="row sch-table">
+                <table class="{{location}}"><tr>
+                    <th>{{location}}</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                  </tr><tr>
+                    <th>8-9 am</th>
+                    <td style="background-color: {{cm8t9a}};" class="sch-blk" id="m8t9a">{{m8t9a}}</td>
+                    <td style="background-color: {{ct8t9a}};" class="sch-blk" id="t8t9a">{{t8t9a}}</td>
+                    <td style="background-color: {{cw8t9a}};" class="sch-blk" id="w8t9a">{{w8t9a}}</td>
+                    <td style="background-color: {{cth8t9a}};" class="sch-blk" id="th8t9a">{{th8t9a}}</td>
+                    <td style="background-color: {{cf8t9a}};" class="sch-blk" id="f8t9a">{{f8t9a}}</td>
+                  </tr><tr>
+                    <th>9-10 am</th>
+                    <td style="background-color: {{cm9t10a}};" class="sch-blk" id="m9t10a">{{m9t10a}}</td>
+                    <td style="background-color: {{ct9t10a}};" class="sch-blk" id="t9t10a">{{t9t10a}}</td>
+                    <td style="background-color: {{cw9t10a}};" class="sch-blk" id="w9t10a">{{w9t10a}}</td>
+                    <td style="background-color: {{cth9t10a}};" class="sch-blk" id="th9t10a">{{th9t10a}}</td>
+                    <td style="background-color: {{cf9t10a}};" class="sch-blk" id="f9t10a">{{f9t10a}}</td>
+                  </tr><tr>
+                    <th>10-11 am</th>
+                    <td style="background-color: {{cm10t11a}};" class="sch-blk" id="m10t11a">{{m10t11a}}</td>
+                    <td style="background-color: {{ct10t11a}};" class="sch-blk" id="t10t11a">{{t10t11a}}</td>
+                    <td style="background-color: {{cw10t11a}};" class="sch-blk" id="w10t11a">{{w10t11a}}</td>
+                    <td style="background-color: {{cth10t11a}};" class="sch-blk" id="th10t11a">{{th10t11a}}</td>
+                    <td style="background-color: {{cf10t11a}};" class="sch-blk" id="f10t11a">{{f10t11a}}</td>
+                  </tr><tr>
+                    <th>11-12 pm</th>
+                    <td style="background-color: {{cm11t12p}};" class="sch-blk" id="m11t12p">{{m11t12p}}</td>
+                    <td style="background-color: {{ct11t12p}};" class="sch-blk" id="t11t12p">{{t11t12p}}</td>
+                    <td style="background-color: {{cw11t12p}};" class="sch-blk" id="w11t12p">{{w11t12p}}</td>
+                    <td style="background-color: {{cth11t12p}};" class="sch-blk" id="th11t12p">{{th11t12p}}</td>
+                    <td style="background-color: {{cf11t12p}};" class="sch-blk" id="f11t12p">{{f11t12p}}</td>
+                  </tr><tr>
+                    <th>12-1 pm</th>
+                    <td style="background-color: {{cm12t1p}};" class="sch-blk" id="m12t1p">{{m12t1p}}</td>
+                    <td style="background-color: {{ct12t1p}};" class="sch-blk" id="t12t1p">{{t12t1p}}</td>
+                    <td style="background-color: {{cw12t1p}};" class="sch-blk" id="w12t1p">{{w12t1p}}</td>
+                    <td style="background-color: {{cth12t1p}};" class="sch-blk" id="th12t1p">{{th12t1p}}</td>
+                    <td style="background-color: {{cf12t1p}};" class="sch-blk" id="f12t1p">{{f12t1p}}</td>
+                  </tr><tr>
+                    <th>1-2 pm</th>
+                    <td style="background-color: {{cm1t2p}};" class="sch-blk" id="m1t2p">{{m1t2p}}</td>
+                    <td style="background-color: {{ct1t2p}};" class="sch-blk" id="t1t2p">{{t1t2p}}</td>
+                    <td style="background-color: {{cw1t2p}};" class="sch-blk" id="w1t2p">{{w1t2p}}</td>
+                    <td style="background-color: {{cth1t2p}};" class="sch-blk" id="th1t2p">{{th1t2p}}</td>
+                    <td style="background-color: {{cf1t2p}};" class="sch-blk" id="f1t2p">{{f1t2p}}</td>
+                  </tr><tr>
+                    <th>2-3 pm</th>
+                    <td style="background-color: {{cm2t3p}};" class="sch-blk" id="m2t3p">{{m2t3p}}</td>
+                    <td style="background-color: {{ct2t3p}};" class="sch-blk" id="t2t3p">{{t2t3p}}</td>
+                    <td style="background-color: {{cw2t3p}};" class="sch-blk" id="w2t3p">{{w2t3p}}</td>
+                    <td style="background-color: {{cth2t3p}};" class="sch-blk" id="th2t3p">{{th2t3p}}</td>
+                    <td style="background-color: {{cf2t3p}};" class="sch-blk" id="f2t3p">{{f2t3p}}</td>
+                  </tr><tr>
+                    <th>3-4 pm</th>
+                    <td style="background-color: {{cm3t4p}};" class="sch-blk" id="m3t4p">{{m3t4p}}</td>
+                    <td style="background-color: {{ct3t4p}};" class="sch-blk" id="t3t4p">{{t3t4p}}</td>
+                    <td style="background-color: {{cw3t4p}};" class="sch-blk" id="w3t4p">{{w3t4p}}</td>
+                    <td style="background-color: {{cth3t4p}};" class="sch-blk" id="th3t4p">{{th3t4p}}</td>
+                    <td style="background-color: {{cf3t4p}};" class="sch-blk" id="f3t4p">{{f3t4p}}</td>
+                  </tr><tr>
+                    <th>4-5 pm</th>
+                    <td style="background-color: {{cm4t5p}};" class="sch-blk" id="m4t5p">{{m4t5p}}</td>
+                    <td style="background-color: {{ct4t5p}};" class="sch-blk" id="t4t5p">{{t4t5p}}</td>
+                    <td style="background-color: {{cw4t5p}};" class="sch-blk" id="w4t5p">{{w4t5p}}</td>
+                    <td style="background-color: {{cth4t5p}};" class="sch-blk" id="th4t5p">{{th4t5p}}</td>
+                    <td style="background-color: {{cf4t5p}};" class="sch-blk" id="f4t5p">{{f4t5p}}</td>
+                  </tr><tr>
+                    <th>5-6 pm</th>
+                    <td style="background-color: {{cm5t6p}};" class="sch-blk" id="m5t6p">{{m5t6p}}</td>
+                    <td style="background-color: {{ct5t6p}};" class="sch-blk" id="t5t6p">{{t5t6p}}</td>
+                    <td style="background-color: {{cw5t6p}};" class="sch-blk" id="w5t6p">{{w5t6p}}</td>
+                    <td style="background-color: {{cth5t6p}};" class="sch-blk" id="th5t6p">{{th5t6p}}</td>
+                    <td style="background-color: {{cf5t6p}};" class="sch-blk" id="f5t6p">{{f5t6p}}</td>
+                  </tr><tr>
+                    <th>6-7 pm</th>
+                    <td style="background-color: {{cm6t7p}};" class="sch-blk" id="m6t7p">{{m6t7p}}</td>
+                    <td style="background-color: {{ct6t7p}};" class="sch-blk" id="t6t7p">{{t6t7p}}</td>
+                    <td style="background-color: {{cw6t7p}};" class="sch-blk" id="w6t7p">{{w6t7p}}</td>
+                    <td style="background-color: {{cth6t7p}};" class="sch-blk" id="th6t7p">{{th6t7p}}</td>
+                  </tr><tr>
+                    <th>7-8 pm</th>
+                    <td style="background-color: {{cm7t8p}};" class="sch-blk" id="m7t8p">{{m7t8p}}</td>
+                    <td style="background-color: {{ct7t8p}};" class="sch-blk" id="t7t8p">{{t7t8p}}</td>
+                    <td style="background-color: {{cw7t8p}};" class="sch-blk" id="w7t8p">{{w7t8p}}</td>
+                    <td style="background-color: {{cth7t8p}};" class="sch-blk" id="th7t8p">{{th7t8p}}</td>
+                  </tr><tr>
+                    <th>8-9 pm</th>
+                    <td style="background-color: {{cm8t9p}};" class="sch-blk" id="m8t9p">{{m8t9p}}</td>
+                    <td style="background-color: {{ct8t9p}};" class="sch-blk" id="t8t9p">{{t8t9p}}</td>
+                    <td style="background-color: {{cw8t9p}};" class="sch-blk" id="w8t9p">{{w8t9p}}</td>
+                    <td style="background-color: {{cth8t9p}};" class="sch-blk" id="th8t9p">{{th8t9p}}</td>
+                  </tr><tr>
+                    <th>9-10 pm</th>
+                    <td style="background-color: {{cm9t10p}};" class="sch-blk" id="m9t10p">{{m9t10p}}</td>
+                    <td style="background-color: {{ct9t10p}};" class="sch-blk" id="t9t10p">{{t9t10p}}</td>
+                    <td style="background-color: {{cw9t10p}};" class="sch-blk" id="w9t10p">{{w9t10p}}</td>
+                    <td style="background-color: {{cth9t10p}};" class="sch-blk" id="th9t10p">{{th9t10p}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+      </div>
+    </div>
+  {{else}}
+  {{> notLoggedIn}}
+  {{/if}}
+</template>
